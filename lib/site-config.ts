@@ -1,4 +1,3 @@
-```ts
 /**
  * CONFIGURAÇÃO DA VEM VER
  *
@@ -354,8 +353,8 @@ export const tours: Tour[] = [
 
 export const privateExperiences: Tour[] = [
   {
-    slug: 'miradas-estrelas',
-    name: 'Miradas Estrelas',
+    slug: 'mirar-das-estrelas',
+    name: 'Mirar das Estrelas',
 
     shortDescription:
       'Experiência para admirar o céu noturno nos Lençóis Maranhenses.',
