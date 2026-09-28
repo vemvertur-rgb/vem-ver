@@ -1,11 +1,15 @@
+```ts
 /**
- * ARQUIVO DE CONFIGURAÇÃO DA VEM VER
- * ----------------------------------
- * Edite este arquivo para alterar contatos, textos, passeios, imagens,
- * perguntas frequentes e depoimentos. Não é preciso mexer nos componentes.
+ * CONFIGURAÇÃO DA VEM VER
  *
- * Imagens: coloque os arquivos em /public/images e informe o caminho
- * começando com "/images/...". Use sempre um texto alternativo (alt) descritivo.
+ * Este é o principal arquivo para alterar:
+ * - contato
+ * - Instagram
+ * - textos
+ * - passeios
+ * - valores
+ * - imagens
+ * - perguntas frequentes
  */
 
 export type Tour = {
@@ -15,8 +19,10 @@ export type Tour = {
   description: string
   image: string
   imageAlt: string
-  /** Deixe vazio ("") quando a informação não estiver confirmada. */
   price: string
+  originalPrice?: string
+  priceInfo: string
+  type: 'compartilhado' | 'privativo'
   duration: string
   schedule: string
   highlights: string[]
@@ -39,32 +45,28 @@ export type FaqItem = {
   answer: string
 }
 
+/* =========================================================
+   INFORMAÇÕES DA VEM VER
+   ========================================================= */
+
 export const siteConfig = {
-  name: 'VEM VER Turismo',
+  name: 'Vem Ver',
   slogan: 'Seu próximo destino começa aqui.',
   location: 'Lençóis Maranhenses, Maranhão',
 
-  /** Número com código do país e DDD, só dígitos. Ex.: 5598912345678 */
   whatsappNumber: '5598985698375',
+
   whatsappMessage:
-    'Olá! Vim pelo site da VEM VER Turismo e gostaria de conhecer os passeios nos Lençóis Maranhenses.',
+    'Olá! Vim pelo site da Vem Ver e gostaria de conhecer os passeios nos Lençóis Maranhenses.',
 
-  instagramHandle: '@vemver',
-  instagramUrl: 'https://www.instagram.com/vemver',
+  instagramHandle: '@vemvertur',
+  instagramUrl: 'https://www.instagram.com/vemvertur',
 
-  email: 'contato@vemver.com.br',
+  email: '',
 
-  /** Texto mostrado quando uma informação ainda não foi cadastrada. */
   fallbackInfo: 'Consulte informações pelo WhatsApp.',
   fallbackPrice: 'Consulte valores e disponibilidade',
 
-  /**
-   * Formulário de contato (opcional e gratuito) via Google Forms.
-   * 1. Crie um Google Form com os campos: Nome, WhatsApp, Data, Pessoas, Passeio, Mensagem.
-   * 2. Copie a URL de envio (termina em /formResponse) para `actionUrl`.
-   * 3. Informe o "entry.XXXX" de cada campo.
-   * Enquanto `actionUrl` estiver vazio, o formulário abre o WhatsApp com a mensagem preenchida.
-   */
   googleForm: {
     actionUrl: '',
     fields: {
@@ -77,95 +79,336 @@ export const siteConfig = {
     },
   },
 
+  /* =======================================================
+     HERO
+     ======================================================= */
+
   hero: {
     title: 'Viva os Lençóis Maranhenses',
+
     subtitle:
-      'Passeios pelas dunas e lagoas com a comodidade de uma pousada para descansar. Organize sua viagem completa com a VEM VER Turismo.',
+      'Descubra dunas, lagoas e experiências inesquecíveis com a Vem Ver.',
+
     image: '/images/hero-lencois.webp',
+
     imageAlt:
       'Vista aérea dos Lençóis Maranhenses com dunas de areia branca e lagoas de água azul',
   },
 
+  /* =======================================================
+     APRESENTAÇÃO
+     ======================================================= */
+
+  intro: {
+    title: 'Mais do que um passeio. Uma experiência para guardar.',
+
+    text:
+      'Conheça os Lençóis Maranhenses com a Vem Ver e descubra paisagens incríveis, dunas, lagoas e experiências que tornam sua viagem inesquecível.',
+  },
+
+  /* =======================================================
+     SOBRE
+     ======================================================= */
+
   about: {
-    title: 'Vem ver os Lençóis Maranhenses com a gente',
-    text: 'A VEM VER Turismo nasceu com o objetivo de aproximar você das belezas dos Lençóis Maranhenses, ajudando a transformar sua viagem em uma experiência especial.',
+    title: 'Vem Ver os Lençóis Maranhenses com a gente',
+
+    text:
+      'A Vem Ver nasceu com o objetivo de aproximar você das belezas dos Lençóis Maranhenses, ajudando a transformar sua viagem em uma experiência especial.',
+
     image: '/images/dunas.webp',
-    imageAlt: 'Pessoas caminhando sobre a crista das dunas de areia branca nos Lençóis Maranhenses',
+
+    imageAlt:
+      'Pessoas caminhando sobre a crista das dunas de areia branca nos Lençóis Maranhenses',
+  },
+
+  /* =======================================================
+     OFERTAS
+     ======================================================= */
+
+  offers: {
+    title: 'OFERTAS ESPECIAIS',
+
+    text:
+      'Aproveite nossas condições especiais e venha viver os Lençóis Maranhenses com a Vem Ver.',
   },
 }
 
+/* =========================================================
+   PASSEIOS
+   ========================================================= */
+
 export const tours: Tour[] = [
   {
-    slug: 'lagoa-azul',
-    name: 'Lagoa Azul',
+    slug: 'atins',
+    name: 'Circuito de Atins',
+
     shortDescription:
-      'Um dos cenários mais conhecidos dos Lençóis, com águas azuis entre as dunas.',
+      'Conheça Atins e aproveite as belezas dos Lençóis Maranhenses.',
+
     description:
-      'Conheça a Lagoa Azul e aproveite a paisagem de dunas brancas e águas cristalinas que tornam os Lençóis Maranhenses um destino único. Fale com a VEM VER Turismo para saber mais sobre este passeio.',
-    image: '/images/lagoa-azul.webp',
-    imageAlt: 'Lagoa de água azul intensa cercada por dunas de areia branca',
-    price: '',
+      'Conheça Atins e descubra as paisagens especiais da região dos Lençóis Maranhenses.',
+
+    image: '/images/atins.webp',
+
+    imageAlt:
+      'Paisagem de Atins com rio, coqueiros e dunas',
+
+    originalPrice: 'R$ 250,00',
+    price: 'R$ 230,50',
+    priceInfo: 'por pessoa',
+
+    type: 'compartilhado',
+
     duration: '',
     schedule: '',
     highlights: [],
   },
+
+  {
+    slug: 'lagoa-azul',
+    name: 'Circuito Lagoa Azul',
+
+    shortDescription:
+      'Explore as dunas e lagoas cristalinas dos Lençóis Maranhenses.',
+
+    description:
+      'Conheça a Lagoa Azul e aproveite a paisagem de dunas brancas e águas cristalinas.',
+
+    image: '/images/lagoa-azul.webp',
+
+    imageAlt:
+      'Lagoa de água azul entre as dunas dos Lençóis Maranhenses',
+
+    originalPrice: 'R$ 160,00',
+    price: 'R$ 149,90',
+    priceInfo: 'por pessoa',
+
+    type: 'compartilhado',
+
+    duration: '',
+    schedule: '',
+    highlights: [],
+  },
+
   {
     slug: 'lagoa-bonita',
-    name: 'Lagoa Bonita',
+    name: 'Circuito Lagoa Bonita',
+
     shortDescription:
-      'Vista panorâmica do alto das dunas e lagoas de tons azul e verde.',
+      'Viva uma experiência especial entre dunas e lagoas dos Lençóis.',
+
     description:
-      'A Lagoa Bonita reúne dunas altas e lagoas de cores marcantes, com uma vista que fica na memória. Consulte a VEM VER Turismo para mais detalhes sobre este passeio.',
+      'Conheça a Lagoa Bonita e suas belas paisagens entre dunas e lagoas.',
+
     image: '/images/lagoa-bonita.webp',
-    imageAlt: 'Vista do alto de uma duna para uma lagoa verde-azulada entre as dunas',
-    price: '',
+
+    imageAlt:
+      'Vista do alto de uma duna para uma lagoa entre as dunas',
+
+    originalPrice: 'R$ 160,00',
+    price: 'R$ 149,90',
+    priceInfo: 'por pessoa',
+
+    type: 'compartilhado',
+
     duration: '',
     schedule: '',
     highlights: [],
   },
+
   {
-    slug: 'atins',
-    name: 'Atins',
+    slug: 'cardosa',
+    name: 'Percurso de Cardosa',
+
     shortDescription:
-      'Vila tranquila onde o rio encontra o mar, próxima às dunas.',
+      'Descubra as belezas naturais do percurso de Cardosa.',
+
     description:
-      'Atins é um povoado charmoso, com clima tranquilo e paisagens onde rio, mar e dunas se encontram. Fale com a VEM VER Turismo para consultar as opções de passeio.',
-    image: '/images/atins.webp',
-    imageAlt: 'Encontro do rio com o mar em Atins, com coqueiros e dunas ao fundo',
-    price: '',
+      'Explore o percurso de Cardosa e aproveite as belezas naturais da região.',
+
+    image: '/images/passeio-4x4.webp',
+
+    imageAlt:
+      'Passeio pelas paisagens naturais da região dos Lençóis Maranhenses',
+
+    originalPrice: 'R$ 150,00',
+    price: 'R$ 129,90',
+    priceInfo: 'por pessoa',
+
+    type: 'compartilhado',
+
     duration: '',
     schedule: '',
     highlights: [],
   },
+
   {
     slug: 'santo-amaro',
-    name: 'Santo Amaro',
+    name: 'Percurso de Santo Amaro',
+
     shortDescription:
-      'Lagoas cristalinas e paisagens preservadas do lado oeste dos Lençóis.',
+      'Conheça Santo Amaro e suas paisagens incríveis nos Lençóis Maranhenses.',
+
     description:
-      'Santo Amaro do Maranhão oferece lagoas de águas claras e cenários naturais preservados. Consulte a VEM VER Turismo para saber mais sobre este passeio.',
+      'Conheça Santo Amaro e suas lagoas de águas claras em meio às paisagens dos Lençóis Maranhenses.',
+
     image: '/images/santo-amaro.webp',
-    imageAlt: 'Lagoa de águas claras com vegetação verde na borda das dunas em Santo Amaro',
-    price: '',
+
+    imageAlt:
+      'Lagoa de águas claras em Santo Amaro do Maranhão',
+
+    originalPrice: 'R$ 330,00',
+    price: 'R$ 305,50',
+    priceInfo: 'por pessoa',
+
+    type: 'compartilhado',
+
     duration: '',
     schedule: '',
     highlights: [],
   },
+
   {
-    slug: 'outros-passeios',
-    name: 'Outros passeios',
+    slug: 'cabure',
+    name: 'Circuito de Caburé',
+
     shortDescription:
-      'Passeios 4x4, rio Preguiças, pôr do sol e outras experiências na região.',
+      'Explore Caburé e aproveite uma experiência especial na região.',
+
     description:
-      'Além dos roteiros principais, a região oferece outras experiências, como passeios de 4x4, passeios pelo rio e o pôr do sol nas dunas. Fale com a VEM VER Turismo e conte o que você procura.',
+      'Conheça Caburé e aproveite as paisagens e experiências da região.',
+
+    image: '/images/atins.webp',
+
+    imageAlt:
+      'Paisagem da região dos Lençóis Maranhenses',
+
+    originalPrice: 'R$ 180,00',
+    price: 'R$ 159,90',
+    priceInfo: 'por pessoa',
+
+    type: 'compartilhado',
+
+    duration: '',
+    schedule: '',
+    highlights: [],
+  },
+
+  {
+    slug: 'duas-lagoas',
+    name: 'Circuito de Duas Lagoas',
+
+    shortDescription:
+      'Conheça duas belas lagoas e aproveite a paisagem dos Lençóis.',
+
+    description:
+      'Explore duas belas lagoas e aproveite as paisagens dos Lençóis Maranhenses.',
+
+    image: '/images/lagoa-azul.webp',
+
+    imageAlt:
+      'Lagoa entre as dunas dos Lençóis Maranhenses',
+
+    originalPrice: 'R$ 330,00',
+    price: 'R$ 305,50',
+    priceInfo: 'por pessoa',
+
+    type: 'compartilhado',
+
+    duration: '',
+    schedule: '',
+    highlights: [],
+  },
+
+  {
+    slug: 'quadriciclo',
+    name: 'Pequenos Lençóis de Quadriciclo',
+
+    shortDescription:
+      'Explore os Pequenos Lençóis em uma experiência de quadriciclo.',
+
+    description:
+      'Explore os Pequenos Lençóis em uma experiência de quadriciclo pelas paisagens da região.',
+
     image: '/images/passeio-4x4.webp',
-    imageAlt: 'Veículo 4x4 atravessando trilha de areia e água com dunas ao fundo',
-    price: '',
+
+    imageAlt:
+      'Passeio pelas trilhas de areia dos Lençóis Maranhenses',
+
+    originalPrice: 'R$ 650,00',
+    price: 'R$ 599,90',
+    priceInfo: 'por pessoa',
+
+    type: 'compartilhado',
+
     duration: '',
     schedule: '',
     highlights: [],
   },
 ]
+
+/* =========================================================
+   EXPERIÊNCIAS PRIVATIVAS
+   ========================================================= */
+
+export const privateExperiences: Tour[] = [
+  {
+    slug: 'miradas-estrelas',
+    name: 'Miradas Estrelas',
+
+    shortDescription:
+      'Experiência para admirar o céu noturno nos Lençóis Maranhenses.',
+
+    description:
+      'Uma experiência para admirar o céu noturno e contemplar as estrelas nos Lençóis Maranhenses.',
+
+    image: '/images/por-do-sol.webp',
+
+    imageAlt:
+      'Céu sobre as dunas dos Lençóis Maranhenses',
+
+    originalPrice: 'R$ 1.400,00',
+    price: 'R$ 1.250,50',
+    priceInfo: 'para até 9 pessoas',
+
+    type: 'privativo',
+
+    duration: '',
+    schedule: '',
+    highlights: [],
+  },
+
+  {
+    slug: 'cafe-da-manha',
+    name: 'Café da Manhã nos Lençóis Maranhenses',
+
+    shortDescription:
+      'Uma experiência especial de café da manhã em meio à paisagem dos Lençóis.',
+
+    description:
+      'Uma experiência para tomar café da manhã em meio à paisagem dos Lençóis Maranhenses.',
+
+    image: '/images/dunas.webp',
+
+    imageAlt:
+      'Dunas de areia branca nos Lençóis Maranhenses',
+
+    originalPrice: 'R$ 1.400,00',
+    price: 'R$ 1.250,50',
+    priceInfo: 'para até 9 pessoas',
+
+    type: 'privativo',
+
+    duration: '',
+    schedule: '',
+    highlights: [],
+  },
+]
+
+/* =========================================================
+   GALERIA
+   ========================================================= */
 
 export const gallery: GalleryImage[] = [
   {
@@ -175,7 +418,7 @@ export const gallery: GalleryImage[] = [
   },
   {
     src: '/images/dunas.webp',
-    alt: 'Dunas de areia branca com marcas do vento',
+    alt: 'Dunas de areia branca nos Lençóis Maranhenses',
     label: 'Dunas',
   },
   {
@@ -185,81 +428,160 @@ export const gallery: GalleryImage[] = [
   },
   {
     src: '/images/atins.webp',
-    alt: 'Paisagem de Atins com rio, coqueiros e dunas',
+    alt: 'Paisagem de Atins',
     label: 'Atins',
   },
   {
     src: '/images/santo-amaro.webp',
-    alt: 'Lagoa cristalina em Santo Amaro do Maranhão',
+    alt: 'Lagoa em Santo Amaro do Maranhão',
     label: 'Santo Amaro',
   },
   {
     src: '/images/barreirinhas.webp',
-    alt: 'Rio Preguiças em Barreirinhas com barcos e vegetação',
+    alt: 'Rio Preguiças em Barreirinhas',
     label: 'Barreirinhas',
   },
   {
     src: '/images/passeio-4x4.webp',
-    alt: 'Passeio de 4x4 pelas trilhas dos Lençóis Maranhenses',
-    label: 'Passeios 4x4',
+    alt: 'Passeio pelas trilhas dos Lençóis Maranhenses',
+    label: 'Passeios',
   },
   {
     src: '/images/por-do-sol.webp',
-    alt: 'Pôr do sol sobre as dunas e uma lagoa nos Lençóis Maranhenses',
+    alt: 'Pôr do sol sobre as dunas',
     label: 'Pôr do sol',
   },
 ]
 
-/** Adicione aqui apenas avaliações reais de clientes. */
+/* =========================================================
+   DEPOIMENTOS
+   ========================================================= */
+
 export const testimonials: Testimonial[] = []
+
+/* =========================================================
+   PERGUNTAS FREQUENTES
+   ========================================================= */
 
 export const faq: FaqItem[] = [
   {
     question: 'Como faço para reservar um passeio?',
     answer:
-      'Entre em contato com a VEM VER Turismo pelo WhatsApp ou pelo formulário deste site. Vamos ajudar você a escolher o passeio e informar como seguir com a reserva.',
+      'Entre em contato com a Vem Ver pelo WhatsApp para consultar o passeio, a data e as informações necessárias para sua reserva.',
   },
+
   {
-    question: 'Quais passeios estão disponíveis?',
+    question: 'Como consultar a disponibilidade?',
     answer:
-      'Veja os passeios na seção "Passeios" deste site. Para confirmar as opções disponíveis na data da sua viagem, fale com a VEM VER Turismo pelo WhatsApp.',
+      'Fale com a Vem Ver pelo WhatsApp informando a data pretendida e o passeio de interesse.',
   },
+
   {
-    question: 'Como consultar os valores?',
+    question: 'Os valores apresentados são por pessoa?',
     answer:
-      'Os valores podem variar de acordo com o passeio e a data. Consulte valores e disponibilidade pelo WhatsApp.',
+      'Os passeios compartilhados são apresentados com valor por pessoa. As experiências privativas informam o valor para até 9 pessoas.',
   },
+
   {
-    question: 'Vocês ajudam com hospedagem em pousada?',
+    question: 'Quais passeios são privativos?',
     answer:
-      'Sim. Além dos passeios, a VEM VER Turismo orienta você sobre hospedagem em pousada na região, para que sua estadia seja confortável e prática. Consulte disponibilidade pelo WhatsApp.',
+      'As experiências privativas disponíveis no site são Miradas Estrelas e Café da Manhã nos Lençóis Maranhenses.',
   },
+
+  {
+    question: 'Quantas pessoas podem participar dos passeios privativos?',
+    answer:
+      'As experiências privativas apresentadas no site são para até 9 pessoas.',
+  },
+
+  {
+    question: 'Como funciona o pagamento?',
+    answer:
+      'Fale com a Vem Ver pelo WhatsApp para consultar as formas de pagamento disponíveis.',
+  },
+
   {
     question: 'Os passeios dependem das condições climáticas?',
     answer:
-      'Passeios na natureza podem ser influenciados pelas condições do tempo e da região. Consulte a VEM VER Turismo para receber orientações atualizadas sobre o seu passeio.',
+      'Passeios realizados em ambientes naturais podem depender das condições climáticas e das condições da região. Consulte a Vem Ver antes da viagem.',
   },
-  {
-    question: 'Posso solicitar um passeio particular?',
-    answer:
-      'Fale com a VEM VER Turismo pelo WhatsApp e conte o que você procura. Vamos verificar as possibilidades para a sua viagem.',
-  },
+
   {
     question: 'Como funciona o cancelamento?',
     answer:
-      'As condições de cancelamento são informadas no momento da consulta. Consulte informações pelo WhatsApp.',
+      'As condições de cancelamento são informadas no momento da consulta. Fale com a Vem Ver pelo WhatsApp.',
   },
+
   {
-    question: 'Como entro em contato com a VEM VER Turismo?',
+    question: 'Como entrar em contato com a Vem Ver?',
     answer:
-      'Você pode falar com a VEM VER Turismo pelo WhatsApp, pelo Instagram, por e-mail ou pelo formulário de contato deste site.',
+      'Você pode entrar em contato pelo WhatsApp ou pelo Instagram @vemvertur.',
   },
 ]
 
-export const navLinks = [
-  { label: 'Início', href: '/#inicio' },
-  { label: 'Passeios', href: '/#passeios' },
-  { label: 'Sobre nós', href: '/#sobre' },
-  { label: 'Dúvidas', href: '/#duvidas' },
-  { label: 'Contato', href: '/#contato' },
+/* =========================================================
+   COMO FUNCIONA
+   ========================================================= */
+
+export const howItWorks = [
+  {
+    number: 1,
+    title: 'Escolha seu passeio',
+    text: 'Escolha a experiência que combina com sua viagem.',
+  },
+
+  {
+    number: 2,
+    title: 'Fale com a Vem Ver',
+    text: 'Entre em contato pelo WhatsApp.',
+  },
+
+  {
+    number: 3,
+    title: 'Consulte disponibilidade',
+    text: 'Confira datas, detalhes e condições do passeio.',
+  },
+
+  {
+    number: 4,
+    title: 'Aproveite os Lençóis',
+    text: 'Prepare-se para viver uma experiência inesquecível.',
+  },
 ]
+
+/* =========================================================
+   MENU
+   ========================================================= */
+
+export const navLinks = [
+  {
+    label: 'Início',
+    href: '/#inicio',
+  },
+
+  {
+    label: 'Passeios',
+    href: '/#passeios',
+  },
+
+  {
+    label: 'Privativos',
+    href: '/#privativos',
+  },
+
+  {
+    label: 'Sobre',
+    href: '/#sobre',
+  },
+
+  {
+    label: 'Dúvidas',
+    href: '/#duvidas',
+  },
+
+  {
+    label: 'Contato',
+    href: '/#contato',
+  },
+]
+```
