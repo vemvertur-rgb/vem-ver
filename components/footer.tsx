@@ -71,6 +71,15 @@ export function Footer() {
                     Galeria
                   </Link>
                 </li>
+
+                <li>
+                  <Link
+                    href="/#contato"
+                    className="text-sm text-primary-foreground/70 transition-colors hover:text-white"
+                  >
+                    Contato
+                  </Link>
+                </li>
               </ul>
             </nav>
           </div>
