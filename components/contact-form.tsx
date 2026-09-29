@@ -2,7 +2,11 @@
 
 import { useState, type FormEvent } from 'react'
 import { CheckCircle2 } from 'lucide-react'
-import { siteConfig, tours } from '@/lib/site-config'
+import {
+  siteConfig,
+  tours,
+  privateExperiences,
+} from '@/lib/site-config'
 import { whatsappLink } from '@/lib/links'
 
 type Status = 'idle' | 'sending' | 'sent-form' | 'sent-whatsapp' | 'error'
@@ -18,7 +22,17 @@ export function ContactForm() {
 
     const form = event.currentTarget
     const data = new FormData(form)
-    const get = (key: string) => String(data.get(key) ?? '').trim()
+
+    const get = (key: string) =>
+      String(data.get(key) ?? '').trim()
+
+    const getAll = (key: string) =>
+      data
+        .getAll(key)
+        .map((value) => String(value).trim())
+        .filter(Boolean)
+
+    const selectedTours = getAll('tour')
 
     const { actionUrl, fields } = siteConfig.googleForm
 
@@ -26,11 +40,12 @@ export function ContactForm() {
       setStatus('sending')
 
       const body = new FormData()
+
       body.append(fields.name, get('name'))
       body.append(fields.whatsapp, get('whatsapp'))
       body.append(fields.date, get('date'))
       body.append(fields.people, get('people'))
-      body.append(fields.tour, get('tour'))
+      body.append(fields.tour, selectedTours.join(', '))
       body.append(fields.message, get('message'))
 
       try {
@@ -57,13 +72,20 @@ export function ContactForm() {
       `WhatsApp: ${get('whatsapp')}`,
       get('date') &&
         `Data pretendida: ${get('date').split('-').reverse().join('/')}`,
-      get('people') && `Número de pessoas: ${get('people')}`,
-      get('tour') && `Passeio de interesse: ${get('tour')}`,
+      get('days') &&
+        `Dias previstos em Barreirinhas: ${get('days')}`,
+      get('people') &&
+        `Número de pessoas: ${get('people')}`,
+      selectedTours.length > 0 &&
+        `Passeios de interesse:\n${selectedTours
+          .map((tour) => `- ${tour}`)
+          .join('\n')}`,
       get('accommodation') &&
         `Hospedagem: ${get('accommodation')}`,
       get('transfer') &&
         `Transfer para Barreirinhas: ${get('transfer')}`,
-      get('message') && `Mensagem: ${get('message')}`,
+      get('message') &&
+        `Mensagem: ${get('message')}`,
     ].filter(Boolean)
 
     window.open(
@@ -115,6 +137,27 @@ export function ContactForm() {
           />
         </Field>
 
+        <Field
+          id="days"
+          label="Quantos dias pretende ficar em Barreirinhas?"
+        >
+          <select
+            id="days"
+            name="days"
+            defaultValue=""
+            className={inputClass}
+          >
+            <option value="">Selecione uma opção</option>
+            <option value="1 dia">1 dia</option>
+            <option value="2 dias">2 dias</option>
+            <option value="3 dias">3 dias</option>
+            <option value="4 dias">4 dias</option>
+            <option value="5 dias">5 dias</option>
+            <option value="6 dias">6 dias</option>
+            <option value="7 dias ou mais">7 dias ou mais</option>
+          </select>
+        </Field>
+
         <Field id="people" label="Número de pessoas">
           <input
             id="people"
@@ -128,21 +171,49 @@ export function ContactForm() {
         </Field>
       </div>
 
-      <Field id="tour" label="Passeio de interesse">
-        <select
-          id="tour"
-          name="tour"
-          defaultValue=""
-          className={inputClass}
-        >
-          <option value="">Ainda não sei</option>
+      <Field
+        id="tour"
+        label="Quais passeios você tem interesse em fazer?"
+      >
+        <div className="grid gap-3 rounded-2xl border border-input bg-card p-4">
+          {[
+            ...tours,
+            ...privateExperiences,
+          ].map((t) => (
+            <label
+              key={t.slug}
+              className="flex cursor-pointer items-start gap-3 rounded-xl p-2 transition-colors hover:bg-muted"
+            >
+              <input
+                type="checkbox"
+                name="tour"
+                value={t.name}
+                className="mt-1 size-4 shrink-0 accent-primary"
+              />
 
-          {tours.map((t) => (
-            <option key={t.slug} value={t.name}>
-              {t.name}
-            </option>
+              <span className="text-sm leading-relaxed">
+                {t.name}
+              </span>
+            </label>
           ))}
-        </select>
+
+          <label className="flex cursor-pointer items-start gap-3 rounded-xl p-2 transition-colors hover:bg-muted">
+            <input
+              type="checkbox"
+              name="tour"
+              value="Ainda não sei / gostaria de receber uma sugestão"
+              className="mt-1 size-4 shrink-0 accent-primary"
+            />
+
+            <span className="text-sm leading-relaxed">
+              Ainda não sei / gostaria de receber uma sugestão
+            </span>
+          </label>
+        </div>
+
+        <p className="text-xs text-muted-foreground">
+          Você pode selecionar mais de um passeio.
+        </p>
       </Field>
 
       <Field
