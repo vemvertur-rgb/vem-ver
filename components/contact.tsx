@@ -1,8 +1,8 @@
-import { Instagram, Mail, MapPin, MessageCircle } from 'lucide-react'
+import { Mail, MapPin, MessageCircle } from 'lucide-react'
 import { siteConfig } from '@/lib/site-config'
 import { whatsappLink } from '@/lib/links'
 import { ContactForm } from './contact-form'
-import { WhatsAppIcon } from './brand-icons'
+import { InstagramIcon, WhatsAppIcon } from './brand-icons'
 
 export function Contact() {
   return (
@@ -79,10 +79,7 @@ export function Contact() {
                 className="flex items-start gap-4 rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-4 transition-colors hover:bg-primary-foreground/10"
               >
                 <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary-foreground/10">
-                  <Instagram
-                    className="size-5"
-                    aria-hidden="true"
-                  />
+                  <InstagramIcon />
                 </div>
 
                 <div>
