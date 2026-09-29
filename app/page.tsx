@@ -20,6 +20,9 @@ export default function HomePage() {
       {/* Passeios e experiências privativas */}
       <Tours />
 
+      {/* Formulário e canais de contato */}
+      <Contact />
+
       {/* Como funciona a reserva */}
       <HowItWorks />
 
@@ -34,9 +37,6 @@ export default function HomePage() {
 
       {/* Perguntas frequentes */}
       <Faq />
-
-      {/* Formulário e canais de contato */}
-      <Contact />
     </>
   )
 }
