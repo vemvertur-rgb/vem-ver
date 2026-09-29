@@ -508,20 +508,16 @@ export const faq: FaqItem[] = [
   {
     question: 'Como funciona o cancelamento?',
     answer:
-      '{
-  question: "Como funciona o cancelamento?",
-  answer:
-    "Cancelamento em até 7 dias após a contratação (direito de arrependimento):\n\n" +
-    "➜ Reembolso integral, desde que o serviço ainda não tenha sido realizado.\n\n" +
-    "Mais de 30 dias antes do primeiro passeio:\n\n" +
-    "➜ Reembolso de 80% do valor pago.\n\n" +
-    "Entre 29 e 15 dias antes do passeio:\n\n" +
-    "➜ Reembolso de 70% do valor pago.\n\n" +
-    "Entre 14 e 7 dias antes do passeio:\n\n" +
-    "➜ Reembolso de 50% do valor pago.\n\n" +
-    "Com menos de 7 dias de antecedência ou em caso de não comparecimento (no-show):\n\n" +
-    "➜ Não há reembolso.",
-},',
+      'Cancelamento em até 7 dias após a contratação (direito de arrependimento):\n\n' +
+      '➜ Reembolso integral, desde que o serviço ainda não tenha sido realizado.\n\n' +
+      'Mais de 30 dias antes do primeiro passeio:\n\n' +
+      '➜ Reembolso de 80% do valor pago.\n\n' +
+      'Entre 29 e 15 dias antes do passeio:\n\n' +
+      '➜ Reembolso de 70% do valor pago.\n\n' +
+      'Entre 14 e 7 dias antes do passeio:\n\n' +
+      '➜ Reembolso de 50% do valor pago.\n\n' +
+      'Com menos de 7 dias de antecedência ou em caso de não comparecimento (no-show):\n\n' +
+      '➜ Não há reembolso.',
   },
 
   {
