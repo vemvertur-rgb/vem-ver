@@ -2,19 +2,40 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ArrowLeft, CalendarClock, Clock, Tag } from 'lucide-react'
-import { siteConfig, tours, privateExperiences } from '@/lib/site-config'
-import { asset, tourWhatsappMessage, whatsappLink } from '@/lib/links'
+import {
+  ArrowLeft,
+  CalendarClock,
+  Clock,
+  Tag,
+} from 'lucide-react'
+
+import {
+  siteConfig,
+  tours,
+  privateExperiences,
+} from '@/lib/site-config'
+
+import {
+  asset,
+  tourWhatsappMessage,
+  whatsappLink,
+} from '@/lib/links'
+
 import { WhatsAppIcon } from '@/components/brand-icons'
 import { CtaLink } from '@/components/cta-link'
 import { TourCard } from '@/components/tour-card'
 
 export const dynamicParams = false
 
-const allTours = [...tours, ...privateExperiences]
+const allTours = [
+  ...tours,
+  ...privateExperiences,
+]
 
 export function generateStaticParams() {
-  return allTours.map((t) => ({ slug: t.slug }))
+  return allTours.map((tour) => ({
+    slug: tour.slug,
+  }))
 }
 
 export async function generateMetadata({
@@ -23,18 +44,27 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const tour = allTours.find((t) => t.slug === slug)
 
-  if (!tour) return {}
+  const tour = allTours.find(
+    (item) => item.slug === slug,
+  )
+
+  if (!tour) {
+    return {}
+  }
 
   return {
-    title: `Passeio ${tour.name} nos Lençóis Maranhenses`,
+    title: `${tour.name} | Vem Ver Turismo`,
     description: tour.shortDescription,
-    alternates: { canonical: `passeios/${tour.slug}/` },
+    alternates: {
+      canonical: `/passeios/${tour.slug}/`,
+    },
     openGraph: {
+      title: `${tour.name} | Vem Ver Turismo`,
+      description: tour.shortDescription,
       images: [
         {
-          url: tour.image.replace(/^\//, ''),
+          url: asset(tour.image),
           alt: tour.imageAlt,
         },
       ],
@@ -48,46 +78,70 @@ export default async function TourPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const tour = allTours.find((t) => t.slug === slug)
 
-  if (!tour) notFound()
+  const tour = allTours.find(
+    (item) => item.slug === slug,
+  )
+
+  if (!tour) {
+    notFound()
+  }
 
   const info = [
     {
       icon: Tag,
-      label: 'Valores',
-      value: tour.price || siteConfig.fallbackPrice,
+      label: 'Valor',
+      value:
+        tour.price || siteConfig.fallbackPrice,
     },
     {
       icon: Clock,
       label: 'Duração',
-      value: tour.duration || siteConfig.fallbackInfo,
+      value:
+        tour.duration || siteConfig.fallbackInfo,
     },
     {
       icon: CalendarClock,
-      label: 'Horários e disponibilidade',
-      value: tour.schedule || siteConfig.fallbackInfo,
+      label: 'Horário e disponibilidade',
+      value:
+        tour.schedule || siteConfig.fallbackInfo,
     },
   ]
 
-  const others = tours.filter((t) => t.slug !== tour.slug).slice(0, 3)
+  const others = tours
+    .filter((item) => item.slug !== tour.slug)
+    .slice(0, 3)
 
   return (
     <>
-      <article className="px-4 pb-16 pt-8 md:px-6 md:pb-24 md:pt-12">
+      {/* =====================================================
+          DETALHES DO PASSEIO
+      ===================================================== */}
+
+      <article className="bg-background px-4 pb-16 pt-8 md:px-6 md:pb-24 md:pt-12">
         <div className="mx-auto max-w-6xl">
-          <nav aria-label="Navegação estrutural" className="mb-6">
+
+          {/* Voltar */}
+          <nav
+            aria-label="Navegação estrutural"
+            className="mb-8"
+          >
             <Link
               href="/#passeios"
-              className="inline-flex min-h-11 items-center gap-2 font-medium text-primary hover:underline"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full px-3 font-medium text-primary transition-colors hover:bg-primary/5 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              <ArrowLeft className="size-4" aria-hidden="true" />
+              <ArrowLeft
+                className="size-4"
+                aria-hidden="true"
+              />
               Voltar para os passeios
             </Link>
           </nav>
 
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl bg-muted">
+
+            {/* Imagem */}
+            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl bg-muted shadow-sm">
               <Image
                 src={asset(tour.image)}
                 alt={tour.imageAlt}
@@ -98,87 +152,146 @@ export default async function TourPage({
               />
             </div>
 
-            <div className="flex flex-col gap-6">
-              <p className="text-sm font-semibold uppercase tracking-widest text-accent-foreground">
-                {tour.type === 'privativo' ? 'Experiência Privativa' : 'Passeio'}
-              </p>
+            {/* Informações */}
+            <div className="flex flex-col">
 
-              <h1 className="font-serif text-4xl font-semibold leading-tight text-balance md:text-5xl">
-                {tour.name}
-              </h1>
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
+                  {tour.type === 'privativo'
+                    ? 'Experiência privativa'
+                    : 'Passeio'}
+                </p>
 
-              <p className="text-lg leading-relaxed text-muted-foreground text-pretty whitespace-pre-line">
-                {tour.description}
-              </p>
+                <h1 className="mt-3 font-serif text-4xl font-semibold leading-tight text-balance md:text-5xl">
+                  {tour.name}
+                </h1>
 
-              <dl className="grid gap-3">
-                {info.map(({ icon: Icon, label, value }) => (
-                  <div
-                    key={label}
-                    className="flex items-start gap-4 rounded-2xl bg-sand p-4"
-                  >
-                    <Icon
-                      className="mt-0.5 size-5 shrink-0 text-primary"
-                      aria-hidden="true"
-                    />
+                <p className="mt-5 text-lg leading-relaxed text-muted-foreground text-pretty whitespace-pre-line">
+                  {tour.description}
+                </p>
+              </div>
 
-                    <div>
-                      <dt className="text-sm text-muted-foreground">
-                        {label}
-                      </dt>
+              {/* Informações principais */}
+              <dl className="mt-8 grid gap-3">
+                {info.map(
+                  ({
+                    icon: Icon,
+                    label,
+                    value,
+                  }) => (
+                    <div
+                      key={label}
+                      className="flex items-start gap-4 rounded-2xl border border-border bg-sand p-4"
+                    >
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                        <Icon
+                          className="size-5"
+                          aria-hidden="true"
+                        />
+                      </div>
 
-                      <dd className="font-semibold">
-                        {value}
-                      </dd>
+                      <div className="min-w-0">
+                        <dt className="text-sm text-muted-foreground">
+                          {label}
+                        </dt>
+
+                        <dd className="mt-1 font-semibold">
+                          {value}
+                        </dd>
+
+                        {label === 'Valor' &&
+                          tour.priceInfo && (
+                            <p className="mt-1 text-sm text-muted-foreground">
+                              {tour.priceInfo}
+                            </p>
+                          )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ),
+                )}
               </dl>
 
+              {/* Destaques */}
               {tour.highlights.length > 0 && (
-                <div>
-                  <h2 className="mb-3 text-lg font-semibold">
+                <div className="mt-8">
+                  <h2 className="text-lg font-semibold">
                     Destaques
                   </h2>
 
-                  <ul className="list-inside list-disc space-y-1 text-muted-foreground">
-                    {tour.highlights.map((h) => (
-                      <li key={h}>{h}</li>
-                    ))}
+                  <ul className="mt-3 list-inside list-disc space-y-2 text-muted-foreground">
+                    {tour.highlights.map(
+                      (highlight) => (
+                        <li key={highlight}>
+                          {highlight}
+                        </li>
+                      ),
+                    )}
                   </ul>
                 </div>
               )}
 
-              <CtaLink
-                href={whatsappLink(tourWhatsappMessage(tour.name))}
-                external
-                variant="whatsapp"
-                className="sm:w-fit"
-              >
-                <WhatsAppIcon />
-                Consultar pelo WhatsApp
-              </CtaLink>
+              {/* CTA */}
+              <div className="mt-8">
+                <CtaLink
+                  href={whatsappLink(
+                    tourWhatsappMessage(
+                      tour.name,
+                    ),
+                  )}
+                  external
+                  variant="whatsapp"
+                  className="w-full sm:w-fit"
+                  ariaLabel={`Consultar ${tour.name} pelo WhatsApp`}
+                >
+                  <WhatsAppIcon />
+                  Consultar pelo WhatsApp
+                </CtaLink>
+
+                <p className="mt-3 text-sm text-muted-foreground">
+                  Consulte disponibilidade, condições e
+                  detalhes diretamente com a Vem Ver.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </article>
+
+      {/* =====================================================
+          OUTROS PASSEIOS
+      ===================================================== */}
 
       <section
         aria-labelledby="outros-title"
         className="bg-sand px-4 py-16 md:px-6 md:py-24"
       >
         <div className="mx-auto max-w-6xl">
-          <h2
-            id="outros-title"
-            className="font-serif text-3xl font-semibold"
-          >
-            Outros passeios
-          </h2>
 
-          <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {others.map((t) => (
-              <li key={t.slug} className="flex">
-                <TourCard tour={t} />
+          <div className="max-w-2xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
+              Mais experiências
+            </p>
+
+            <h2
+              id="outros-title"
+              className="mt-3 font-serif text-3xl font-semibold leading-tight md:text-4xl"
+            >
+              Conheça outros passeios
+            </h2>
+
+            <p className="mt-3 text-lg leading-relaxed text-muted-foreground">
+              Encontre outras experiências para aproveitar
+              os Lençóis Maranhenses.
+            </p>
+          </div>
+
+          <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {others.map((item) => (
+              <li
+                key={item.slug}
+                className="flex"
+              >
+                <TourCard tour={item} />
               </li>
             ))}
           </ul>
