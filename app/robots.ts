@@ -2,11 +2,17 @@ import type { MetadataRoute } from 'next'
 
 export const dynamic = 'force-static'
 
-const base = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.vemver.com.br').replace(/\/$/, '')
+const base = (
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  'https://vemvertur-rgb.github.io/vem-ver'
+).replace(/\/$/, '')
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: { userAgent: '*', allow: '/' },
+    rules: {
+      userAgent: '*',
+      allow: '/',
+    },
     sitemap: `${base}/sitemap.xml`,
   }
 }
