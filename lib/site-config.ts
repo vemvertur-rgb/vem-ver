@@ -252,7 +252,7 @@ export const tours: Tour[] = [
     description:
       'Uma experiência para conhecer algumas das paisagens e lagoas mais marcantes da região de Santo Amaro.\n\nA saída de Barreirinhas acontece às 8h30. Seguimos aproximadamente 97 km por estrada asfaltada até Santo Amaro.\n\nAo chegar, embarcamos em veículo 4x4 para iniciar o percurso pelas dunas.\n\nDurante o passeio, fazemos paradas em lagoas da região, como Lagoa Andorinha, Lagoa Gaivota e Lagoa Betânia, conforme as condições do período.\n\nO passeio inclui tempo para banho, descanso e contemplação das paisagens.\n\nDepois, há uma pausa para almoço e permanência na região até o pôr do sol.\n\nApós esse momento, iniciamos o retorno para Barreirinhas.\n\nHorário: saída às 8h30 e retorno por volta das 19h30.\n\nInclui: guia credenciado, motorista, transporte em van ou micro-ônibus, guarda-sol e cadeiras.',
 
-    image: '/images/santo-amaro.webp',
+    image: '/images/santo-amaro-nova.jpg',
 
     imageAlt:
       'Lagoa de águas claras em Santo Amaro do Maranhão',
