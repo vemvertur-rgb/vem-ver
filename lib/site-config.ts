@@ -146,7 +146,7 @@ export const tours: Tour[] = [
       'Conheça Atins e aproveite as belezas dos Lençóis Maranhenses.',
 
     description:
-      'Conheça Atins e descubra as paisagens especiais da região dos Lençóis Maranhenses.',
+      'Uma experiência que combina as paisagens dos Lençóis Maranhenses com o charme e a cultura da vila de Atins.\n\nA saída acontece por volta das 9h em veículo 4x4. Durante o caminho, atravessamos trechos de areia, pequenas áreas alagadas e parte da região dos Lençóis Maranhenses.\n\nAo longo do percurso, fazemos paradas em lagoas para banho, descanso e contemplação da paisagem.\n\nDepois, seguimos até Atins, uma vila conhecida por sua atmosfera tranquila e forte presença da cultura local. No local, haverá tempo livre para caminhar pela vila, almoçar e aproveitar o ambiente antes de iniciar o retorno.\n\nÀ tarde, fazemos o caminho de volta para Barreirinhas, percorrendo novamente os trechos do trajeto com tranquilidade e segurança.',
 
     image: '/images/atins.jpg',
 
@@ -172,7 +172,7 @@ export const tours: Tour[] = [
       'Explore as dunas e lagoas cristalinas dos Lençóis Maranhenses.',
 
     description:
-      'Conheça a Lagoa Azul e aproveite a paisagem de dunas brancas e águas cristalinas.',
+      'Uma das experiências mais tradicionais dos Lençóis Maranhenses.\n\nO passeio começa com o embarque no local de hospedagem, seguindo em veículo 4x4. Após atravessar a ponte sobre o Rio Preguiças, seguimos por aproximadamente 40 minutos por uma trilha cercada pela vegetação até chegar às dunas dos Lençóis Maranhenses.\n\nDurante o percurso, visitamos a Lagoa Azul e outras lagoas da região, com tempo para banho, descanso e contemplação da paisagem.\n\nO guia acompanha o grupo durante todo o passeio, respeitando o ritmo dos visitantes e proporcionando uma experiência tranquila.\n\nHorário: saída às 8h30 e retorno por volta das 12h30.\n\nInclui: guia credenciado, motorista, transporte em veículo 4x4 e cooler para água e outros itens.',
 
     image: '/images/lagoa-azul.webp',
 
@@ -198,7 +198,7 @@ export const tours: Tour[] = [
       'Viva uma experiência especial entre dunas e lagoas dos Lençóis.',
 
     description:
-      'Conheça a Lagoa Bonita e suas belas paisagens entre dunas e lagoas.',
+      'Uma experiência marcada pelas grandes dunas, pela vista panorâmica e pelo pôr do sol nos Lençóis Maranhenses.\n\nO passeio começa com o embarque no local de hospedagem em veículo 4x4. Após atravessar a ponte sobre o Rio Preguiças, seguimos por aproximadamente 1 hora por uma trilha em meio à vegetação até chegar à região das dunas.\n\nPara alcançar o alto das dunas, utilizamos uma escadaria que leva a um dos pontos de observação mais bonitos do circuito.\n\nDo alto, é possível contemplar uma ampla paisagem formada pelas dunas e lagoas, incluindo a Lagoa Bonita. Depois, fazemos uma caminhada pelo circuito, com tempo para conhecer as lagoas e aproveitar o banho.\n\nO pôr do sol é um dos grandes momentos do passeio. Conforme o sol se aproxima do horizonte, a paisagem ganha diferentes tons e o ambiente fica ainda mais tranquilo.\n\nApós o pôr do sol, descemos em direção às lagoas para um último momento de contemplação e banho antes do retorno.\n\nHorário: saída às 13h30 e retorno por volta das 19h30.\n\nInclui: guia credenciado, motorista, transporte em veículo 4x4 e cooler para água e outros itens.',
 
     image: '/images/lagoa-bonita.webp',
 
@@ -224,7 +224,7 @@ export const tours: Tour[] = [
       'Descubra as belezas naturais do percurso de Cardosa.',
 
     description:
-      'Explore o percurso de Cardosa e aproveite as belezas naturais da região.',
+      'Uma experiência mais tranquila, ideal para quem deseja aproveitar a natureza de uma maneira diferente.\n\nO percurso começa seguindo por uma estrada asfaltada até a região da Passagem do Canto. A partir daí, continuamos por uma estrada de piçarra durante aproximadamente 45 minutos até chegar a Cardosa.\n\nNo local, começa a descida pelo Rio Formiga. Durante aproximadamente 1 hora, o visitante percorre o rio utilizando boia e colete salva-vidas.\n\nA descida é tranquila e permite aproveitar o rio, a natureza e o ambiente ao redor sem exigir o mesmo esforço físico dos circuitos pelas dunas.\n\nDepois do percurso pelo rio, há tempo livre para banho, descanso, redes e para aproveitar a atmosfera da comunidade.\n\nHorário: saída às 8h30 e retorno por volta das 12h30.\n\nInclui: guia credenciado, motorista, cooler, boia para a descida do rio e colete salva-vidas.',
 
     image: '/images/cardosa.jpg',
 
@@ -250,7 +250,7 @@ export const tours: Tour[] = [
       'Conheça Santo Amaro e suas paisagens incríveis nos Lençóis Maranhenses.',
 
     description:
-      'Conheça Santo Amaro e suas lagoas de águas claras em meio às paisagens dos Lençóis Maranhenses.',
+      'Uma experiência para conhecer algumas das paisagens e lagoas mais marcantes da região de Santo Amaro.\n\nA saída de Barreirinhas acontece às 8h30. Seguimos aproximadamente 97 km por estrada asfaltada até Santo Amaro.\n\nAo chegar, embarcamos em veículo 4x4 para iniciar o percurso pelas dunas.\n\nDurante o passeio, fazemos paradas em lagoas da região, como Lagoa Andorinha, Lagoa Gaivota e Lagoa Betânia, conforme as condições do período.\n\nO passeio inclui tempo para banho, descanso e contemplação das paisagens.\n\nDepois, há uma pausa para almoço e permanência na região até o pôr do sol.\n\nApós esse momento, iniciamos o retorno para Barreirinhas.\n\nHorário: saída às 8h30 e retorno por volta das 19h30.\n\nInclui: guia credenciado, motorista, transporte em van ou micro-ônibus, guarda-sol e cadeiras.',
 
     image: '/images/santo-amaro.webp',
 
@@ -276,7 +276,7 @@ export const tours: Tour[] = [
       'Explore Caburé e aproveite uma experiência especial na região.',
 
     description:
-      'Conheça Caburé e aproveite as paisagens e experiências da região.',
+      'Um passeio completo que combina rio, manguezais, dunas e mar em uma única experiência.\n\nO percurso é realizado em lancha voadeira e conta com três principais paradas.\n\nVassouras: a aproximadamente 45 minutos de Barreirinhas pelo Rio Preguiças, seguimos em direção à região próxima à sua foz. Em Vassouras, encontramos uma pequena estrutura com barraca de palha, bebidas e artesanatos. O local também é conhecido pela presença dos macacos-prego. Nas proximidades, há uma duna e lagoas que podem estar cheias dependendo do período do ano.\n\nMandacaru: a próxima parada é o povoado de Mandacaru, onde está localizado o farol com aproximadamente 35 metros de altura. Do alto, é possível observar uma ampla paisagem formada pelo Rio Preguiças, manguezais, mar e as dunas dos Lençóis Maranhenses.\n\nCaburé: a última parada é a Praia de Caburé. O local possui uma extensa faixa de areia e mar adequado para banho, além de restaurantes onde é possível encontrar petiscos e bebidas. Também é possível descansar nas redes e aproveitar o ambiente entre o rio e o mar.\n\nO almoço não está incluído no passeio.\n\nHorário: saída às 8h30 e retorno por volta das 15h30.',
 
     image: '/images/cabure.jpg',
 
@@ -302,7 +302,7 @@ export const tours: Tour[] = [
       'Conheça duas belas lagoas e aproveite a paisagem dos Lençóis.',
 
     description:
-      'Explore duas belas lagoas e aproveite as paisagens dos Lençóis Maranhenses.',
+      'Uma opção mais completa para quem deseja explorar diferentes paisagens dos Lençóis Maranhenses em um único dia.\n\nO passeio começa às 8h30 com o embarque no local de hospedagem em veículo 4x4. Após atravessar a ponte sobre o Rio Preguiças, seguimos por aproximadamente 40 minutos até a região de acesso à Lagoa Azul.\n\nA partir do estacionamento, continuamos pelas dunas acompanhados pelo guia, que conduz o grupo pelos melhores pontos e lagoas disponíveis de acordo com as condições do período.\n\nPor volta das 11h30, retornamos ao veículo e seguimos para um restaurante local, onde haverá tempo para almoço e descanso.\n\nPor volta das 15h, seguimos para a região da Lagoa Bonita. O acesso ao circuito é feito por uma bela escadaria de madeira que leva às dunas e às lagoas.\n\nNesse segundo momento do passeio, haverá novamente tempo livre para conhecer as melhores lagoas do período e aproveitar o banho.\n\nApós o pôr do sol, iniciamos o retorno para Barreirinhas.\n\nÉ um roteiro indicado para quem deseja passar mais tempo explorando os Lençóis e conhecer diferentes paisagens em uma única experiência.\n\nHorário: saída às 8h30 e retorno por volta das 19h30.\n\nInclui: guia credenciado, motorista, transporte em veículo 4x4 e cooler para água e outros itens.',
 
     image: '/images/lagoa-azul.webp',
 
@@ -328,7 +328,7 @@ export const tours: Tour[] = [
       'Explore os Pequenos Lençóis em uma experiência de quadriciclo.',
 
     description:
-      'Explore os Pequenos Lençóis em uma experiência de quadriciclo pelas paisagens da região.',
+      'Uma aventura pelos caminhos dos Pequenos Lençóis Maranhenses, passando por trilhas, dunas e lagoas sazonais.\n\nO percurso dura aproximadamente 3h30 e passa por diferentes ambientes da região.\n\nDurante a aventura, visitamos locais como Caeté, Alazão, Parque Eólico e Campos das Dunas, percorrendo trilhas fechadas e trechos com lama e diferentes tipos de terreno.\n\nUm dos principais momentos do passeio é a chegada à Praia de Caburé, onde existe um ponto de apoio para almoço e para aproveitar o local.\n\nPor volta das 14h30, iniciamos o caminho de retorno para Barreirinhas, com chegada prevista para o final da tarde.\n\nCada quadriciclo comporta até 2 pessoas.\n\nHorário: saída às 9h e retorno por volta das 17h.\n\nInclui: guia credenciado, quadriciclo, carro de apoio e cooler.',
 
     image: '/images/quadri.jpg',
 
@@ -360,7 +360,7 @@ export const privateExperiences: Tour[] = [
       'Experiência para admirar o céu noturno nos Lençóis Maranhenses.',
 
     description:
-      'Uma experiência para admirar o céu noturno e contemplar as estrelas nos Lençóis Maranhenses.',
+      'Uma experiência noturna para contemplar o céu dos Lençóis Maranhenses longe das luzes da cidade.\n\nA saída acontece por volta das 20h, seguindo em direção à região do Circuito Lagoa Azul para o luau.\n\nAo nos afastarmos das luzes de Barreirinhas, o céu se torna o grande protagonista da experiência.\n\nO destaque da noite é a observação das estrelas, acompanhada pela paisagem das dunas e lagoas dos Lençóis Maranhenses.\n\nO ambiente proporciona um momento tranquilo para contemplação e conexão com a natureza.\n\nApós a experiência, iniciamos o retorno para Barreirinhas.\n\nHorário: saída por volta das 20h e retorno aproximadamente à 1h.',
 
     image: '/images/por-do-sol.webp',
 
@@ -386,7 +386,7 @@ export const privateExperiences: Tour[] = [
       'Uma experiência especial de café da manhã em meio à paisagem dos Lençóis.',
 
     description:
-      'Uma experiência para tomar café da manhã em meio à paisagem dos Lençóis Maranhenses.',
+      'Uma experiência exclusiva para começar o dia cercado pela paisagem dos Lençóis Maranhenses.\n\nO passeio começa com o transfer até um local especialmente preparado para receber o café da manhã.\n\nA mesa conta com alimentos frescos, como pães, bolos, frutas tropicais, sucos naturais e outras delícias locais.\n\nEnquanto toma o café da manhã, você poderá apreciar a tranquilidade da natureza e a paisagem dos Lençóis Maranhenses.\n\nO nascer do sol é um dos momentos especiais da experiência, com suas cores refletidas nas lagoas cristalinas e nas dunas.\n\nUma experiência pensada para quem busca tranquilidade, exclusividade e contato com a natureza.\n\nHorário: aproximadamente das 3h30 às 6h30.',
 
     image: '/images/dunas.webp',
 
@@ -402,6 +402,7 @@ export const privateExperiences: Tour[] = [
     duration: '',
     schedule: '',
     highlights: [],
+
   },
 ]
 
