@@ -464,10 +464,10 @@ export const testimonials: Testimonial[] = []
 
 export const faq: FaqItem[] = [
   {
-    question: 'Como faço para reservar um passeio?',
-    answer:
-      'Preencha o formulário logo abaixo, com data e as informações necessárias para sua reserva.',
-  },
+  question: 'Como faço para reservar um passeio?',
+  answer:
+    'Preencha o formulário abaixo com seus dados e a data pretendida. Ao enviar, o WhatsApp será aberto com sua solicitação pronta para você conferir e enviar.',
+},
 
   {
     question: 'Como consultar a disponibilidade?',
