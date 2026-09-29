@@ -226,7 +226,7 @@ export const tours: Tour[] = [
     description:
       'Explore o percurso de Cardosa e aproveite as belezas naturais da região.',
 
-    image: '/images/passeio-4x4.webp',
+    image: '/images/cardosa.jpg',
 
     imageAlt:
       'Passeio pelas paisagens naturais da região dos Lençóis Maranhenses',
