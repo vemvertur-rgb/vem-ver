@@ -22,7 +22,7 @@ const fraunces = Fraunces({
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||
-  'https://www.vemver.com.br'
+  'https://vemvertur-rgb.github.io/vem-ver'
 
 const title =
   'VEM VER Turismo | Passeios nos Lençóis Maranhenses'
