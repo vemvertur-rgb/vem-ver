@@ -484,7 +484,7 @@ export const faq: FaqItem[] = [
   {
     question: 'Quais passeios são privativos?',
     answer:
-      'As experiências privativas disponíveis no site são Miradas Estrelas e Café da Manhã nos Lençóis Maranhenses.',
+      'As experiências privativas disponíveis no site são Mirar das Estrelas e Café da Manhã nos Lençóis Maranhenses.',
   },
 
   {
