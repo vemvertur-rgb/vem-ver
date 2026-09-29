@@ -466,7 +466,7 @@ export const faq: FaqItem[] = [
   {
     question: 'Como faço para reservar um passeio?',
     answer:
-      'Entre em contato com a Vem Ver pelo WhatsApp para consultar o passeio, a data e as informações necessárias para sua reserva.',
+      'Preencha o formulário logo abaixo, com data e as informações necessárias para sua reserva.',
   },
 
   {
@@ -484,7 +484,7 @@ export const faq: FaqItem[] = [
   {
     question: 'Quais passeios são privativos?',
     answer:
-      'As experiências privativas disponíveis no site são Mirar das Estrelas e Café da Manhã nos Lençóis Maranhenses.',
+      'As experiências privativas disponíveis no site são Mirar das Estrelas, Café da Manhã nos Lençóis Maranhenses ou qualquer um dos passeios para você e/ou seu grupo.',
   },
 
   {
@@ -508,7 +508,19 @@ export const faq: FaqItem[] = [
   {
     question: 'Como funciona o cancelamento?',
     answer:
-      'As condições de cancelamento são informadas no momento da consulta. Fale com a Vem Ver pelo WhatsApp.',
+      'Cancelamento em até 7 dias após a contratação (direito de arrependimento):
+ ➜ Reembolso integral, desde que o serviço ainda não tenha sido realizado.
+Mais de 30 dias antes do primeiro passeio:
+ ➜ Reembolso de 80% do valor pago.
+  
+Entre 29 e 15 dias antes do passeio:
+ ➜ Reembolso de 70% do valor pago.
+
+Entre 14 e 7 dias antes do passeio:
+ ➜ Reembolso de 50% do valor pago.
+
+Com menos de 7 dias de antecedência ou não comparecimento (no-show):
+ ➜ Não há reembolso..',
   },
 
   {
