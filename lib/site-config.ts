@@ -61,7 +61,7 @@ export const siteConfig = {
   instagramHandle: '@vemvertur',
   instagramUrl: 'https://www.instagram.com/vemvertur',
 
-  email: '',
+  email: 'vemvertur@gmail.com',
 
   fallbackInfo: 'Consulte informações pelo WhatsApp.',
   fallbackPrice: 'Consulte valores e disponibilidade',
@@ -478,7 +478,7 @@ export const faq: FaqItem[] = [
   {
     question: 'Os valores apresentados são por pessoa?',
     answer:
-      'Os passeios compartilhados são apresentados com valor por pessoa. As experiências privativas informam o valor para até 9 pessoas.',
+      'Sim, os passeios compartilhados são apresentados com valor por pessoa. As experiências privativas informam o valor para até 9 pessoas.',
   },
 
   {
