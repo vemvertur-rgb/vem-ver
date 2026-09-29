@@ -24,7 +24,7 @@ export function TourCard({ tour }: { tour: Tour }) {
         <h3 className="font-serif text-2xl font-semibold">{tour.name}</h3>
 
         <p className="leading-relaxed text-muted-foreground">
-          {tour.type === 'privativo' ? tour.description : tour.shortDescription}
+          {tour.shortDescription}
         </p>
 
         <div className="flex flex-col gap-1 pt-1">
