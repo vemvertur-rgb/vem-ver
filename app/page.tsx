@@ -11,22 +11,31 @@ import { Contact } from '@/components/contact'
 export default function HomePage() {
   return (
     <>
+      {/* Apresentação principal */}
       <Hero />
 
+      {/* Introdução e diferenciais */}
       <Intro />
 
+      {/* Passeios e experiências privativas */}
       <Tours />
 
-      <About />
-
+      {/* Como funciona a reserva */}
       <HowItWorks />
 
+      {/* Sobre a Vem Ver */}
+      <About />
+
+      {/* Galeria de imagens */}
       <Gallery />
 
+      {/* Depoimentos — aparece quando houver avaliações */}
       <Testimonials />
 
+      {/* Perguntas frequentes */}
       <Faq />
 
+      {/* Formulário e canais de contato */}
       <Contact />
     </>
   )
