@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { MapPin } from 'lucide-react'
+import { MapPin, Sparkles } from 'lucide-react'
 import { siteConfig } from '@/lib/site-config'
 import { asset, whatsappLink } from '@/lib/links'
 import { CtaLink } from './cta-link'
@@ -7,53 +7,101 @@ import { WhatsAppIcon } from './brand-icons'
 
 export function Hero() {
   const { hero } = siteConfig
+
   return (
-    <section id="inicio" aria-labelledby="hero-title" className="relative isolate overflow-hidden">
+    <section
+      id="inicio"
+      aria-labelledby="hero-title"
+      className="relative isolate overflow-hidden"
+    >
+      {/* Imagem de fundo */}
       <Image
         src={asset(hero.image)}
         alt={hero.imageAlt}
         fill
         priority
         sizes="100vw"
-        className="-z-10 object-cover"
+        className="-z-20 object-cover"
       />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[oklch(0.2_0.05_240/0.35)] via-[oklch(0.2_0.05_240/0.45)] to-[oklch(0.2_0.05_240/0.75)]" />
 
-      <div className="mx-auto flex min-h-[85svh] max-w-6xl flex-col justify-end gap-8 px-4 pb-16 pt-28 md:min-h-[88vh] md:flex-row md:items-center md:justify-between md:gap-10 md:px-6 md:pb-24 md:pt-32">
-        <div className="order-2 flex flex-col md:order-1 md:flex-1">
-        <p className="mb-4 inline-flex w-fit items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-sm font-medium text-white backdrop-blur-sm">
-          <MapPin className="size-4" aria-hidden="true" />
-          {siteConfig.location} · Passeios & Pousada
-        </p>
-        <h1
-          id="hero-title"
-          className="max-w-3xl font-serif text-4xl font-semibold leading-[1.1] text-white text-balance sm:text-5xl md:text-6xl lg:text-7xl"
-        >
-          {hero.title}
-        </h1>
-        <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/90 text-pretty md:text-xl">
-          {hero.subtitle}
-        </p>
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <CtaLink href="/#passeios" variant="primary" className="bg-white text-primary hover:bg-white/90">
-            Conhecer os passeios
-          </CtaLink>
-          <CtaLink href={whatsappLink()} external variant="whatsapp">
-            <WhatsAppIcon />
-            Falar no WhatsApp
-          </CtaLink>
-        </div>
+      {/* Camada de escurecimento */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/30 via-black/35 to-black/75" />
+
+      {/* Conteúdo */}
+      <div className="mx-auto flex min-h-[90svh] max-w-7xl flex-col justify-center gap-10 px-4 pb-16 pt-28 md:min-h-[88vh] md:flex-row md:items-center md:justify-between md:gap-12 md:px-6 md:pb-20 md:pt-32">
+
+        {/* Texto */}
+        <div className="order-2 flex max-w-3xl flex-col md:order-1 md:flex-1">
+
+          {/* Localização */}
+          <div className="mb-5 flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-md">
+              <MapPin
+                className="size-4"
+                aria-hidden="true"
+              />
+              {siteConfig.location}
+            </span>
+
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-md">
+              <Sparkles
+                className="size-4"
+                aria-hidden="true"
+              />
+              Experiências inesquecíveis
+            </span>
+          </div>
+
+          {/* Título */}
+          <h1
+            id="hero-title"
+            className="max-w-3xl font-serif text-4xl font-semibold leading-[1.05] text-white text-balance sm:text-5xl md:text-6xl lg:text-7xl"
+          >
+            {hero.title}
+          </h1>
+
+          {/* Subtítulo */}
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/90 text-pretty md:text-xl">
+            {hero.subtitle}
+          </p>
+
+          {/* Botões */}
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <CtaLink
+              href="/#passeios"
+              variant="primary"
+              className="bg-white text-primary shadow-lg hover:bg-white/90"
+            >
+              Conhecer os passeios
+            </CtaLink>
+
+            <CtaLink
+              href={whatsappLink()}
+              external
+              variant="whatsapp"
+            >
+              <WhatsAppIcon />
+              Falar no WhatsApp
+            </CtaLink>
+          </div>
+
+          {/* Informação de confiança */}
+          <p className="mt-6 text-sm text-white/75">
+            Consulte disponibilidade, valores e detalhes do seu passeio
+            diretamente com a Vem Ver.
+          </p>
         </div>
 
+        {/* Logo */}
         <div className="order-1 flex justify-center md:order-2 md:shrink-0">
           <Image
             src={asset('/images/logo-vemver.png')}
-            alt="Logo VEM VER Turismo"
+            alt="Logo Vem Ver Turismo"
             width={1254}
             height={1254}
             priority
             sizes="(min-width: 1024px) 420px, (min-width: 768px) 320px, 180px"
-            className="size-44 drop-shadow-[0_12px_32px_rgba(0,0,0,0.45)] md:size-80 lg:size-[420px]"
+            className="size-44 drop-shadow-[0_12px_32px_rgba(0,0,0,0.5)] md:size-80 lg:size-[420px]"
           />
         </div>
       </div>
