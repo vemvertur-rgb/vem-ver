@@ -1,4 +1,4 @@
-import { Instagram, Mail, MapPin } from 'lucide-react'
+import { Mail, MapPin } from 'lucide-react'
 import Link from 'next/link'
 import { siteConfig, navLinks } from '@/lib/site-config'
 import { InstagramIcon, WhatsAppIcon } from './brand-icons'
@@ -7,10 +7,7 @@ import { whatsappLink } from '@/lib/links'
 export function Footer() {
   return (
     <footer className="bg-primary text-primary-foreground">
-
-      {/* Conteúdo principal */}
       <div className="mx-auto max-w-6xl px-4 py-14 md:px-6 md:py-16">
-
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr]">
 
           {/* Marca */}
@@ -86,6 +83,7 @@ export function Footer() {
 
             <div className="mt-4 space-y-4">
 
+              {/* WhatsApp */}
               <a
                 href={whatsappLink()}
                 target="_blank"
@@ -96,6 +94,7 @@ export function Footer() {
                 WhatsApp
               </a>
 
+              {/* Instagram */}
               <a
                 href={siteConfig.instagramUrl}
                 target="_blank"
@@ -106,6 +105,7 @@ export function Footer() {
                 {siteConfig.instagramHandle}
               </a>
 
+              {/* E-mail */}
               <a
                 href={`mailto:${siteConfig.email}`}
                 className="flex items-center gap-3 text-sm text-primary-foreground/70 transition-colors hover:text-white"
@@ -114,6 +114,7 @@ export function Footer() {
                   className="size-5"
                   aria-hidden="true"
                 />
+
                 <span className="break-all">
                   {siteConfig.email}
                 </span>
@@ -131,10 +132,7 @@ export function Footer() {
                 aria-label="Instagram da Vem Ver"
                 className="flex size-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
               >
-                <Instagram
-                  className="size-5"
-                  aria-hidden="true"
-                />
+                <InstagramIcon />
               </a>
 
               <a
@@ -152,7 +150,7 @@ export function Footer() {
 
         </div>
 
-        {/* Separador */}
+        {/* Rodapé inferior */}
         <div className="mt-12 border-t border-primary-foreground/10 pt-6">
 
           <div className="flex flex-col gap-3 text-sm text-primary-foreground/60 md:flex-row md:items-center md:justify-between">
@@ -168,7 +166,6 @@ export function Footer() {
           </div>
 
         </div>
-
       </div>
     </footer>
   )
