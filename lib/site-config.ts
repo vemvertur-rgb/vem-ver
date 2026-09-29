@@ -488,10 +488,10 @@ export const faq: FaqItem[] = [
   },
 
   {
-    question: 'Quantas pessoas podem participar dos passeios privativos?',
-    answer:
-      'As experiências privativas apresentadas no site são para até 9 pessoas.',
-  },
+  question: 'Quais passeios são privativos?',
+  answer:
+    'As experiências privativas disponíveis no site são Mirar das Estrelas e Café da Manhã nos Lençóis Maranhenses.',
+},
 
   {
     question: 'Como funciona o pagamento?',
