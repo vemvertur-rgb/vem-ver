@@ -1,5 +1,10 @@
 import Image from 'next/image'
-import { MapPin, MessageCircle, ShieldCheck, Sparkles } from 'lucide-react'
+import {
+  MapPin,
+  MessageCircle,
+  ShieldCheck,
+  Sparkles,
+} from 'lucide-react'
 import { siteConfig } from '@/lib/site-config'
 import { asset, whatsappLink } from '@/lib/links'
 import { CtaLink } from './cta-link'
@@ -38,7 +43,9 @@ export function About() {
       className="bg-primary px-4 py-20 text-primary-foreground md:px-6 md:py-28"
     >
       <div className="mx-auto max-w-6xl">
+
         <div className="grid items-center gap-10 md:grid-cols-2 md:gap-16">
+
           {/* Imagem */}
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl md:aspect-[4/5]">
             <Image
@@ -52,31 +59,32 @@ export function About() {
           </div>
 
           {/* Conteúdo */}
-          <div className="flex flex-col gap-5">
-            <p className="text-sm font-semibold uppercase tracking-widest text-sand-deep">
-              Por que escolher a Vem Ver?
+          <div className="flex flex-col">
+
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sand-deep">
+              Sobre a Vem Ver
             </p>
 
             <h2
               id="sobre-title"
-              className="font-serif text-3xl font-semibold leading-tight text-balance md:text-4xl"
+              className="mt-3 font-serif text-3xl font-semibold leading-tight text-balance md:text-4xl"
             >
               {about.title}
             </h2>
 
-            <p className="text-lg leading-relaxed text-primary-foreground/90 text-pretty">
+            <p className="mt-5 text-lg leading-relaxed text-primary-foreground/90 text-pretty">
               {about.text}
             </p>
 
             {/* Diferenciais */}
-            <div className="mt-3 grid gap-4 sm:grid-cols-2">
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
               {differentials.map((item) => {
                 const Icon = item.icon
 
                 return (
                   <div
                     key={item.title}
-                    className="rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-4"
+                    className="rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-4 transition-colors duration-300 hover:bg-primary-foreground/10"
                   >
                     <div className="mb-3 flex size-10 items-center justify-center rounded-xl bg-primary-foreground/10">
                       <Icon
@@ -98,18 +106,20 @@ export function About() {
             </div>
 
             {/* WhatsApp */}
-            <div className="pt-2">
+            <div className="mt-8">
               <CtaLink
                 href={whatsappLink()}
                 external
                 variant="whatsapp"
               >
                 <WhatsAppIcon />
-                Falar com a VEM VER Turismo
+                Falar com a Vem Ver
               </CtaLink>
             </div>
+
           </div>
         </div>
+
       </div>
     </section>
   )
