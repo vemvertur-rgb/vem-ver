@@ -362,7 +362,7 @@ export const privateExperiences: Tour[] = [
     description:
       'Uma experiência noturna para contemplar o céu dos Lençóis Maranhenses longe das luzes da cidade.\n\nA saída acontece por volta das 20h, seguindo em direção à região do Circuito Lagoa Azul para o luau.\n\nAo nos afastarmos das luzes de Barreirinhas, o céu se torna o grande protagonista da experiência.\n\nO destaque da noite é a observação das estrelas, acompanhada pela paisagem das dunas e lagoas dos Lençóis Maranhenses.\n\nO ambiente proporciona um momento tranquilo para contemplação e conexão com a natureza.\n\nApós a experiência, iniciamos o retorno para Barreirinhas.\n\nHorário: saída por volta das 20h e retorno aproximadamente à 1h.',
 
-    image: '/images/mirar-das-estrelas-nova(2).jpg',
+    image: '/images/mirar-das-estrelas-nova (2).jpg',
 
     imageAlt:
       'Céu sobre as dunas dos Lençóis Maranhenses',
