@@ -426,22 +426,22 @@ export const gallery: GalleryImage[] = [
     label: 'Lagoas',
   },
   {
-    src: '/images/atins.webp',
+    src: '/images/prego-nova.jpg',
     alt: 'Paisagem de Atins',
-    label: 'Atins',
+    label: 'Fauna',
   },
   {
-    src: '/images/santo-amaro.webp',
+    src: '/images/santo-amaro-nova.jpg',
     alt: 'Lagoa em Santo Amaro do Maranhão',
     label: 'Santo Amaro',
   },
   {
-    src: '/images/barreirinhas.webp',
+    src: '/images/barreirinhas-nova.jpg',
     alt: 'Rio Preguiças em Barreirinhas',
     label: 'Barreirinhas',
   },
   {
-    src: '/images/passeio-4x4.webp',
+    src: '/images/passeio-4x4-nova.jpg',
     alt: 'Passeio pelas trilhas dos Lençóis Maranhenses',
     label: 'Passeios',
   },
