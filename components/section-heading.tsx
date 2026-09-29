@@ -17,22 +17,31 @@ export function SectionHeading({
   align = 'center',
   className,
 }: SectionHeadingProps) {
+  const isCentered = align === 'center'
+
   return (
     <div
       className={cn(
-        'flex max-w-2xl flex-col gap-3',
-        align === 'center' && 'mx-auto items-center text-center',
+        'flex max-w-3xl flex-col gap-3',
+        isCentered && 'mx-auto items-center text-center',
         className,
       )}
     >
-      <p className="text-sm font-semibold uppercase tracking-widest text-accent-foreground">
+      <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
         {eyebrow}
       </p>
-      <h2 id={id} className="font-serif text-3xl font-semibold text-balance leading-tight md:text-4xl">
+
+      <h2
+        id={id}
+        className="font-serif text-3xl font-semibold leading-tight text-balance md:text-4xl lg:text-5xl"
+      >
         {title}
       </h2>
+
       {description && (
-        <p className="text-lg leading-relaxed text-muted-foreground text-pretty">{description}</p>
+        <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground text-pretty md:text-xl">
+          {description}
+        </p>
       )}
     </div>
   )
