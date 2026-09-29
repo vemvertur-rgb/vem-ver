@@ -5,6 +5,9 @@ import { TourCard } from './tour-card'
 export function Tours() {
   return (
     <>
+      {/* =====================================================
+          PASSEIOS
+      ===================================================== */}
       <section
         id="passeios"
         aria-labelledby="passeios-title"
@@ -13,9 +16,9 @@ export function Tours() {
         <div className="mx-auto max-w-6xl">
           <SectionHeading
             id="passeios-title"
-            eyebrow="Passeios"
+            eyebrow="Nossos passeios"
             title="Escolha sua próxima aventura"
-            description="Conheça algumas das experiências nos Lençóis Maranhenses e fale com a VEM VER Turismo para consultar valores e disponibilidade."
+            description="Explore dunas, lagoas, rios e paisagens incríveis dos Lençóis Maranhenses. Escolha seu passeio e fale com a Vem Ver para consultar disponibilidade."
           />
 
           <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -28,6 +31,9 @@ export function Tours() {
         </div>
       </section>
 
+      {/* =====================================================
+          EXPERIÊNCIAS PRIVATIVAS
+      ===================================================== */}
       <section
         id="privativos"
         aria-labelledby="privativos-title"
@@ -37,11 +43,11 @@ export function Tours() {
           <SectionHeading
             id="privativos-title"
             eyebrow="Experiências privativas"
-            title="Momentos especiais nos Lençóis"
-            description="Viva experiências exclusivas e aproveite os Lençóis Maranhenses de uma forma ainda mais especial."
+            title="Viva os Lençóis do seu jeito"
+            description="Experiências pensadas para quem busca mais exclusividade, tranquilidade e momentos especiais durante a viagem."
           />
 
-          <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
+          <ul className="mt-12 grid gap-6 md:grid-cols-2">
             {privateExperiences.map((tour) => (
               <li key={tour.slug} className="flex">
                 <TourCard tour={tour} />
