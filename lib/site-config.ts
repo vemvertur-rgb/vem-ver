@@ -512,12 +512,12 @@ export const faq: FaqItem[] = [
  ➜ Reembolso integral, desde que o serviço ainda não tenha sido realizado.
 Mais de 30 dias antes do primeiro passeio:
  ➜ Reembolso de 80% do valor pago.
-  Entre 29 e 15 dias antes do passeio:
+Entre 29 e 15 dias antes do passeio:
  ➜ Reembolso de 70% do valor pago.
 Entre 14 e 7 dias antes do passeio:
  ➜ Reembolso de 50% do valor pago.
 Com menos de 7 dias de antecedência ou não comparecimento (no-show):
- ➜ Não há reembolso..',
+ ➜ Não há reembolso.',
   },
 
   {
