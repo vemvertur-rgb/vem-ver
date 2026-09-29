@@ -1,75 +1,189 @@
-import { Mail, MapPin } from 'lucide-react'
+import { Instagram, Mail, MapPin, MessageCircle } from 'lucide-react'
 import { siteConfig } from '@/lib/site-config'
 import { whatsappLink } from '@/lib/links'
-import { InstagramIcon, WhatsAppIcon } from './brand-icons'
 import { ContactForm } from './contact-form'
+import { WhatsAppIcon } from './brand-icons'
 
 export function Contact() {
-  const channels = [
-    {
-      icon: WhatsAppIcon,
-      label: 'WhatsApp',
-      value: 'Fale com a gente',
-      href: whatsappLink(),
-      external: true,
-    },
-    {
-      icon: InstagramIcon,
-      label: 'Instagram',
-      value: siteConfig.instagramHandle,
-      href: siteConfig.instagramUrl,
-      external: true,
-    },
-    {
-      icon: Mail,
-      label: 'E-mail',
-      value: siteConfig.email,
-      href: `mailto:${siteConfig.email}`,
-      external: false,
-    },
-  ]
-
   return (
-    <section id="contato" aria-labelledby="contato-title" className="bg-sand px-4 py-20 md:px-6 md:py-28">
-      <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
-        <div className="flex flex-col gap-6">
-          <p className="text-sm font-semibold uppercase tracking-widest text-accent-foreground">Contato</p>
-          <h2 id="contato-title" className="font-serif text-3xl font-semibold leading-tight text-balance md:text-4xl">
-            Pronto para conhecer os Lençóis Maranhenses?
-          </h2>
-          <p className="text-lg leading-relaxed text-muted-foreground">
-            Fale com a VEM VER Turismo e consulte nossos passeios, valores e disponibilidade.
+    <section
+      id="contato"
+      aria-labelledby="contato-title"
+      className="bg-sand px-4 py-20 md:px-6 md:py-28"
+    >
+      <div className="mx-auto max-w-6xl">
+
+        {/* Título */}
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
+            Fale com a Vem Ver
           </p>
-          <ul className="flex flex-col gap-3">
-            {channels.map(({ icon: Icon, label, value, href, external }) => (
-              <li key={label}>
-                <a
-                  href={href}
-                  {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                  className="flex min-h-16 items-center gap-4 rounded-2xl border border-border bg-card px-4 py-3 transition-colors hover:border-primary/40"
-                >
-                  <span className="flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                    <Icon className="size-5" aria-hidden="true" />
-                  </span>
-                  <span className="flex flex-col">
-                    <span className="text-sm text-muted-foreground">{label}</span>
-                    <span className="font-semibold break-all">{value}</span>
-                  </span>
-                </a>
-              </li>
-            ))}
-            <li className="flex min-h-16 items-center gap-4 px-4 py-3">
-              <span className="flex size-11 items-center justify-center rounded-xl bg-accent text-accent-foreground">
-                <MapPin className="size-5" aria-hidden="true" />
-              </span>
-              <span className="flex flex-col">
-                <span className="text-sm text-muted-foreground">Localização</span>
-                <span className="font-semibold">{siteConfig.location}</span>
-              </span>
-            </li>
-          </ul>
+
+          <h2
+            id="contato-title"
+            className="mt-3 font-serif text-3xl font-semibold leading-tight text-balance md:text-4xl"
+          >
+            Vamos planejar sua experiência?
+          </h2>
+
+          <p className="mt-5 text-lg leading-relaxed text-muted-foreground text-pretty">
+            Escolha seu passeio, informe a data desejada e entre em contato
+            com a Vem Ver para consultar disponibilidade e detalhes.
+          </p>
         </div>
-        <ContactForm />
+
+        {/* Conteúdo */}
+        <div className="mt-12 grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+
+          {/* Informações */}
+          <div className="rounded-3xl bg-primary p-7 text-primary-foreground shadow-sm md:p-8">
+
+            <h3 className="font-serif text-2xl font-semibold">
+              Entre em contato
+            </h3>
+
+            <p className="mt-3 leading-relaxed text-primary-foreground/80">
+              Estamos à disposição para ajudar você a encontrar o passeio
+              ideal para sua viagem aos Lençóis Maranhenses.
+            </p>
+
+            <div className="mt-8 space-y-5">
+
+              {/* WhatsApp */}
+              <a
+                href={whatsappLink()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-start gap-4 rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-4 transition-colors hover:bg-primary-foreground/10"
+              >
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary-foreground/10">
+                  <WhatsAppIcon />
+                </div>
+
+                <div>
+                  <p className="font-semibold">
+                    WhatsApp
+                  </p>
+
+                  <p className="mt-1 text-sm text-primary-foreground/70">
+                    Fale diretamente com a Vem Ver
+                  </p>
+                </div>
+              </a>
+
+              {/* Instagram */}
+              <a
+                href={siteConfig.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-4 rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-4 transition-colors hover:bg-primary-foreground/10"
+              >
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary-foreground/10">
+                  <Instagram
+                    className="size-5"
+                    aria-hidden="true"
+                  />
+                </div>
+
+                <div>
+                  <p className="font-semibold">
+                    Instagram
+                  </p>
+
+                  <p className="mt-1 text-sm text-primary-foreground/70">
+                    {siteConfig.instagramHandle}
+                  </p>
+                </div>
+              </a>
+
+              {/* E-mail */}
+              <a
+                href={`mailto:${siteConfig.email}`}
+                className="flex items-start gap-4 rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-4 transition-colors hover:bg-primary-foreground/10"
+              >
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary-foreground/10">
+                  <Mail
+                    className="size-5"
+                    aria-hidden="true"
+                  />
+                </div>
+
+                <div>
+                  <p className="font-semibold">
+                    E-mail
+                  </p>
+
+                  <p className="mt-1 break-all text-sm text-primary-foreground/70">
+                    {siteConfig.email}
+                  </p>
+                </div>
+              </a>
+
+              {/* Localização */}
+              <div className="flex items-start gap-4 rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-4">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary-foreground/10">
+                  <MapPin
+                    className="size-5"
+                    aria-hidden="true"
+                  />
+                </div>
+
+                <div>
+                  <p className="font-semibold">
+                    Destino
+                  </p>
+
+                  <p className="mt-1 text-sm text-primary-foreground/70">
+                    {siteConfig.location}
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Botão WhatsApp */}
+            <div className="mt-8">
+              <a
+                href={whatsappLink()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 font-semibold text-primary transition-colors hover:bg-white/90"
+              >
+                <WhatsAppIcon />
+                Falar pelo WhatsApp
+              </a>
+            </div>
+
+          </div>
+
+          {/* Formulário */}
+          <div className="rounded-3xl border border-border bg-card p-6 shadow-sm md:p-8">
+
+            <div className="mb-6">
+              <div className="flex items-center gap-3">
+                <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <MessageCircle
+                    className="size-5"
+                    aria-hidden="true"
+                  />
+                </div>
+
+                <h3 className="font-serif text-2xl font-semibold">
+                  Solicite informações
+                </h3>
+              </div>
+
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                Preencha seus dados e envie sua solicitação para consultar
+                disponibilidade e informações do passeio.
+              </p>
+            </div>
+
+            <ContactForm />
+
+          </div>
+
+        </div>
       </div>
     </section>
   )
