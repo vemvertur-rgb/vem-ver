@@ -171,9 +171,9 @@ export function Contact() {
               </div>
 
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                Preencha seus dados e envie sua solicitação para consultar
-                disponibilidade e informações do passeio.
-              </p>
+  Preencha seus dados. Ao enviar, o WhatsApp será aberto com sua
+  solicitação pronta para você conferir e enviar.
+</p>
             </div>
 
             <ContactForm />
