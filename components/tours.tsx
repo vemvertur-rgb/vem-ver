@@ -14,6 +14,7 @@ export function Tours() {
         className="bg-sand px-4 py-20 md:px-6 md:py-28"
       >
         <div className="mx-auto max-w-6xl">
+
           <SectionHeading
             id="passeios-title"
             eyebrow="Nossos passeios"
@@ -23,11 +24,15 @@ export function Tours() {
 
           <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {tours.map((tour) => (
-              <li key={tour.slug} className="flex">
+              <li
+                key={tour.slug}
+                className="flex"
+              >
                 <TourCard tour={tour} />
               </li>
             ))}
           </ul>
+
         </div>
       </section>
 
@@ -40,6 +45,7 @@ export function Tours() {
         className="bg-background px-4 py-20 md:px-6 md:py-28"
       >
         <div className="mx-auto max-w-6xl">
+
           <SectionHeading
             id="privativos-title"
             eyebrow="Experiências privativas"
@@ -49,11 +55,15 @@ export function Tours() {
 
           <ul className="mt-12 grid gap-6 md:grid-cols-2">
             {privateExperiences.map((tour) => (
-              <li key={tour.slug} className="flex">
+              <li
+                key={tour.slug}
+                className="flex"
+              >
                 <TourCard tour={tour} />
               </li>
             ))}
           </ul>
+
         </div>
       </section>
     </>
