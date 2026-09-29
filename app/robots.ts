@@ -1,10 +1,11 @@
+```ts
 import type { MetadataRoute } from 'next'
 
 export const dynamic = 'force-static'
 
 const base = (
   process.env.NEXT_PUBLIC_SITE_URL ||
-  'https://vemvertur-rgb.github.io/vem-ver'
+  'https://www.vemver.com.br'
 ).replace(/\/$/, '')
 
 export default function robots(): MetadataRoute.Robots {
@@ -16,3 +17,4 @@ export default function robots(): MetadataRoute.Robots {
     sitemap: `${base}/sitemap.xml`,
   }
 }
+```
