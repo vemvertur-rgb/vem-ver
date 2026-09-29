@@ -159,7 +159,7 @@ export const tours: Tour[] = [
 
     type: 'compartilhado',
 
-    duration: '',
+    duration: 'Aproximadamente 9 horas',
     schedule: '',
     highlights: [],
   },
@@ -185,7 +185,7 @@ export const tours: Tour[] = [
 
     type: 'compartilhado',
 
-    duration: '',
+    duration: 'Aproximadamente 4 horas',
     schedule: '',
     highlights: [],
   },
@@ -211,7 +211,7 @@ export const tours: Tour[] = [
 
     type: 'compartilhado',
 
-    duration: '',
+    duration: 'Aproximadamente 6 horas',
     schedule: '',
     highlights: [],
   },
@@ -237,7 +237,7 @@ export const tours: Tour[] = [
 
     type: 'compartilhado',
 
-    duration: '',
+    duration: 'Aproximadamente 4 horas',
     schedule: '',
     highlights: [],
   },
@@ -263,7 +263,7 @@ export const tours: Tour[] = [
 
     type: 'compartilhado',
 
-    duration: '',
+    duration: 'Aproximadamente 11 horas',
     schedule: '',
     highlights: [],
   },
@@ -289,7 +289,7 @@ export const tours: Tour[] = [
 
     type: 'compartilhado',
 
-    duration: '',
+    duration: 'Aproximadamente 7 horas',
     schedule: '',
     highlights: [],
   },
@@ -315,7 +315,7 @@ export const tours: Tour[] = [
 
     type: 'compartilhado',
 
-    duration: '',
+    duration: 'Aproximadamente 11 horas',
     schedule: '',
     highlights: [],
   },
@@ -341,7 +341,7 @@ export const tours: Tour[] = [
 
     type: 'compartilhado',
 
-    duration: '',
+    duration: 'Aproximadamente 8 horas',
     schedule: '',
     highlights: [],
   },
@@ -373,7 +373,7 @@ export const privateExperiences: Tour[] = [
 
     type: 'privativo',
 
-    duration: '',
+    duration: 'Aproximadamente 5 horas',
     schedule: '',
     highlights: [],
   },
@@ -399,10 +399,9 @@ export const privateExperiences: Tour[] = [
 
     type: 'privativo',
 
-    duration: '',
+    duration: 'Aproximadamente 3 horas',
     schedule: '',
     highlights: [],
-
   },
 ]
 
