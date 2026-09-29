@@ -19,13 +19,36 @@ export function TourCard({ tour }: { tour: Tour }) {
           className="object-cover"
         />
       </div>
+
       <div className="flex flex-1 flex-col gap-3 p-6">
         <h3 className="font-serif text-2xl font-semibold">{tour.name}</h3>
-        <p className="leading-relaxed text-muted-foreground">{tour.shortDescription}</p>
-        <p className="flex items-center gap-2 text-sm font-medium text-primary">
-          <Info className="size-4 shrink-0" aria-hidden="true" />
-          {tour.price || siteConfig.fallbackPrice}
+
+        <p className="leading-relaxed text-muted-foreground">
+          {tour.shortDescription}
         </p>
+
+        <div className="flex flex-col gap-1 pt-1">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Info className="size-4 shrink-0" aria-hidden="true" />
+
+            {tour.originalPrice && (
+              <span className="line-through">
+                {tour.originalPrice}
+              </span>
+            )}
+          </div>
+
+          <p className="text-2xl font-bold text-primary">
+            {tour.price || siteConfig.fallbackPrice}
+          </p>
+
+          {tour.originalPrice && (
+            <span className="text-sm font-medium text-destructive">
+              Oferta especial
+            </span>
+          )}
+        </div>
+
         <div className="mt-auto flex flex-col gap-2 pt-3">
           <a
             href={whatsappLink(tourWhatsappMessage(tour.name))}
@@ -36,6 +59,7 @@ export function TourCard({ tour }: { tour: Tour }) {
             <WhatsAppIcon />
             Consultar pelo WhatsApp
           </a>
+
           <Link
             href={`/passeios/${tour.slug}/`}
             className={ctaClass('outline', 'w-full')}
