@@ -426,7 +426,7 @@ export const gallery: GalleryImage[] = [
     label: 'Lagoas',
   },
   {
-    src: '/images/prego-nova.jpg',
+    src: '/images/macaco-nova.jpg',
     alt: 'Paisagem de Atins',
     label: 'Fauna',
   },
