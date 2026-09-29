@@ -39,32 +39,54 @@
 
 :root {
   color-scheme: light;
+
   /* Branco */
-  --background: oklch(0.995 0.003 85);
-  --foreground: oklch(0.26 0.04 245);
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.3 0.08 255);
+
+  /* Cards */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.26 0.04 245);
+  --card-foreground: oklch(0.3 0.08 255);
+
+  /* Pop-ups */
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.26 0.04 245);
-  /* Azul do céu e das lagoas */
-  --primary: oklch(0.5 0.12 232);
-  --primary-foreground: oklch(0.99 0 0);
-  /* Areia das dunas */
-  --sand: oklch(0.965 0.022 85);
-  --sand-deep: oklch(0.9 0.045 82);
-  --secondary: oklch(0.965 0.022 85);
-  --secondary-foreground: oklch(0.3 0.04 245);
-  --muted: oklch(0.965 0.022 85);
-  --muted-foreground: oklch(0.47 0.03 245);
-  /* Verde natural (detalhes) */
-  --accent: oklch(0.93 0.04 165);
-  --accent-foreground: oklch(0.4 0.09 165);
-  --whatsapp: oklch(0.5 0.12 155);
-  --whatsapp-foreground: oklch(0.99 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.9 0.02 85);
-  --input: oklch(0.87 0.02 85);
-  --ring: oklch(0.5 0.12 232);
+  --popover-foreground: oklch(0.3 0.08 255);
+
+  /* Azul royal - cor principal */
+  --primary: oklch(0.48 0.22 258);
+  --primary-foreground: oklch(1 0 0);
+
+  /* Azul claro - fundos e áreas suaves */
+  --sand: oklch(0.95 0.035 250);
+  --sand-deep: oklch(0.88 0.065 250);
+
+  /* Elementos secundários */
+  --secondary: oklch(0.95 0.035 250);
+  --secondary-foreground: oklch(0.3 0.08 255);
+
+  /* Áreas discretas */
+  --muted: oklch(0.95 0.035 250);
+  --muted-foreground: oklch(0.48 0.07 255);
+
+  /* Amarelo forte da logo */
+  --accent: oklch(0.87 0.18 92);
+  --accent-foreground: oklch(0.25 0.07 255);
+
+  /* WhatsApp */
+  --whatsapp: oklch(0.58 0.17 150);
+  --whatsapp-foreground: oklch(1 0 0);
+
+  /* Vermelho forte para destaques */
+  --destructive: oklch(0.55 0.22 28);
+
+  /* Bordas */
+  --border: oklch(0.88 0.04 250);
+  --input: oklch(0.85 0.04 250);
+
+  /* Foco */
+  --ring: oklch(0.48 0.22 258);
+
+  /* Cantos */
   --radius: 0.75rem;
 }
 
@@ -72,13 +94,16 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
   }
+
   body {
     @apply bg-background text-foreground font-sans;
   }
+
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
