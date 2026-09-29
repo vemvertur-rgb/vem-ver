@@ -160,7 +160,7 @@ export const tours: Tour[] = [
     type: 'compartilhado',
 
     duration: 'Aproximadamente 9 horas',
-    schedule: '',
+    schedule: 'Saída por volta das 9h e retorno à tarde.',
     highlights: [],
   },
 
@@ -186,7 +186,7 @@ export const tours: Tour[] = [
     type: 'compartilhado',
 
     duration: 'Aproximadamente 4 horas',
-    schedule: '',
+    schedule: 'Saída às 8h30 e retorno por volta das 12h30.',
     highlights: [],
   },
 
@@ -212,7 +212,7 @@ export const tours: Tour[] = [
     type: 'compartilhado',
 
     duration: 'Aproximadamente 6 horas',
-    schedule: '',
+    schedule: 'Saída às 13h30 e retorno por volta das 19h30.',
     highlights: [],
   },
 
@@ -238,7 +238,7 @@ export const tours: Tour[] = [
     type: 'compartilhado',
 
     duration: 'Aproximadamente 4 horas',
-    schedule: '',
+    schedule: 'Saída às 8h30 e retorno por volta das 12h30.',
     highlights: [],
   },
 
@@ -264,7 +264,7 @@ export const tours: Tour[] = [
     type: 'compartilhado',
 
     duration: 'Aproximadamente 11 horas',
-    schedule: '',
+    schedule: 'Saída às 8h30 e retorno por volta das 19h30.',
     highlights: [],
   },
 
@@ -290,7 +290,7 @@ export const tours: Tour[] = [
     type: 'compartilhado',
 
     duration: 'Aproximadamente 7 horas',
-    schedule: '',
+    schedule: 'Saída às 8h30 e retorno por volta das 15h30.',
     highlights: [],
   },
 
@@ -316,7 +316,7 @@ export const tours: Tour[] = [
     type: 'compartilhado',
 
     duration: 'Aproximadamente 11 horas',
-    schedule: '',
+    schedule: 'Saída às 8h30 e retorno por volta das 19h30.',
     highlights: [],
   },
 
@@ -342,7 +342,7 @@ export const tours: Tour[] = [
     type: 'compartilhado',
 
     duration: 'Aproximadamente 8 horas',
-    schedule: '',
+    schedule: 'Saída às 9h e retorno por volta das 17h.',
     highlights: [],
   },
 ]
@@ -374,7 +374,7 @@ export const privateExperiences: Tour[] = [
     type: 'privativo',
 
     duration: 'Aproximadamente 5 horas',
-    schedule: '',
+    schedule: 'Saída por volta das 20h e retorno aproximadamente à 1h.',
     highlights: [],
   },
 
@@ -400,7 +400,7 @@ export const privateExperiences: Tour[] = [
     type: 'privativo',
 
     duration: 'Aproximadamente 3 horas',
-    schedule: '',
+    schedule: 'Aproximadamente das 3h30 às 6h30.',
     highlights: [],
   },
 ]
@@ -464,10 +464,10 @@ export const testimonials: Testimonial[] = []
 
 export const faq: FaqItem[] = [
   {
-  question: 'Como faço para reservar um passeio?',
-  answer:
-    'Preencha o formulário abaixo com seus dados e a data pretendida. Ao enviar, o WhatsApp será aberto com sua solicitação pronta para você conferir e enviar.',
-},
+    question: 'Como faço para reservar um passeio?',
+    answer:
+      'Preencha o formulário abaixo com seus dados e a data pretendida. Ao enviar, o WhatsApp será aberto com sua solicitação pronta para você conferir e enviar.',
+  },
 
   {
     question: 'Como consultar a disponibilidade?',
@@ -484,14 +484,8 @@ export const faq: FaqItem[] = [
   {
     question: 'Quais passeios são privativos?',
     answer:
-      'As experiências privativas disponíveis no site são Mirar das Estrelas, Café da Manhã nos Lençóis Maranhenses ou qualquer um dos passeios para você e/ou seu grupo.',
+      'As experiências privativas disponíveis no site são Mirar das Estrelas e Café da Manhã nos Lençóis Maranhenses.',
   },
-
-  {
-  question: 'Quais passeios são privativos?',
-  answer:
-    'As experiências privativas disponíveis no site são Mirar das Estrelas e Café da Manhã nos Lençóis Maranhenses.',
-},
 
   {
     question: 'Como funciona o pagamento?',
