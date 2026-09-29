@@ -148,7 +148,7 @@ export const tours: Tour[] = [
     description:
       'Conheça Atins e descubra as paisagens especiais da região dos Lençóis Maranhenses.',
 
-    image: '/images/atins.webp',
+    image: '/images/atins.jpg',
 
     imageAlt:
       'Paisagem de Atins com rio, coqueiros e dunas',
