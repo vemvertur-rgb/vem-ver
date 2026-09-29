@@ -10,24 +10,34 @@
   --color-input: var(--input);
   --color-border: var(--border);
   --color-destructive: var(--destructive);
+
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
+
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
+
   --color-secondary-foreground: var(--secondary-foreground);
   --color-secondary: var(--secondary);
+
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
+
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
+
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+
   --color-foreground: var(--foreground);
   --color-background: var(--background);
+
   --color-sand: var(--sand);
   --color-sand-deep: var(--sand-deep);
+
   --color-whatsapp: var(--whatsapp);
   --color-whatsapp-foreground: var(--whatsapp-foreground);
+
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -40,53 +50,93 @@
 :root {
   color-scheme: light;
 
-  /* Branco */
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.3 0.08 255);
+  /* =======================================================
+     CORES PRINCIPAIS
+     ======================================================= */
 
-  /* Cards */
+  /* Fundo principal */
+  --background: oklch(0.995 0.003 250);
+  --foreground: oklch(0.28 0.07 255);
+
+  /* =======================================================
+     CARDS
+     ======================================================= */
+
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.3 0.08 255);
+  --card-foreground: oklch(0.28 0.07 255);
 
-  /* Pop-ups */
+  /* =======================================================
+     POPOVERS
+     ======================================================= */
+
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.3 0.08 255);
+  --popover-foreground: oklch(0.28 0.07 255);
 
-  /* Azul royal - cor principal */
+  /* =======================================================
+     AZUL PRINCIPAL DA VEM VER
+     ======================================================= */
+
   --primary: oklch(0.48 0.22 258);
   --primary-foreground: oklch(1 0 0);
 
-  /* Azul claro - fundos e áreas suaves */
-  --sand: oklch(0.95 0.035 250);
-  --sand-deep: oklch(0.88 0.065 250);
+  /* =======================================================
+     FUNDOS AZULADOS
+     ======================================================= */
 
-  /* Elementos secundários */
-  --secondary: oklch(0.95 0.035 250);
-  --secondary-foreground: oklch(0.3 0.08 255);
+  --sand: oklch(0.955 0.028 250);
+  --sand-deep: oklch(0.89 0.055 250);
 
-  /* Áreas discretas */
-  --muted: oklch(0.95 0.035 250);
-  --muted-foreground: oklch(0.48 0.07 255);
+  /* =======================================================
+     ELEMENTOS SECUNDÁRIOS
+     ======================================================= */
 
-  /* Amarelo forte da logo */
+  --secondary: oklch(0.955 0.028 250);
+  --secondary-foreground: oklch(0.28 0.07 255);
+
+  /* =======================================================
+     ELEMENTOS DISCRETOS
+     ======================================================= */
+
+  --muted: oklch(0.95 0.025 250);
+  --muted-foreground: oklch(0.46 0.065 255);
+
+  /* =======================================================
+     DESTAQUE
+     ======================================================= */
+
   --accent: oklch(0.87 0.18 92);
   --accent-foreground: oklch(0.25 0.07 255);
 
-  /* WhatsApp */
+  /* =======================================================
+     WHATSAPP
+     ======================================================= */
+
   --whatsapp: oklch(0.58 0.17 150);
   --whatsapp-foreground: oklch(1 0 0);
 
-  /* Vermelho forte para destaques */
+  /* =======================================================
+     ERROS / ALERTAS
+     ======================================================= */
+
   --destructive: oklch(0.55 0.22 28);
 
-  /* Bordas */
-  --border: oklch(0.88 0.04 250);
-  --input: oklch(0.85 0.04 250);
+  /* =======================================================
+     BORDAS E CAMPOS
+     ======================================================= */
 
-  /* Foco */
+  --border: oklch(0.88 0.035 250);
+  --input: oklch(0.84 0.04 250);
+
+  /* =======================================================
+     FOCO
+     ======================================================= */
+
   --ring: oklch(0.48 0.22 258);
 
-  /* Cantos */
+  /* =======================================================
+     ARREDONDAMENTO
+     ======================================================= */
+
   --radius: 0.75rem;
 }
 
@@ -101,12 +151,23 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background font-sans text-foreground;
   }
 
+  /* Evita animações desconfortáveis para usuários
+     que preferem movimento reduzido. */
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
     }
   }
 }
