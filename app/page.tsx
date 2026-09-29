@@ -12,13 +12,21 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+
       <Intro />
+
       <Tours />
-      <HowItWorks />
+
       <About />
+
+      <HowItWorks />
+
       <Gallery />
+
       <Testimonials />
+
       <Faq />
+
       <Contact />
     </>
   )
