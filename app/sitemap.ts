@@ -9,7 +9,7 @@ export const dynamic = 'force-static'
 
 const base = (
   process.env.NEXT_PUBLIC_SITE_URL ||
-  'https://vemvertur-rgb.github.io/vem-ver'
+  'https://www.vemver.com.br'
 ).replace(/\/$/, '')
 
 const allTours = [
