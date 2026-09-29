@@ -139,7 +139,7 @@ export function ContactForm() {
 
         <Field
           id="days"
-          label="Quantos dias pretende ficar em Barreirinhas?"
+          label="Quantos dias de passeio pretende ter?"
         >
           <select
             id="days"
