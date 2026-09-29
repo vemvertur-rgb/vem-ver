@@ -1,15 +1,32 @@
 import type { MetadataRoute } from 'next'
-import { tours } from '@/lib/site-config'
+
+import {
+  tours,
+  privateExperiences,
+} from '@/lib/site-config'
 
 export const dynamic = 'force-static'
 
-const base = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.vemver.com.br').replace(/\/$/, '')
+const base = (
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  'https://vemvertur-rgb.github.io/vem-ver'
+).replace(/\/$/, '')
+
+const allTours = [
+  ...tours,
+  ...privateExperiences,
+]
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
-    { url: `${base}/`, changeFrequency: 'monthly', priority: 1 },
-    ...tours.map((t) => ({
-      url: `${base}/passeios/${t.slug}/`,
+    {
+      url: `${base}/`,
+      changeFrequency: 'monthly',
+      priority: 1,
+    },
+
+    ...allTours.map((tour) => ({
+      url: `${base}/passeios/${tour.slug}/`,
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     })),
