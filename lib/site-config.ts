@@ -278,7 +278,7 @@ export const tours: Tour[] = [
     description:
       'Conheça Caburé e aproveite as paisagens e experiências da região.',
 
-    image: '/images/atins.webp',
+    image: '/images/cabure.jpg',
 
     imageAlt:
       'Paisagem da região dos Lençóis Maranhenses',
@@ -330,7 +330,7 @@ export const tours: Tour[] = [
     description:
       'Explore os Pequenos Lençóis em uma experiência de quadriciclo pelas paisagens da região.',
 
-    image: '/images/passeio-4x4.webp',
+    image: '/images/quadri.jpg',
 
     imageAlt:
       'Passeio pelas trilhas de areia dos Lençóis Maranhenses',
