@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { Clock, Info } from 'lucide-react'
@@ -7,6 +9,23 @@ import { WhatsAppIcon } from './brand-icons'
 import { ctaClass } from './cta-link'
 
 export function TourCard({ tour }: { tour: Tour }) {
+  function goToContact() {
+    const contact = document.getElementById('contato')
+
+    if (contact) {
+      contact.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+
+      window.history.replaceState(
+        null,
+        '',
+        `${window.location.pathname}#contato`,
+      )
+    }
+  }
+
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
       <div className="relative aspect-[4/3] overflow-hidden bg-muted">
@@ -78,14 +97,15 @@ export function TourCard({ tour }: { tour: Tour }) {
         </div>
 
         <div className="mt-5 flex flex-col gap-2">
-          <Link
-            href="/#contato"
+          <button
+            type="button"
+            onClick={goToContact}
             aria-label={`Consultar informações sobre ${tour.name}`}
             className={ctaClass('whatsapp', 'w-full')}
           >
             <WhatsAppIcon />
             Consultar pelo WhatsApp
-          </Link>
+          </button>
 
           <Link
             href={`/passeios/${tour.slug}/`}
