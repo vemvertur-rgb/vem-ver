@@ -131,13 +131,18 @@ export function Testimonials() {
       setMessage(
         'Obrigado pelo seu depoimento! Ele foi enviado e aparecerá no site após nossa aprovação.'
       )
-    } catch (error) {
+    } catch (error: any) {
       console.error('Erro ao enviar depoimento:', error)
 
+      const errorMessage =
+        error?.message ||
+        error?.details ||
+        error?.hint ||
+        error?.code ||
+        JSON.stringify(error)
+
       setMessage(
-        error instanceof Error
-          ? `Erro ao enviar depoimento: ${error.message}`
-          : 'Erro desconhecido ao enviar o depoimento.'
+        `Erro ao enviar depoimento: ${errorMessage}`
       )
     } finally {
       setSending(false)
