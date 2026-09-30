@@ -71,7 +71,9 @@ export function Testimonials() {
     event.preventDefault()
 
     if (!name.trim() || !tour || !description.trim()) {
-      setMessage('Preencha seu nome, escolha o passeio e escreva seu depoimento.')
+      setMessage(
+        'Preencha seu nome, escolha o passeio e escreva seu depoimento.'
+      )
       return
     }
 
@@ -284,8 +286,8 @@ export function Testimonials() {
                 <option value="">Selecione um passeio</option>
 
                 {availableTours.map((item) => (
-                  <option key={item.slug} value={item.title}>
-                    {item.title}
+                  <option key={item.slug} value={item.name}>
+                    {item.name}
                   </option>
                 ))}
               </select>
