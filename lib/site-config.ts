@@ -337,7 +337,7 @@ export const tours: Tour[] = [
 
     originalPrice: 'R$ 650,00',
     price: 'R$ 599,90',
-    priceInfo: 'por pessoa',
+    priceInfo: 'para até 2 pessoas',
 
     type: 'compartilhado',
 
