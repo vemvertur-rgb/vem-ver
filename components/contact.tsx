@@ -36,7 +36,7 @@ export function Contact() {
         <div className="mt-12 grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
 
           {/* Informações */}
-          <div className="rounded-3xl bg-primary p-7 text-primary-foreground shadow-sm md:p-8">
+          <div className="order-2 rounded-3xl bg-primary p-7 text-primary-foreground shadow-sm md:p-8 lg:order-1">
 
             <h3 className="font-serif text-2xl font-semibold">
               Entre em contato
@@ -154,7 +154,7 @@ export function Contact() {
           </div>
 
           {/* Formulário */}
-          <div className="rounded-3xl border border-border bg-card p-6 shadow-sm md:p-8">
+          <div className="order-1 rounded-3xl border border-border bg-card p-6 shadow-sm md:p-8 lg:order-2">
 
             <div className="mb-6">
               <div className="flex items-center gap-3">
@@ -171,9 +171,9 @@ export function Contact() {
               </div>
 
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-  Preencha seus dados. Ao enviar, o WhatsApp será aberto com sua
-  solicitação pronta para você conferir e enviar.
-</p>
+                Preencha seus dados. Ao enviar, o WhatsApp será aberto com sua
+                solicitação pronta para você conferir e enviar.
+              </p>
             </div>
 
             <ContactForm />
