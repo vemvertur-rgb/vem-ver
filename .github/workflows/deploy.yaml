@@ -38,8 +38,11 @@ jobs:
           node-version: 20
           cache: pnpm
 
-      # Instala as dependências exatamente
-      # conforme o pnpm-lock.yaml
+      # Atualiza o pnpm-lock.yaml conforme o package.json
+      - name: Atualizar lockfile
+        run: pnpm install --lockfile-only
+
+      # Instala as dependências
       - name: Instalar dependências
         run: pnpm install --frozen-lockfile
 
@@ -48,6 +51,8 @@ jobs:
         run: pnpm build
         env:
           NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
 
       # Configura o GitHub Pages
       - name: Configurar GitHub Pages
@@ -69,7 +74,7 @@ jobs:
     needs: build
 
     steps:
-      # Publica o site no GitHub Pages
+      # Publica no GitHub Pages
       - name: Publicar no GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
