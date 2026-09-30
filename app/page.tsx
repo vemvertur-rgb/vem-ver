@@ -5,6 +5,7 @@ import { HowItWorks } from '@/components/how-it-works'
 import { About } from '@/components/about'
 import { Gallery } from '@/components/gallery'
 import { Testimonials } from '@/components/testimonials'
+import { Faq } from '@/components/faq'
 import { Contact } from '@/components/contact'
 
 export default function HomePage() {
@@ -30,6 +31,9 @@ export default function HomePage() {
 
       {/* Depoimentos */}
       <Testimonials />
+
+      {/* Perguntas frequentes */}
+      <Faq />
 
       {/* Galeria */}
       <Gallery />
