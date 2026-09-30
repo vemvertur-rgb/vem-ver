@@ -1,7 +1,7 @@
 'use client'
 
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import { ImagePlus, Loader2, Star } from 'lucide-react'
+import { ImagePlus, Loader2, Star, X } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { tours, privateExperiences } from '@/lib/site-config'
 import { SectionHeading } from './section-heading'
@@ -27,6 +27,25 @@ function getPhotoUrls(fotos: string | null): string[] {
   }
 }
 
+function getTourNames(passeio: string): string[] {
+  if (!passeio) return []
+
+  try {
+    const parsed = JSON.parse(passeio)
+
+    if (Array.isArray(parsed)) {
+      return parsed
+    }
+  } catch {
+    // Depoimentos antigos continuam funcionando normalmente.
+  }
+
+  return passeio
+    .split(' • ')
+    .map((item) => item.trim())
+    .filter(Boolean)
+}
+
 export function Testimonials() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([])
   const [loading, setLoading] = useState(true)
@@ -34,10 +53,11 @@ export function Testimonials() {
   const [message, setMessage] = useState('')
 
   const [name, setName] = useState('')
-  const [tour, setTour] = useState('')
+  const [selectedTours, setSelectedTours] = useState<string[]>([])
   const [rating, setRating] = useState(5)
   const [description, setDescription] = useState('')
   const [photos, setPhotos] = useState<File[]>([])
+  const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null)
 
   useEffect(() => {
     async function loadTestimonials() {
@@ -59,6 +79,24 @@ export function Testimonials() {
     loadTestimonials()
   }, [])
 
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        setSelectedPhoto(null)
+      }
+    }
+
+    if (selectedPhoto) {
+      document.addEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = 'hidden'
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = ''
+    }
+  }, [selectedPhoto])
+
   function handlePhotos(event: ChangeEvent<HTMLInputElement>) {
     const selectedFiles = Array.from(event.target.files ?? [])
       .filter((file) => file.type.startsWith('image/'))
@@ -67,12 +105,24 @@ export function Testimonials() {
     setPhotos(selectedFiles)
   }
 
+  function handleTourChange(tourName: string) {
+    setSelectedTours((current) =>
+      current.includes(tourName)
+        ? current.filter((item) => item !== tourName)
+        : [...current, tourName]
+    )
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    if (!name.trim() || !tour || !description.trim()) {
+    if (
+      !name.trim() ||
+      selectedTours.length === 0 ||
+      !description.trim()
+    ) {
       setMessage(
-        'Preencha seu nome, escolha o passeio e escreva seu depoimento.'
+        'Preencha seu nome, escolha pelo menos um passeio e escreva seu depoimento.'
       )
       return
     }
@@ -111,7 +161,7 @@ export function Testimonials() {
         .from('depoimentos')
         .insert({
           nome: name.trim(),
-          passeio: tour,
+          passeio: JSON.stringify(selectedTours),
           estrelas: rating,
           descricao: description.trim(),
           fotos: JSON.stringify(photoUrls),
@@ -123,7 +173,7 @@ export function Testimonials() {
       }
 
       setName('')
-      setTour('')
+      setSelectedTours([])
       setRating(5)
       setDescription('')
       setPhotos([])
@@ -151,7 +201,6 @@ export function Testimonials() {
       className="bg-sand px-4 py-20 md:px-6 md:py-28"
     >
       <div className="mx-auto max-w-6xl">
-
         <SectionHeading
           id="depoimentos-title"
           eyebrow="Depoimentos"
@@ -164,6 +213,7 @@ export function Testimonials() {
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {testimonials.map((testimonial) => {
               const photoUrls = getPhotoUrls(testimonial.fotos)
+              const tourNames = getTourNames(testimonial.passeio)
 
               return (
                 <article
@@ -197,13 +247,29 @@ export function Testimonials() {
                   {photoUrls.length > 0 && (
                     <div className="mt-5 grid grid-cols-3 gap-2">
                       {photoUrls.slice(0, 5).map((photo, index) => (
-                        <img
+                        <button
                           key={`${photo}-${index}`}
-                          src={photo}
-                          alt={`Foto enviada por ${testimonial.nome}`}
-                          className="aspect-square w-full rounded-xl object-cover"
-                          loading="lazy"
-                        />
+                          type="button"
+                          onClick={() => setSelectedPhoto(photo)}
+                          className="group relative overflow-hidden rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                          aria-label={`Ampliar foto enviada por ${testimonial.nome}`}
+                        >
+                          <img
+                            src={photo}
+                            alt={`Foto enviada por ${testimonial.nome}`}
+                            className="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            loading="lazy"
+                          />
+
+                          <span
+                            className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/0 text-white transition-colors duration-300 group-hover:bg-black/20"
+                            aria-hidden="true"
+                          >
+                            <span className="rounded-full bg-black/50 px-3 py-1 text-xs opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                              Ver foto
+                            </span>
+                          </span>
+                        </button>
                       ))}
                     </div>
                   )}
@@ -214,9 +280,9 @@ export function Testimonials() {
                       {testimonial.nome}
                     </p>
 
-                    {testimonial.passeio && (
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        {testimonial.passeio}
+                    {tourNames.length > 0 && (
+                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                        {tourNames.join(' • ')}
                       </p>
                     )}
                   </div>
@@ -242,13 +308,12 @@ export function Testimonials() {
             </h3>
 
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              Avalie seu passeio, escreva um depoimento e, se quiser, envie
+              Avalie seus passeios, escreva um depoimento e, se quiser, envie
               algumas fotos da sua viagem.
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-
             {/* Nome */}
             <div>
               <label
@@ -269,30 +334,49 @@ export function Testimonials() {
               />
             </div>
 
-            {/* Passeio */}
+            {/* Passeios */}
             <div>
-              <label
-                htmlFor="testimonial-tour"
-                className="mb-2 block text-sm font-medium"
-              >
-                Qual passeio você fez?
-              </label>
+              <span className="mb-2 block text-sm font-medium">
+                Quais passeios você fez?
+              </span>
 
-              <select
-                id="testimonial-tour"
-                value={tour}
-                onChange={(event) => setTour(event.target.value)}
-                className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none transition focus:border-primary"
-                required
-              >
-                <option value="">Selecione um passeio</option>
+              <p className="mb-3 text-xs text-muted-foreground">
+                Você pode escolher mais de um passeio.
+              </p>
 
-                {availableTours.map((item) => (
-                  <option key={item.slug} value={item.name}>
-                    {item.name}
-                  </option>
-                ))}
-              </select>
+              <div className="grid gap-2 sm:grid-cols-2">
+                {availableTours.map((item) => {
+                  const isSelected = selectedTours.includes(item.name)
+
+                  return (
+                    <label
+                      key={item.slug}
+                      className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm transition ${
+                        isSelected
+                          ? 'border-primary bg-primary/10'
+                          : 'border-border bg-background hover:border-primary/50'
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => handleTourChange(item.name)}
+                        className="size-4 accent-primary"
+                      />
+
+                      <span>{item.name}</span>
+                    </label>
+                  )
+                })}
+              </div>
+
+              {selectedTours.length > 0 && (
+                <p className="mt-3 text-xs text-muted-foreground">
+                  {selectedTours.length} passeio
+                  {selectedTours.length > 1 ? 's' : ''} selecionado
+                  {selectedTours.length > 1 ? 's' : ''}.
+                </p>
+              )}
             </div>
 
             {/* Estrelas */}
@@ -301,7 +385,10 @@ export function Testimonials() {
                 Sua avaliação
               </span>
 
-              <div className="flex gap-2" aria-label="Escolha sua avaliação">
+              <div
+                className="flex gap-2"
+                aria-label="Escolha sua avaliação"
+              >
                 {Array.from({ length: 5 }).map((_, index) => {
                   const starNumber = index + 1
 
@@ -383,7 +470,8 @@ export function Testimonials() {
 
               {photos.length > 0 && (
                 <p className="mt-2 text-xs text-muted-foreground">
-                  {photos.length} foto{photos.length > 1 ? 's' : ''} selecionada
+                  {photos.length} foto
+                  {photos.length > 1 ? 's' : ''} selecionada
                   {photos.length > 1 ? 's' : ''}.
                 </p>
               )}
@@ -418,8 +506,34 @@ export function Testimonials() {
             </p>
           </form>
         </div>
-
       </div>
+
+      {/* Visualizador da foto */}
+      {selectedPhoto && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Visualização ampliada da foto"
+          onClick={() => setSelectedPhoto(null)}
+        >
+          <button
+            type="button"
+            onClick={() => setSelectedPhoto(null)}
+            className="absolute right-4 top-4 z-10 flex size-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white"
+            aria-label="Fechar foto"
+          >
+            <X className="size-6" />
+          </button>
+
+          <img
+            src={selectedPhoto}
+            alt="Foto ampliada do depoimento"
+            className="max-h-[90vh] max-w-[95vw] rounded-xl object-contain shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          />
+        </div>
+      )}
     </section>
   )
 }
