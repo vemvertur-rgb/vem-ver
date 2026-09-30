@@ -41,17 +41,12 @@ export function ContactForm() {
 
     const { actionUrl, fields } = siteConfig.googleForm
 
-    /* =====================================================
-       ENVIO PARA GOOGLE FORMS
-    ===================================================== */
-
     if (actionUrl) {
       setStatus('sending')
 
       const body = new FormData()
 
       body.append(fields.name, get('name'))
-      body.append(fields.whatsapp, get('whatsapp'))
       body.append(fields.date, get('date'))
       body.append(fields.people, get('people'))
       body.append(fields.tour, selectedTours.join(', '))
@@ -73,15 +68,11 @@ export function ContactForm() {
       return
     }
 
-    /* =====================================================
-       ENVIO PARA WHATSAPP
-    ===================================================== */
-
     const lines = [
       'Olá! Vim pelo site da VEM VER Turismo e gostaria de fazer uma solicitação.',
       '',
+
       `Nome: ${get('name')}`,
-      `WhatsApp: ${get('whatsapp')}`,
 
       get('date') &&
         `Data pretendida: ${get('date')
@@ -124,13 +115,8 @@ export function ContactForm() {
       onSubmit={handleSubmit}
       className="flex flex-col gap-6"
     >
-      {/* Dados básicos */}
       <div className="grid gap-5 sm:grid-cols-2">
-
-        <Field
-          id="name"
-          label="Nome"
-        >
+        <Field id="name" label="Nome">
           <input
             id="name"
             name="name"
@@ -142,26 +128,7 @@ export function ContactForm() {
           />
         </Field>
 
-        <Field
-          id="whatsapp"
-          label="WhatsApp"
-        >
-          <input
-            id="whatsapp"
-            name="whatsapp"
-            type="tel"
-            required
-            inputMode="tel"
-            autoComplete="tel"
-            className={inputClass}
-            placeholder="(98) 90000-0000"
-          />
-        </Field>
-
-        <Field
-          id="date"
-          label="Data pretendida"
-        >
+        <Field id="date" label="Data pretendida">
           <input
             id="date"
             name="date"
@@ -180,44 +147,20 @@ export function ContactForm() {
             defaultValue=""
             className={inputClass}
           >
-            <option value="">
-              Selecione uma opção
-            </option>
-
-            <option value="1 dia">
-              1 dia
-            </option>
-
-            <option value="2 dias">
-              2 dias
-            </option>
-
-            <option value="3 dias">
-              3 dias
-            </option>
-
-            <option value="4 dias">
-              4 dias
-            </option>
-
-            <option value="5 dias">
-              5 dias
-            </option>
-
-            <option value="6 dias">
-              6 dias
-            </option>
-
+            <option value="">Selecione uma opção</option>
+            <option value="1 dia">1 dia</option>
+            <option value="2 dias">2 dias</option>
+            <option value="3 dias">3 dias</option>
+            <option value="4 dias">4 dias</option>
+            <option value="5 dias">5 dias</option>
+            <option value="6 dias">6 dias</option>
             <option value="7 dias ou mais">
               7 dias ou mais
             </option>
           </select>
         </Field>
 
-        <Field
-          id="people"
-          label="Número de pessoas"
-        >
+        <Field id="people" label="Número de pessoas">
           <input
             id="people"
             name="people"
@@ -228,20 +171,14 @@ export function ContactForm() {
             placeholder="Ex.: 2"
           />
         </Field>
-
       </div>
 
-      {/* Passeios */}
       <Field
         id="tour"
         label="Quais passeios você tem interesse em fazer?"
       >
         <div className="grid gap-1 rounded-2xl border border-input bg-background p-3 sm:grid-cols-2">
-
-          {[
-            ...tours,
-            ...privateExperiences,
-          ].map((tour) => (
+          {[...tours, ...privateExperiences].map((tour) => (
             <label
               key={tour.slug}
               className="flex cursor-pointer items-start gap-3 rounded-xl p-3 transition-colors hover:bg-muted"
@@ -252,7 +189,6 @@ export function ContactForm() {
                 value={tour.name}
                 className="mt-1 size-4 shrink-0 accent-primary"
               />
-
               <span className="text-sm leading-relaxed">
                 {tour.name}
               </span>
@@ -266,12 +202,10 @@ export function ContactForm() {
               value="Ainda não sei / gostaria de receber uma sugestão"
               className="mt-1 size-4 shrink-0 accent-primary"
             />
-
             <span className="text-sm leading-relaxed">
               Ainda não sei / gostaria de receber uma sugestão
             </span>
           </label>
-
         </div>
 
         <p className="text-xs text-muted-foreground">
@@ -279,7 +213,6 @@ export function ContactForm() {
         </p>
       </Field>
 
-      {/* Hospedagem */}
       <Field
         id="accommodation"
         label="Você já possui hospedagem?"
@@ -290,25 +223,19 @@ export function ContactForm() {
           defaultValue=""
           className={inputClass}
         >
-          <option value="">
-            Selecione uma opção
-          </option>
-
+          <option value="">Selecione uma opção</option>
           <option value="Sim, já tenho pousada/hospedagem">
             Sim, já tenho pousada/hospedagem
           </option>
-
           <option value="Não, ainda não tenho">
             Não, ainda não tenho
           </option>
-
           <option value="Ainda estou decidindo">
             Ainda estou decidindo
           </option>
         </select>
       </Field>
 
-      {/* Transfer */}
       <Field
         id="transfer"
         label="Precisa de transfer para Barreirinhas?"
@@ -319,29 +246,14 @@ export function ContactForm() {
           defaultValue=""
           className={inputClass}
         >
-          <option value="">
-            Selecione uma opção
-          </option>
-
-          <option value="Sim">
-            Sim
-          </option>
-
-          <option value="Não">
-            Não
-          </option>
-
-          <option value="Ainda não sei">
-            Ainda não sei
-          </option>
+          <option value="">Selecione uma opção</option>
+          <option value="Sim">Sim</option>
+          <option value="Não">Não</option>
+          <option value="Ainda não sei">Ainda não sei</option>
         </select>
       </Field>
 
-      {/* Mensagem */}
-      <Field
-        id="message"
-        label="Mensagem"
-      >
+      <Field id="message" label="Mensagem">
         <textarea
           id="message"
           name="message"
@@ -351,7 +263,6 @@ export function ContactForm() {
         />
       </Field>
 
-      {/* Botão */}
       <button
         type="submit"
         disabled={status === 'sending'}
@@ -362,7 +273,6 @@ export function ContactForm() {
           : 'Enviar solicitação'}
       </button>
 
-      {/* Status */}
       <div
         aria-live="polite"
         className="text-sm"
@@ -373,7 +283,6 @@ export function ContactForm() {
               className="mt-0.5 size-4 shrink-0"
               aria-hidden="true"
             />
-
             <span>
               Solicitação enviada! Em breve a VEM VER Turismo
               entrará em contato.
@@ -387,7 +296,6 @@ export function ContactForm() {
               className="mt-0.5 size-4 shrink-0"
               aria-hidden="true"
             />
-
             <span>
               Abrimos o WhatsApp com a sua mensagem.
               É só conferir e enviar!
@@ -423,7 +331,6 @@ function Field({
       >
         {label}
       </label>
-
       {children}
     </div>
   )
