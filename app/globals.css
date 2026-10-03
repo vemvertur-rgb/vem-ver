@@ -54,7 +54,6 @@
      CORES PRINCIPAIS
      ======================================================= */
 
-  /* Fundo principal */
   --background: oklch(0.995 0.003 250);
   --foreground: oklch(0.28 0.07 255);
 
@@ -153,21 +152,139 @@
   body {
     @apply bg-background font-sans text-foreground;
   }
+}
 
-  /* Evita animações desconfortáveis para usuários
-     que preferem movimento reduzido. */
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
+/* =========================================================
+   ANIMAÇÕES DA VEM VER
+   ========================================================= */
 
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
+/* Entrada suave de elementos */
+@keyframes vem-ver-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Entrada suave vindo da esquerda */
+@keyframes vem-ver-fade-left {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Entrada suave vindo da direita */
+@keyframes vem-ver-fade-right {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Pequeno efeito de elevação */
+@keyframes vem-ver-float-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Classes reutilizáveis */
+.vem-ver-fade-up {
+  animation: vem-ver-fade-up 0.7s ease-out both;
+}
+
+.vem-ver-fade-left {
+  animation: vem-ver-fade-left 0.7s ease-out both;
+}
+
+.vem-ver-fade-right {
+  animation: vem-ver-fade-right 0.7s ease-out both;
+}
+
+.vem-ver-float-in {
+  animation: vem-ver-float-in 0.7s ease-out both;
+}
+
+/* =========================================================
+   EFEITOS INTERATIVOS
+   ========================================================= */
+
+/* Cards */
+.vem-ver-card {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.vem-ver-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Imagens */
+.vem-ver-image {
+  overflow: hidden;
+}
+
+.vem-ver-image img {
+  transition: transform 0.5s ease;
+}
+
+.vem-ver-image:hover img {
+  transform: scale(1.04);
+}
+
+/* Botões */
+.vem-ver-button {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.vem-ver-button:hover {
+  transform: translateY(-2px);
+}
+
+.vem-ver-button:active {
+  transform: translateY(0);
+}
+
+/* =========================================================
+   ACESSIBILIDADE
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
