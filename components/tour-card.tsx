@@ -13,10 +13,6 @@ import {
 } from '@/lib/links'
 
 import {
-  defaultLocale,
-} from '@/lib/i18n'
-
-import {
   getTourTranslation,
 } from '@/lib/tour-translations'
 
@@ -170,18 +166,16 @@ export function TourCard({
   }
 
   /*
-   * As páginas de passeios estão dentro de:
+   * A página de detalhes dos passeios
+   * está na rota:
    *
-   * /[locale]/passeios/[slug]/
+   * /passeios/[slug]/
    *
-   * Por isso, o português também precisa usar /pt/
-   * para que o Next.js encontre a página corretamente.
+   * Portanto, o link não deve adicionar
+   * /pt/, /en/, /es/ etc.
    */
-  const activeLocale =
-    locale || defaultLocale
-
   const tourPath =
-    `/${activeLocale}/passeios/${tour.slug}/`
+    `/passeios/${tour.slug}/`
 
   return (
     <article className="vem-ver-card group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
