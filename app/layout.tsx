@@ -56,6 +56,8 @@ export const metadata: Metadata = {
     'turismo Maranhão',
     'turismo em Barreirinhas',
     'agência de turismo Lençóis Maranhenses',
+    'passeios em Barreirinhas',
+    'turismo nos Lençóis Maranhenses',
   ],
 
   authors: [
@@ -135,7 +137,6 @@ export default function RootLayout({
       <body className="antialiased">
         <StructuredData />
 
-        {/* Acessibilidade */}
         <a
           href="#conteudo"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
