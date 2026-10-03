@@ -53,20 +53,50 @@ export async function generateMetadata({
     return {}
   }
 
+  const pageTitle = `${tour.name} | Vem Ver Turismo`
+  const pageDescription = tour.shortDescription
+
   return {
-    title: `${tour.name} | Vem Ver Turismo`,
-    description: tour.shortDescription,
+    title: pageTitle,
+
+    description: pageDescription,
+
+    keywords: [
+      tour.name,
+      'Lençóis Maranhenses',
+      'passeios Lençóis Maranhenses',
+      'turismo Maranhão',
+      'turismo Barreirinhas',
+      'Vem Ver Turismo',
+    ],
+
     alternates: {
       canonical: `/passeios/${tour.slug}/`,
     },
+
     openGraph: {
-      title: `${tour.name} | Vem Ver Turismo`,
-      description: tour.shortDescription,
+      type: 'website',
+      locale: 'pt_BR',
+      siteName: 'VEM VER Turismo',
+      title: pageTitle,
+      description: pageDescription,
+      url: `/passeios/${tour.slug}/`,
       images: [
         {
           url: asset(tour.image),
+          width: 1200,
+          height: 900,
           alt: tour.imageAlt,
         },
+      ],
+    },
+
+    twitter: {
+      card: 'summary_large_image',
+      title: pageTitle,
+      description: pageDescription,
+      images: [
+        asset(tour.image),
       ],
     },
   }
@@ -124,11 +154,11 @@ export default async function TourPage({
           {/* Voltar */}
           <nav
             aria-label="Navegação estrutural"
-            className="mb-8"
+            className="vem-ver-fade-left mb-8"
           >
             <Link
               href="/#passeios"
-              className="inline-flex min-h-11 items-center gap-2 rounded-full px-3 font-medium text-primary transition-colors hover:bg-primary/5 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full px-3 font-medium text-primary transition-all duration-200 hover:translate-x-1 hover:bg-primary/5 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <ArrowLeft
                 className="size-4"
@@ -141,19 +171,19 @@ export default async function TourPage({
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
 
             {/* Imagem */}
-            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl bg-muted shadow-sm">
+            <div className="vem-ver-fade-left relative aspect-[4/3] overflow-hidden rounded-3xl bg-muted shadow-sm">
               <Image
                 src={asset(tour.image)}
                 alt={tour.imageAlt}
                 fill
                 priority
                 sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover"
+                className="object-cover transition-transform duration-700 hover:scale-105"
               />
             </div>
 
             {/* Informações */}
-            <div className="flex flex-col">
+            <div className="vem-ver-fade-right flex flex-col">
 
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
@@ -181,9 +211,9 @@ export default async function TourPage({
                   }) => (
                     <div
                       key={label}
-                      className="flex items-start gap-4 rounded-2xl border border-border bg-sand p-4"
+                      className="vem-ver-card flex items-start gap-4 rounded-2xl border border-border bg-sand p-4"
                     >
-                      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-transform duration-300 hover:scale-105">
                         <Icon
                           className="size-5"
                           aria-hidden="true"
@@ -213,7 +243,7 @@ export default async function TourPage({
 
               {/* Destaques */}
               {tour.highlights.length > 0 && (
-                <div className="mt-8">
+                <div className="vem-ver-fade-up mt-8">
                   <h2 className="text-lg font-semibold">
                     Destaques
                   </h2>
@@ -231,7 +261,7 @@ export default async function TourPage({
               )}
 
               {/* CTA */}
-              <div className="mt-8">
+              <div className="vem-ver-fade-up mt-8">
                 <CtaLink
                   href={whatsappLink(
                     tourWhatsappMessage(
@@ -240,7 +270,7 @@ export default async function TourPage({
                   )}
                   external
                   variant="whatsapp"
-                  className="w-full sm:w-fit"
+                  className="vem-ver-button w-full sm:w-fit"
                   ariaLabel={`Consultar ${tour.name} pelo WhatsApp`}
                 >
                   <WhatsAppIcon />
@@ -267,7 +297,7 @@ export default async function TourPage({
       >
         <div className="mx-auto max-w-6xl">
 
-          <div className="max-w-2xl">
+          <div className="vem-ver-fade-up max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
               Mais experiências
             </p>
@@ -286,15 +316,19 @@ export default async function TourPage({
           </div>
 
           <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {others.map((item) => (
+            {others.map((item, index) => (
               <li
                 key={item.slug}
-                className="flex"
+                className="vem-ver-float-in flex"
+                style={{
+                  animationDelay: `${index * 120}ms`,
+                }}
               >
                 <TourCard tour={item} />
               </li>
             ))}
           </ul>
+
         </div>
       </section>
     </>
