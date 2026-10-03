@@ -20,17 +20,18 @@ export function Header() {
   ]
 
   const allLinks = [
-  ...navLinks,
-  ...extraLinks,
-]
+    ...navLinks,
+    ...extraLinks,
+  ]
+
   return (
-    <header className="sticky top-0 z-40 border-b border-border/70 bg-background/90 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-border/70 bg-background/90 backdrop-blur-md vem-ver-fade-up">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 md:h-[72px] md:px-6">
 
         {/* Logo */}
         <Link
           href="/#inicio"
-          className="shrink-0 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="shrink-0 rounded-md transition-transform duration-200 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           aria-label={`${siteConfig.name} - página inicial`}
           onClick={close}
         >
@@ -47,7 +48,7 @@ export function Header() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="rounded-full px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="rounded-full px-3 py-2 text-sm font-medium text-foreground/80 transition-all duration-200 hover:bg-muted hover:text-foreground hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   {link.label}
                 </Link>
@@ -67,7 +68,7 @@ export function Header() {
             aria-label="Falar com a Vem Ver pelo WhatsApp"
             className={ctaClass(
               'whatsapp',
-              'hidden min-h-11 px-5 text-sm sm:inline-flex'
+              'hidden min-h-11 px-5 text-sm sm:inline-flex vem-ver-button'
             )}
           >
             <WhatsAppIcon />
@@ -77,7 +78,7 @@ export function Header() {
           {/* Menu mobile */}
           <button
             type="button"
-            className="inline-flex size-11 items-center justify-center rounded-full text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring lg:hidden"
+            className="inline-flex size-11 items-center justify-center rounded-full text-foreground transition-all duration-200 hover:bg-muted hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring lg:hidden"
             aria-expanded={open}
             aria-controls="menu-mobile"
             aria-label={
@@ -89,12 +90,12 @@ export function Header() {
           >
             {open ? (
               <X
-                className="size-6"
+                className="size-6 transition-transform duration-200"
                 aria-hidden="true"
               />
             ) : (
               <Menu
-                className="size-6"
+                className="size-6 transition-transform duration-200"
                 aria-hidden="true"
               />
             )}
@@ -104,27 +105,56 @@ export function Header() {
       </div>
 
       {/* Menu mobile */}
-      {open && (
+      <div
+        className={`grid overflow-hidden transition-all duration-300 ease-out lg:hidden ${
+          open
+            ? 'grid-rows-[1fr] opacity-100'
+            : 'grid-rows-[0fr] opacity-0'
+        }`}
+      >
         <nav
           id="menu-mobile"
           aria-label="Menu principal"
-          className="border-t border-border bg-background shadow-lg lg:hidden"
+          className="min-h-0 border-t border-border bg-background shadow-lg"
         >
           <ul className="mx-auto flex max-w-6xl flex-col px-4 py-3">
 
-            {allLinks.map((link) => (
-              <li key={link.href}>
+            {allLinks.map((link, index) => (
+              <li
+                key={link.href}
+                className={`transition-all duration-300 ${
+                  open
+                    ? 'translate-y-0 opacity-100'
+                    : '-translate-y-2 opacity-0'
+                }`}
+                style={{
+                  transitionDelay: open
+                    ? `${index * 40}ms`
+                    : '0ms',
+                }}
+              >
                 <Link
                   href={link.href}
                   onClick={close}
-                  className="flex min-h-12 items-center rounded-xl px-3 text-base font-medium text-foreground/85 transition-colors hover:bg-muted hover:text-foreground"
+                  className="flex min-h-12 items-center rounded-xl px-3 text-base font-medium text-foreground/85 transition-all duration-200 hover:bg-muted hover:text-foreground hover:translate-x-1"
                 >
                   {link.label}
                 </Link>
               </li>
             ))}
 
-            <li className="pt-3">
+            <li
+              className={`pt-3 transition-all duration-300 ${
+                open
+                  ? 'translate-y-0 opacity-100'
+                  : '-translate-y-2 opacity-0'
+              }`}
+              style={{
+                transitionDelay: open
+                  ? `${allLinks.length * 40}ms`
+                  : '0ms',
+              }}
+            >
               <a
                 href={whatsappLink()}
                 target="_blank"
@@ -132,7 +162,7 @@ export function Header() {
                 onClick={close}
                 className={ctaClass(
                   'whatsapp',
-                  'w-full'
+                  'w-full vem-ver-button'
                 )}
               >
                 <WhatsAppIcon />
@@ -142,7 +172,7 @@ export function Header() {
 
           </ul>
         </nav>
-      )}
+      </div>
     </header>
   )
 }
