@@ -1,6 +1,9 @@
 'use client'
 
-import { usePathname, useRouter } from 'next/navigation'
+import {
+  usePathname,
+  useRouter,
+} from 'next/navigation'
 
 import {
   defaultLocale,
@@ -39,7 +42,7 @@ function getLocalizedPath(
     return `/${locale}/`
   }
 
-  return `/${locale}${cleanPath.endsWith('/') ? cleanPath : `${cleanPath}/`}`
+  return `/{$locale}${cleanPath.endsWith('/') ? cleanPath : `${cleanPath}/`}`
 }
 
 export function LanguageSelector() {
@@ -64,13 +67,20 @@ export function LanguageSelector() {
   }
 
   return (
-    <label className="sr-only">
-      Idioma
+    <div className="relative">
+      <label
+        htmlFor="language-selector"
+        className="sr-only"
+      >
+        Selecionar idioma
+      </label>
 
       <select
+        id="language-selector"
         value={currentLocale}
         onChange={handleChange}
         aria-label="Selecionar idioma"
+        className="min-h-10 cursor-pointer appearance-none rounded-full border border-border bg-background px-3 pr-8 text-sm font-medium text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         {locales.map((locale) => (
           <option
@@ -82,6 +92,13 @@ export function LanguageSelector() {
           </option>
         ))}
       </select>
-    </label>
+
+      <span
+        className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground"
+        aria-hidden="true"
+      >
+        ▼
+      </span>
+    </div>
   )
 }
