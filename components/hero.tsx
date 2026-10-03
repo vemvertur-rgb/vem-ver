@@ -1,12 +1,16 @@
 import Image from 'next/image'
 import { MapPin, Sparkles } from 'lucide-react'
+
 import { siteConfig } from '@/lib/site-config'
 import { asset, whatsappLink } from '@/lib/links'
+
 import { CtaLink } from './cta-link'
 import { WhatsAppIcon } from './brand-icons'
+import { useLocale } from './locale-provider'
 
 export function Hero() {
   const { hero } = siteConfig
+  const { translations: t } = useLocale()
 
   return (
     <section
@@ -40,6 +44,7 @@ export function Hero() {
                 className="size-4"
                 aria-hidden="true"
               />
+
               {siteConfig.location}
             </span>
 
@@ -48,7 +53,8 @@ export function Hero() {
                 className="size-4"
                 aria-hidden="true"
               />
-              Experiências inesquecíveis
+
+              {t.hero.eyebrow}
             </span>
           </div>
 
@@ -57,12 +63,12 @@ export function Hero() {
             id="hero-title"
             className="max-w-3xl font-serif text-4xl font-semibold leading-[1.05] text-white text-balance sm:text-5xl md:text-6xl lg:text-7xl"
           >
-            {hero.title}
+            {t.hero.title}
           </h1>
 
           {/* Subtítulo */}
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/90 text-pretty md:text-xl">
-            {hero.subtitle}
+            {t.hero.description}
           </p>
 
           {/* Botões */}
@@ -72,7 +78,7 @@ export function Hero() {
               variant="primary"
               className="vem-ver-button bg-white text-primary shadow-lg hover:bg-white/90"
             >
-              Conhecer os passeios
+              {t.hero.toursButton}
             </CtaLink>
 
             <CtaLink
@@ -82,14 +88,13 @@ export function Hero() {
               className="vem-ver-button"
             >
               <WhatsAppIcon />
-              Falar no WhatsApp
+              {t.hero.whatsappButton}
             </CtaLink>
           </div>
 
           {/* Informação de confiança */}
           <p className="mt-6 text-sm text-white/75">
-            Consulte disponibilidade, valores e detalhes do seu passeio
-            diretamente com a Vem Ver.
+            {t.tour.contactDescription}
           </p>
         </div>
 
