@@ -26,6 +26,7 @@ import {
   defaultLocale,
   isLocale,
   localeHtmlLang,
+  locales,
   type Locale,
 } from '@/lib/i18n'
 
@@ -198,22 +199,9 @@ function getLocalizedPath(
 }
 
 export function generateStaticParams() {
-  return localesAndTours()
-}
-
-function localesAndTours() {
   const params: PageParams[] = []
 
-  const supportedLocales = [
-    'en',
-    'es',
-    'fr',
-    'it',
-    'zh',
-    'ja',
-  ] as const
-
-  for (const locale of supportedLocales) {
+  for (const locale of locales) {
     for (const tour of allTours) {
       params.push({
         locale,
@@ -235,11 +223,11 @@ export async function generateMetadata({
     slug,
   } = await params
 
-  const locale: Locale = isLocale(
-    localeParam,
-  )
-    ? localeParam
-    : defaultLocale
+  if (!isLocale(localeParam)) {
+    return {}
+  }
+
+  const locale = localeParam
 
   const tour = allTours.find(
     (item) => item.slug === slug,
@@ -362,7 +350,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function LocalizedTourPage({
+export default async function TourPage({
   params,
 }: {
   params: Promise<PageParams>
@@ -441,12 +429,6 @@ export default async function LocalizedTourPage({
       (item) => item.slug !== tour.slug,
     )
     .slice(0, 3)
-
-  const localizedHomePath =
-    getLocalizedPath(
-      locale,
-      '/',
-    )
 
   const localizedToursPath =
     getLocalizedPath(
