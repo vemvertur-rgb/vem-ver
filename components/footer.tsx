@@ -8,16 +8,17 @@ export function Footer() {
   return (
     <footer className="bg-primary text-primary-foreground">
       <div className="mx-auto max-w-6xl px-4 py-14 md:px-6 md:py-16">
+
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr]">
 
           {/* Marca */}
-          <div>
+          <div className="vem-ver-fade-left">
             <Link
               href="/"
-              className="inline-flex items-center gap-3"
+              className="inline-flex items-center gap-3 transition-transform duration-200 hover:translate-x-1"
               aria-label="Vem Ver - Início"
             >
-              <div className="flex size-11 items-center justify-center rounded-xl bg-white/10">
+              <div className="flex size-11 items-center justify-center rounded-xl bg-white/10 transition-transform duration-300 hover:scale-105">
                 <span className="font-serif text-2xl font-bold">
                   V
                 </span>
@@ -42,7 +43,7 @@ export function Footer() {
           </div>
 
           {/* Navegação */}
-          <div>
+          <div className="vem-ver-fade-up">
             <h2 className="font-semibold">
               Navegação
             </h2>
@@ -56,7 +57,7 @@ export function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-sm text-primary-foreground/70 transition-colors hover:text-white"
+                      className="inline-block text-sm text-primary-foreground/70 transition-all duration-200 hover:translate-x-1 hover:text-white"
                     >
                       {link.label}
                     </Link>
@@ -66,7 +67,7 @@ export function Footer() {
                 <li>
                   <Link
                     href="/#galeria"
-                    className="text-sm text-primary-foreground/70 transition-colors hover:text-white"
+                    className="inline-block text-sm text-primary-foreground/70 transition-all duration-200 hover:translate-x-1 hover:text-white"
                   >
                     Galeria
                   </Link>
@@ -75,7 +76,7 @@ export function Footer() {
                 <li>
                   <Link
                     href="/#contato"
-                    className="text-sm text-primary-foreground/70 transition-colors hover:text-white"
+                    className="inline-block text-sm text-primary-foreground/70 transition-all duration-200 hover:translate-x-1 hover:text-white"
                   >
                     Contato
                   </Link>
@@ -85,7 +86,7 @@ export function Footer() {
           </div>
 
           {/* Contato */}
-          <div>
+          <div className="vem-ver-fade-right">
             <h2 className="font-semibold">
               Fale com a Vem Ver
             </h2>
@@ -97,7 +98,7 @@ export function Footer() {
                 href={whatsappLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-sm text-primary-foreground/70 transition-colors hover:text-white"
+                className="group flex items-center gap-3 text-sm text-primary-foreground/70 transition-all duration-200 hover:translate-x-1 hover:text-white"
               >
                 <WhatsAppIcon />
                 WhatsApp
@@ -108,7 +109,7 @@ export function Footer() {
                 href={siteConfig.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-sm text-primary-foreground/70 transition-colors hover:text-white"
+                className="group flex items-center gap-3 text-sm text-primary-foreground/70 transition-all duration-200 hover:translate-x-1 hover:text-white"
               >
                 <InstagramIcon />
                 {siteConfig.instagramHandle}
@@ -117,7 +118,7 @@ export function Footer() {
               {/* E-mail */}
               <a
                 href={`mailto:${siteConfig.email}`}
-                className="flex items-center gap-3 text-sm text-primary-foreground/70 transition-colors hover:text-white"
+                className="group flex items-center gap-3 text-sm text-primary-foreground/70 transition-all duration-200 hover:translate-x-1 hover:text-white"
               >
                 <Mail
                   className="size-5"
@@ -139,7 +140,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram da Vem Ver"
-                className="flex size-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
+                className="vem-ver-button flex size-10 items-center justify-center rounded-full bg-white/10"
               >
                 <InstagramIcon />
               </a>
@@ -149,7 +150,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp da Vem Ver"
-                className="flex size-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
+                className="vem-ver-button flex size-10 items-center justify-center rounded-full bg-white/10"
               >
                 <WhatsAppIcon />
               </a>
@@ -160,7 +161,7 @@ export function Footer() {
         </div>
 
         {/* Rodapé inferior */}
-        <div className="mt-12 border-t border-primary-foreground/10 pt-6">
+        <div className="vem-ver-fade-up mt-12 border-t border-primary-foreground/10 pt-6">
 
           <div className="flex flex-col gap-3 text-sm text-primary-foreground/60 md:flex-row md:items-center md:justify-between">
 
@@ -175,6 +176,7 @@ export function Footer() {
           </div>
 
         </div>
+
       </div>
     </footer>
   )
