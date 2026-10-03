@@ -6,6 +6,7 @@ import { Footer } from '@/components/footer'
 import { WhatsAppButton } from '@/components/whatsapp-button'
 import { StructuredData } from '@/components/structured-data'
 import { CurrencyProvider } from '@/components/currency-provider'
+import { LocaleProvider } from '@/components/locale-provider'
 import { asset } from '@/lib/links'
 
 import './globals.css'
@@ -134,26 +135,28 @@ export default function RootLayout({
       className={`${inter.variable} ${fraunces.variable}`}
     >
       <body className="antialiased">
-        <CurrencyProvider>
-          <StructuredData />
+        <LocaleProvider>
+          <CurrencyProvider>
+            <StructuredData />
 
-          <a
-            href="#conteudo"
-            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
-          >
-            Pular para o conteúdo
-          </a>
+            <a
+              href="#conteudo"
+              className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+            >
+              Pular para o conteúdo
+            </a>
 
-          <Header />
+            <Header />
 
-          <main id="conteudo">
-            {children}
-          </main>
+            <main id="conteudo">
+              {children}
+            </main>
 
-          <Footer />
+            <Footer />
 
-          <WhatsAppButton />
-        </CurrencyProvider>
+            <WhatsAppButton />
+          </CurrencyProvider>
+        </LocaleProvider>
       </body>
     </html>
   )
