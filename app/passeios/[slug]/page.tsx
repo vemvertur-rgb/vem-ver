@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+
 import {
   ArrowLeft,
   CalendarClock,
@@ -27,6 +28,10 @@ import {
   localeHtmlLang,
   type Locale,
 } from '@/lib/i18n'
+
+import {
+  getTourTranslation,
+} from '@/lib/tour-translations'
 
 import { StructuredData } from '@/components/structured-data'
 import { WhatsAppIcon } from '@/components/brand-icons'
@@ -225,8 +230,10 @@ export async function generateMetadata({
 }: {
   params: Promise<PageParams>
 }): Promise<Metadata> {
-  const { locale: localeParam, slug } =
-    await params
+  const {
+    locale: localeParam,
+    slug,
+  } = await params
 
   const locale: Locale = isLocale(
     localeParam,
@@ -242,10 +249,36 @@ export async function generateMetadata({
     return {}
   }
 
-  const pageTitle = `${tour.name} | Vem Ver Turismo`
+  const localizedTour =
+    getTourTranslation(
+      tour.slug,
+      locale,
+    )
+
+  const displayTour =
+    localizedTour || {
+      name: tour.name,
+      shortDescription:
+        tour.shortDescription,
+      description:
+        tour.description,
+      imageAlt:
+        tour.imageAlt,
+      priceInfo:
+        tour.priceInfo,
+      duration:
+        tour.duration,
+      schedule:
+        tour.schedule,
+      highlights:
+        tour.highlights,
+    }
+
+  const pageTitle =
+    `${displayTour.name} | Vem Ver Turismo`
 
   const pageDescription =
-    tour.shortDescription
+    displayTour.shortDescription
 
   const localizedPath =
     getLocalizedPath(
@@ -259,28 +292,37 @@ export async function generateMetadata({
   return {
     title: pageTitle,
 
-    description: pageDescription,
+    description:
+      pageDescription,
 
     keywords: [
-      tour.name,
+      displayTour.name,
       'Lençóis Maranhenses',
-      'passeios Lençóis Maranhenses',
-      'turismo Maranhão',
-      'turismo Barreirinhas',
-      'passeios em Barreirinhas',
+      'Lençóis Maranhenses tours',
+      'Maranhão tourism',
+      'Barreirinhas',
+      'Brazil tourism',
       'Vem Ver Turismo',
     ],
 
     alternates: {
       canonical: localizedPath,
+
       languages: {
-        'pt-BR': `/passeios/${tour.slug}/`,
-        en: `/en/passeios/${tour.slug}/`,
-        es: `/es/passeios/${tour.slug}/`,
-        fr: `/fr/passeios/${tour.slug}/`,
-        it: `/it/passeios/${tour.slug}/`,
-        'zh-CN': `/zh/passeios/${tour.slug}/`,
-        ja: `/ja/passeios/${tour.slug}/`,
+        'pt-BR':
+          `/passeios/${tour.slug}/`,
+        en:
+          `/en/passeios/${tour.slug}/`,
+        es:
+          `/es/passeios/${tour.slug}/`,
+        fr:
+          `/fr/passeios/${tour.slug}/`,
+        it:
+          `/it/passeios/${tour.slug}/`,
+        'zh-CN':
+          `/zh/passeios/${tour.slug}/`,
+        ja:
+          `/ja/passeios/${tour.slug}/`,
       },
     },
 
@@ -290,14 +332,15 @@ export async function generateMetadata({
         htmlLang.replace('-', '_'),
       siteName: 'VEM VER Turismo',
       title: pageTitle,
-      description: pageDescription,
+      description:
+        pageDescription,
       url: localizedPath,
       images: [
         {
           url: asset(tour.image),
           width: 1200,
           height: 900,
-          alt: tour.imageAlt,
+          alt: displayTour.imageAlt,
         },
       ],
     },
@@ -305,7 +348,8 @@ export async function generateMetadata({
     twitter: {
       card: 'summary_large_image',
       title: pageTitle,
-      description: pageDescription,
+      description:
+        pageDescription,
       images: [
         asset(tour.image),
       ],
@@ -345,6 +389,31 @@ export default async function LocalizedTourPage({
   const content =
     contentByLocale[locale]
 
+  const localizedTour =
+    getTourTranslation(
+      tour.slug,
+      locale,
+    )
+
+  const displayTour =
+    localizedTour || {
+      name: tour.name,
+      shortDescription:
+        tour.shortDescription,
+      description:
+        tour.description,
+      imageAlt:
+        tour.imageAlt,
+      priceInfo:
+        tour.priceInfo,
+      duration:
+        tour.duration,
+      schedule:
+        tour.schedule,
+      highlights:
+        tour.highlights,
+    }
+
   const info = [
     {
       icon: Tag,
@@ -355,26 +424,29 @@ export default async function LocalizedTourPage({
       icon: Clock,
       label: content.duration,
       value:
-        tour.duration ||
+        displayTour.duration ||
         siteConfig.fallbackInfo,
     },
     {
       icon: CalendarClock,
       label: content.schedule,
       value:
-        tour.schedule ||
+        displayTour.schedule ||
         siteConfig.fallbackInfo,
     },
   ]
 
-  const others = tours
+  const others = allTours
     .filter(
       (item) => item.slug !== tour.slug,
     )
     .slice(0, 3)
 
   const localizedHomePath =
-    getLocalizedPath(locale, '/')
+    getLocalizedPath(
+      locale,
+      '/',
+    )
 
   const localizedToursPath =
     getLocalizedPath(
@@ -414,7 +486,7 @@ export default async function LocalizedTourPage({
             <div className="vem-ver-fade-left relative aspect-[4/3] overflow-hidden rounded-3xl bg-muted shadow-sm">
               <Image
                 src={asset(tour.image)}
-                alt={tour.imageAlt}
+                alt={displayTour.imageAlt}
                 fill
                 priority
                 sizes="(min-width: 1024px) 50vw, 100vw"
@@ -425,6 +497,7 @@ export default async function LocalizedTourPage({
             <div className="vem-ver-fade-right flex flex-col">
 
               <div>
+
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
                   {tour.type === 'privativo'
                     ? content.moreExperiences
@@ -432,12 +505,13 @@ export default async function LocalizedTourPage({
                 </p>
 
                 <h1 className="mt-3 font-serif text-4xl font-semibold leading-tight text-balance md:text-5xl">
-                  {tour.name}
+                  {displayTour.name}
                 </h1>
 
                 <p className="mt-5 whitespace-pre-line text-lg leading-relaxed text-muted-foreground text-pretty">
-                  {tour.description}
+                  {displayTour.description}
                 </p>
+
               </div>
 
               <dl className="mt-8 grid gap-3">
@@ -452,6 +526,7 @@ export default async function LocalizedTourPage({
                       key={label}
                       className="vem-ver-card flex items-start gap-4 rounded-2xl border border-border bg-sand p-4"
                     >
+
                       <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-transform duration-300 hover:scale-105">
                         <Icon
                           className="size-5"
@@ -466,6 +541,7 @@ export default async function LocalizedTourPage({
                         </dt>
 
                         <dd className="mt-1 font-semibold">
+
                           {label ===
                           content.price ? (
                             <LocalizedPrice
@@ -481,26 +557,29 @@ export default async function LocalizedTourPage({
                           ) : (
                             value
                           )}
+
                         </dd>
 
                         {label ===
                           content.price &&
-                          tour.priceInfo && (
+                          displayTour.priceInfo && (
                             <p className="mt-1 text-sm text-muted-foreground">
                               {
-                                tour.priceInfo
+                                displayTour.priceInfo
                               }
                             </p>
                           )}
 
                       </div>
+
                     </div>
                   ),
                 )}
 
               </dl>
 
-              {tour.highlights.length > 0 && (
+              {displayTour.highlights.length >
+                0 && (
                 <div className="vem-ver-fade-up mt-8">
 
                   <h2 className="text-lg font-semibold">
@@ -508,7 +587,7 @@ export default async function LocalizedTourPage({
                   </h2>
 
                   <ul className="mt-3 list-inside list-disc space-y-2 text-muted-foreground">
-                    {tour.highlights.map(
+                    {displayTour.highlights.map(
                       (highlight) => (
                         <li key={highlight}>
                           {highlight}
@@ -525,22 +604,20 @@ export default async function LocalizedTourPage({
                 <CtaLink
                   href={whatsappLink(
                     tourWhatsappMessage(
-                      tour.name,
+                      displayTour.name,
                     ),
                   )}
                   external
                   variant="whatsapp"
                   className="vem-ver-button w-full sm:w-fit"
-                  ariaLabel={`${content.whatsapp}: ${tour.name}`}
+                  ariaLabel={`${content.whatsapp}: ${displayTour.name}`}
                 >
                   <WhatsAppIcon />
                   {content.whatsapp}
                 </CtaLink>
 
                 <p className="mt-3 text-sm text-muted-foreground">
-                  {
-                    content.whatsappDescription
-                  }
+                  {content.whatsappDescription}
                 </p>
 
               </div>
@@ -559,9 +636,7 @@ export default async function LocalizedTourPage({
           <div className="vem-ver-fade-up max-w-2xl">
 
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
-              {
-                content.moreExperiences
-              }
+              {content.moreExperiences}
             </p>
 
             <h2
@@ -572,28 +647,32 @@ export default async function LocalizedTourPage({
             </h2>
 
             <p className="mt-3 text-lg leading-relaxed text-muted-foreground">
-              {
-                content.otherToursDescription
-              }
+              {content.otherToursDescription}
             </p>
 
           </div>
 
           <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
-            {others.map((item, index) => (
-              <li
-                key={item.slug}
-                className="vem-ver-float-in flex"
-                style={{
-                  animationDelay: `${index * 120}ms`,
-                }}
-              >
-                <TourCard tour={item} />
-              </li>
-            ))}
+            {others.map(
+              (item, index) => (
+                <li
+                  key={item.slug}
+                  className="vem-ver-float-in flex"
+                  style={{
+                    animationDelay:
+                      `${index * 120}ms`,
+                  }}
+                >
+                  <TourCard
+                    tour={item}
+                  />
+                </li>
+              ),
+            )}
 
           </ul>
+
         </div>
       </section>
     </>
