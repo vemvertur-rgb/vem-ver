@@ -1,6 +1,9 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import {
+  useEffect,
+  useState,
+} from 'react'
 
 import {
   defaultCurrency,
@@ -8,8 +11,13 @@ import {
   type CurrencyCode,
 } from '@/lib/currency'
 
-import { getExchangeRates } from '@/lib/exchange-rate'
-import { useCurrency } from './currency-provider'
+import {
+  getExchangeRates,
+} from '@/lib/exchange-rate'
+
+import {
+  useCurrency,
+} from './currency-provider'
 
 type LocalizedPriceProps = {
   amount: number
@@ -17,53 +25,106 @@ type LocalizedPriceProps = {
   className?: string
 }
 
+const REFRESH_INTERVAL =
+  15 * 60 * 1000
+
 export function LocalizedPrice({
   amount,
   locale = 'pt-BR',
   className,
 }: LocalizedPriceProps) {
-  const { currency } = useCurrency()
+  const {
+    currency,
+  } = useCurrency()
 
-  const [rates, setRates] = useState<
-    Partial<Record<CurrencyCode, number>>
+  const [
+    rates,
+    setRates,
+  ] = useState<
+    Partial<
+      Record<
+        CurrencyCode,
+        number
+      >
+    >
   >({
     BRL: 1,
   })
+
+  const [
+    loading,
+    setLoading,
+  ] = useState(
+    currency !== defaultCurrency,
+  )
 
   useEffect(() => {
     let active = true
 
     async function loadRates() {
+      setLoading(true)
+
       const nextRates =
         await getExchangeRates()
 
-      if (active) {
-        setRates(nextRates)
+      if (!active) {
+        return
       }
+
+      setRates(nextRates)
+      setLoading(false)
     }
 
-    loadRates()
+    if (
+      currency !== defaultCurrency
+    ) {
+      loadRates()
+    } else {
+      setLoading(false)
+    }
+
+    const intervalId =
+      window.setInterval(
+        () => {
+          if (
+            currency !==
+            defaultCurrency
+          ) {
+            loadRates()
+          }
+        },
+        REFRESH_INTERVAL,
+      )
 
     return () => {
       active = false
+      window.clearInterval(
+        intervalId,
+      )
     }
-  }, [])
+  }, [currency])
 
   const selectedCurrency =
     currency || defaultCurrency
 
-  const rate = rates[selectedCurrency]
+  const rate =
+    rates[selectedCurrency]
+
+  const hasRate =
+    selectedCurrency ===
+      defaultCurrency ||
+    typeof rate === 'number'
 
   const convertedAmount =
-    selectedCurrency === 'BRL'
+    selectedCurrency ===
+      defaultCurrency
       ? amount
-      : typeof rate === 'number'
-        ? amount * rate
+      : hasRate
+        ? amount * (rate as number)
         : amount
 
   const formatted =
-    selectedCurrency === 'BRL' ||
-    typeof rate === 'number'
+    hasRate
       ? formatCurrency(
           convertedAmount,
           selectedCurrency,
@@ -71,13 +132,20 @@ export function LocalizedPrice({
         )
       : formatCurrency(
           amount,
-          'BRL',
+          defaultCurrency,
           'pt-BR',
         )
 
   return (
-    <span className={className}>
-      {formatted}
+    <span
+      className={className}
+      aria-live="polite"
+    >
+      {loading &&
+      selectedCurrency !==
+        defaultCurrency
+        ? `${formatted}…`
+        : formatted}
     </span>
   )
 }
