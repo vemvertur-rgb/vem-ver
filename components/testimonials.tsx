@@ -211,14 +211,17 @@ export function Testimonials() {
         {/* Depoimentos aprovados */}
         {!loading && testimonials.length > 0 && (
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {testimonials.map((testimonial) => {
+            {testimonials.map((testimonial, index) => {
               const photoUrls = getPhotoUrls(testimonial.fotos)
               const tourNames = getTourNames(testimonial.passeio)
 
               return (
                 <article
                   key={testimonial.id}
-                  className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                  className="vem-ver-card vem-ver-float-in flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                  style={{
+                    animationDelay: `${index * 100}ms`,
+                  }}
                 >
                   {/* Estrelas */}
                   <div
@@ -251,7 +254,7 @@ export function Testimonials() {
                           key={`${photo}-${index}`}
                           type="button"
                           onClick={() => setSelectedPhoto(photo)}
-                          className="group relative overflow-hidden rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                          className="vem-ver-image group relative overflow-hidden rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                           aria-label={`Ampliar foto enviada por ${testimonial.nome}`}
                         >
                           <img
@@ -293,7 +296,7 @@ export function Testimonials() {
         )}
 
         {!loading && testimonials.length === 0 && (
-          <div className="mt-12 rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
+          <div className="vem-ver-fade-up mt-12 rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
             <p className="text-muted-foreground">
               Seja o primeiro a compartilhar sua experiência com a Vem Ver.
             </p>
@@ -301,7 +304,7 @@ export function Testimonials() {
         )}
 
         {/* Formulário de depoimento */}
-        <div className="mx-auto mt-16 max-w-3xl rounded-2xl border border-border bg-card p-6 shadow-sm md:p-8">
+        <div className="vem-ver-fade-up mx-auto mt-16 max-w-3xl rounded-2xl border border-border bg-card p-6 shadow-sm md:p-8">
           <div className="mb-8">
             <h3 className="text-2xl font-semibold">
               Conte como foi sua experiência
@@ -400,7 +403,7 @@ export function Testimonials() {
                       aria-label={`${starNumber} estrela${
                         starNumber > 1 ? 's' : ''
                       }`}
-                      className="rounded-md p-1 transition-transform hover:scale-110"
+                      className="vem-ver-button rounded-md p-1 transition-transform hover:scale-110"
                     >
                       <Star
                         className={`size-7 ${
@@ -481,7 +484,7 @@ export function Testimonials() {
             <button
               type="submit"
               disabled={sending}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 font-semibold text-primary-foreground transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+              className="vem-ver-button flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 font-semibold text-primary-foreground transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {sending && <Loader2 className="size-4 animate-spin" />}
 
