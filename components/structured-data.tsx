@@ -69,12 +69,45 @@ export function StructuredData({
       }
     : null
 
+  const breadcrumbData = tour
+    ? {
+        '@type': 'BreadcrumbList',
+        '@id': `${siteUrl}/passeios/${tour.slug}/#breadcrumb`,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Início',
+            item: `${siteUrl}/`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name:
+              tour.type === 'privativo'
+                ? 'Experiências privativas'
+                : 'Passeios',
+            item:
+              tour.type === 'privativo'
+                ? `${siteUrl}/#privativos`
+                : `${siteUrl}/#passeios`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: tour.name,
+          },
+        ],
+      }
+    : null
+
   const data = {
     '@context': 'https://schema.org',
     '@graph': [
       organization,
       destination,
       ...(tourData ? [tourData] : []),
+      ...(breadcrumbData ? [breadcrumbData] : []),
     ],
   }
 
