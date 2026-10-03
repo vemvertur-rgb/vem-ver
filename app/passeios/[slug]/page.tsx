@@ -79,7 +79,7 @@ const contentByLocale: Record<
     highlights: 'Destaques',
     whatsapp: 'Consultar pelo WhatsApp',
     whatsappDescription:
-      'Consulte disponibilidade, condições e detalhes diretamente com a Vem Ver. Aqui está o ponto principal:',
+      'Consulte disponibilidade, condições e detalhes diretamente com a Vem Ver.',
     moreExperiences: 'Mais experiências',
     otherTours: 'Conheça outros passeios',
     otherToursDescription:
@@ -187,10 +187,6 @@ function getLocalizedPath(
   locale: Locale,
   path: string,
 ): string {
-  if (locale === defaultLocale) {
-    return path
-  }
-
   if (path === '/') {
     return `/${locale}/`
   }
@@ -302,7 +298,7 @@ export async function generateMetadata({
 
       languages: {
         'pt-BR':
-          `/passeios/${tour.slug}/`,
+          `/pt/passeios/${tour.slug}/`,
         en:
           `/en/passeios/${tour.slug}/`,
         es:
@@ -433,12 +429,6 @@ export default async function LocalizedTourPage({
       (item) => item.slug !== tour.slug,
     )
     .slice(0, 3)
-
-  const localizedHomePath =
-    getLocalizedPath(
-      locale,
-      '/',
-    )
 
   const localizedToursPath =
     getLocalizedPath(
