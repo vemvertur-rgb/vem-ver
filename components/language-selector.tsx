@@ -31,18 +31,16 @@ function getLocalizedPath(
 
   const cleanPath =
     segments.length > 0
-      ? `/${segments.join('/')}`
+      ? `/${segments.join('/')}/`
       : '/'
 
   if (locale === defaultLocale) {
     return cleanPath
   }
 
-  if (cleanPath === '/') {
-    return `/${locale}/`
-  }
-
-  return `/{$locale}${cleanPath.endsWith('/') ? cleanPath : `${cleanPath}/`}`
+  return cleanPath === '/'
+    ? `/${locale}/`
+    : `/${locale}${cleanPath}`
 }
 
 export function LanguageSelector() {
@@ -50,7 +48,9 @@ export function LanguageSelector() {
   const router = useRouter()
 
   const currentLocale =
-    getLocaleFromPathname(pathname)
+    getLocaleFromPathname(
+      pathname,
+    )
 
   function handleChange(
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -58,16 +58,18 @@ export function LanguageSelector() {
     const nextLocale =
       event.target.value as Locale
 
-    const nextPath = getLocalizedPath(
-      pathname,
-      nextLocale,
-    )
+    const nextPath =
+      getLocalizedPath(
+        pathname,
+        nextLocale,
+      )
 
     router.push(nextPath)
   }
 
   return (
     <div className="relative">
+
       <label
         htmlFor="language-selector"
         className="sr-only"
@@ -82,15 +84,19 @@ export function LanguageSelector() {
         aria-label="Selecionar idioma"
         className="min-h-10 cursor-pointer appearance-none rounded-full border border-border bg-background px-3 pr-8 text-sm font-medium text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
-        {locales.map((locale) => (
-          <option
-            key={locale}
-            value={locale}
-          >
-            {localeFlags[locale]}{' '}
-            {localeLabels[locale]}
-          </option>
-        ))}
+
+        {locales.map(
+          (locale) => (
+            <option
+              key={locale}
+              value={locale}
+            >
+              {localeFlags[locale]}{' '}
+              {localeLabels[locale]}
+            </option>
+          ),
+        )}
+
       </select>
 
       <span
@@ -99,6 +105,7 @@ export function LanguageSelector() {
       >
         ▼
       </span>
+
     </div>
   )
 }
