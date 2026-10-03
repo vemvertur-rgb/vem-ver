@@ -147,7 +147,7 @@ export function TourCard({
 
         <div className="mt-5">
           <LocalizedPrice
-            tour={tour}
+            price={tour.price}
             locale={activeLocale}
           />
         </div>
