@@ -14,7 +14,7 @@ export function Contact() {
       <div className="mx-auto max-w-6xl">
 
         {/* Título */}
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="vem-ver-fade-up mx-auto max-w-3xl text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
             Fale com a Vem Ver
           </p>
@@ -36,7 +36,7 @@ export function Contact() {
         <div className="mt-12 grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
 
           {/* Informações */}
-          <div className="order-2 rounded-3xl bg-primary p-7 text-primary-foreground shadow-sm md:p-8 lg:order-1">
+          <div className="vem-ver-fade-left order-2 rounded-3xl bg-primary p-7 text-primary-foreground shadow-sm md:p-8 lg:order-1">
 
             <h3 className="font-serif text-2xl font-semibold">
               Entre em contato
@@ -54,9 +54,9 @@ export function Contact() {
                 href={whatsappLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-start gap-4 rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-4 transition-colors hover:bg-primary-foreground/10"
+                className="vem-ver-card group flex items-start gap-4 rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-4"
               >
-                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary-foreground/10">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary-foreground/10 transition-transform duration-300 group-hover:scale-105">
                   <WhatsAppIcon />
                 </div>
 
@@ -76,9 +76,9 @@ export function Contact() {
                 href={siteConfig.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-start gap-4 rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-4 transition-colors hover:bg-primary-foreground/10"
+                className="vem-ver-card group flex items-start gap-4 rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-4"
               >
-                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary-foreground/10">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary-foreground/10 transition-transform duration-300 group-hover:scale-105">
                   <InstagramIcon />
                 </div>
 
@@ -96,9 +96,9 @@ export function Contact() {
               {/* E-mail */}
               <a
                 href={`mailto:${siteConfig.email}`}
-                className="flex items-start gap-4 rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-4 transition-colors hover:bg-primary-foreground/10"
+                className="vem-ver-card group flex items-start gap-4 rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-4"
               >
-                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary-foreground/10">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary-foreground/10 transition-transform duration-300 group-hover:scale-105">
                   <Mail
                     className="size-5"
                     aria-hidden="true"
@@ -117,8 +117,8 @@ export function Contact() {
               </a>
 
               {/* Localização */}
-              <div className="flex items-start gap-4 rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-4">
-                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary-foreground/10">
+              <div className="vem-ver-card group flex items-start gap-4 rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-4">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary-foreground/10 transition-transform duration-300 group-hover:scale-105">
                   <MapPin
                     className="size-5"
                     aria-hidden="true"
@@ -144,7 +144,7 @@ export function Contact() {
                 href={whatsappLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 font-semibold text-primary transition-colors hover:bg-white/90"
+                className="vem-ver-button inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 font-semibold text-primary transition-colors hover:bg-white/90"
               >
                 <WhatsAppIcon />
                 Falar pelo WhatsApp
@@ -154,11 +154,11 @@ export function Contact() {
           </div>
 
           {/* Formulário */}
-          <div className="order-1 rounded-3xl border border-border bg-card p-6 shadow-sm md:p-8 lg:order-2">
+          <div className="vem-ver-fade-right order-1 rounded-3xl border border-border bg-card p-6 shadow-sm transition-shadow duration-300 hover:shadow-md md:p-8 lg:order-2">
 
             <div className="mb-6">
               <div className="flex items-center gap-3">
-                <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-transform duration-300 hover:scale-105">
                   <MessageCircle
                     className="size-5"
                     aria-hidden="true"
