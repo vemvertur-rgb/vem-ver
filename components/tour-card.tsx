@@ -17,6 +17,10 @@ import {
   getLocaleFromPathname,
 } from '@/lib/i18n'
 
+import {
+  getTourTranslation,
+} from '@/lib/tour-translations'
+
 import { WhatsAppIcon } from './brand-icons'
 import { ctaClass } from './cta-link'
 import { LocalizedPrice } from './localized-price'
@@ -121,6 +125,31 @@ export function TourCard({
     contentByLocale[locale] ||
     contentByLocale.pt
 
+  const localizedTour =
+    getTourTranslation(
+      tour.slug,
+      locale,
+    )
+
+  const displayTour =
+    localizedTour || {
+      name: tour.name,
+      shortDescription:
+        tour.shortDescription,
+      description:
+        tour.description,
+      imageAlt:
+        tour.imageAlt,
+      priceInfo:
+        tour.priceInfo,
+      duration:
+        tour.duration,
+      schedule:
+        tour.schedule,
+      highlights:
+        tour.highlights,
+    }
+
   function goToContact() {
     const contact =
       document.getElementById(
@@ -166,7 +195,7 @@ export function TourCard({
 
         <Image
           src={asset(tour.image)}
-          alt={tour.imageAlt}
+          alt={displayTour.imageAlt}
           fill
           loading="lazy"
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
@@ -186,14 +215,14 @@ export function TourCard({
         <div className="flex flex-1 flex-col gap-3">
 
           <h3 className="font-serif text-2xl font-semibold leading-tight text-balance">
-            {tour.name}
+            {displayTour.name}
           </h3>
 
           <p className="leading-relaxed text-muted-foreground">
-            {tour.shortDescription}
+            {displayTour.shortDescription}
           </p>
 
-          {tour.duration && (
+          {displayTour.duration && (
             <div className="flex items-center gap-2 pt-1 text-sm text-muted-foreground">
 
               <Clock
@@ -202,7 +231,7 @@ export function TourCard({
               />
 
               <span>
-                {tour.duration}
+                {displayTour.duration}
               </span>
 
             </div>
@@ -223,6 +252,11 @@ export function TourCard({
                     amount={
                       tour.originalPrice
                     }
+                    locale={
+                      locale === 'pt'
+                        ? 'pt-BR'
+                        : locale
+                    }
                   />
                 </span>
 
@@ -234,11 +268,16 @@ export function TourCard({
               <span className="text-2xl font-bold text-primary">
                 <LocalizedPrice
                   amount={tour.price}
+                  locale={
+                    locale === 'pt'
+                      ? 'pt-BR'
+                      : locale
+                  }
                 />
               </span>
 
               <span className="text-sm text-muted-foreground">
-                {tour.priceInfo}
+                {displayTour.priceInfo}
               </span>
 
             </div>
@@ -258,7 +297,7 @@ export function TourCard({
           <button
             type="button"
             onClick={goToContact}
-            aria-label={`${content.consultInformation} ${tour.name}`}
+            aria-label={`${content.consultInformation} ${displayTour.name}`}
             className={ctaClass(
               'whatsapp',
               'w-full',
@@ -270,7 +309,7 @@ export function TourCard({
 
           <Link
             href={tourPath}
-            aria-label={`${content.viewDetails}: ${tour.name}`}
+            aria-label={`${content.viewDetails}: ${displayTour.name}`}
             className={ctaClass(
               'outline',
               'w-full',
