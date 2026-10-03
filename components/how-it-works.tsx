@@ -12,12 +12,15 @@ export function HowItWorks() {
       className="bg-sand px-4 py-20 md:px-6 md:py-28"
     >
       <div className="mx-auto max-w-6xl">
-        <SectionHeading
-          id="como-funciona-title"
-          eyebrow="Como funciona"
-          title="Seu passeio começa aqui"
-          description="Escolha sua experiência, fale com a Vem Ver e prepare-se para conhecer os Lençóis Maranhenses."
-        />
+
+        <div className="vem-ver-fade-up">
+          <SectionHeading
+            id="como-funciona-title"
+            eyebrow="Como funciona"
+            title="Seu passeio começa aqui"
+            description="Escolha sua experiência, fale com a Vem Ver e prepare-se para conhecer os Lençóis Maranhenses."
+          />
+        </div>
 
         <ol className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {howItWorks.map((step, index) => {
@@ -26,24 +29,27 @@ export function HowItWorks() {
             return (
               <li
                 key={step.number}
-                className="vem-ver-card vem-ver-float-in relative flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                className="vem-ver-card vem-ver-float-in group relative flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
                 style={{
-                  animationDelay: `${index * 100}ms`,
+                  animationDelay: `${index * 120}ms`,
                 }}
               >
-                {/* Número */}
                 <div className="mb-5 flex items-center justify-between">
-                  <div className="flex size-12 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground">
+
+                  {/* Número */}
+                  <div className="flex size-12 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground transition-transform duration-300 group-hover:scale-110">
                     {step.number}
                   </div>
 
-                  <Icon
-                    className="size-6 text-primary"
-                    aria-hidden="true"
-                  />
+                  {/* Ícone */}
+                  <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-all duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground">
+                    <Icon
+                      className="size-5"
+                      aria-hidden="true"
+                    />
+                  </div>
                 </div>
 
-                {/* Conteúdo */}
                 <h3 className="font-serif text-xl font-semibold">
                   {step.title}
                 </h3>
@@ -51,6 +57,11 @@ export function HowItWorks() {
                 <p className="mt-2 leading-relaxed text-muted-foreground">
                   {step.text}
                 </p>
+
+                {/* Linha decorativa */}
+                <div className="mt-auto pt-6">
+                  <div className="h-1 w-0 rounded-full bg-primary transition-all duration-500 group-hover:w-12" />
+                </div>
               </li>
             )
           })}
