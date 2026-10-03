@@ -31,7 +31,7 @@ export function Hero() {
       <div className="mx-auto flex min-h-[90svh] max-w-7xl flex-col justify-center gap-10 px-4 pb-16 pt-28 md:min-h-[88vh] md:flex-row md:items-center md:justify-between md:gap-12 md:px-6 md:pb-20 md:pt-32">
 
         {/* Texto */}
-        <div className="order-2 flex max-w-3xl flex-col md:order-1 md:flex-1">
+        <div className="order-2 flex max-w-3xl flex-col md:order-1 md:flex-1 vem-ver-fade-left">
 
           {/* Localização */}
           <div className="mb-5 flex flex-wrap items-center gap-2">
@@ -70,7 +70,7 @@ export function Hero() {
             <CtaLink
               href="/#passeios"
               variant="primary"
-              className="bg-white text-primary shadow-lg hover:bg-white/90"
+              className="vem-ver-button bg-white text-primary shadow-lg hover:bg-white/90"
             >
               Conhecer os passeios
             </CtaLink>
@@ -79,6 +79,7 @@ export function Hero() {
               href={whatsappLink()}
               external
               variant="whatsapp"
+              className="vem-ver-button"
             >
               <WhatsAppIcon />
               Falar no WhatsApp
@@ -93,7 +94,7 @@ export function Hero() {
         </div>
 
         {/* Logo */}
-        <div className="order-1 flex justify-center md:order-2 md:shrink-0">
+        <div className="order-1 flex justify-center md:order-2 md:shrink-0 vem-ver-float-in">
           <Image
             src={asset('/images/logo-vemver.png')}
             alt="Logo Vem Ver Turismo"
