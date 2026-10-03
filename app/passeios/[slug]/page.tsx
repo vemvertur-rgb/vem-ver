@@ -21,10 +21,18 @@ import {
   whatsappLink,
 } from '@/lib/links'
 
+import {
+  defaultLocale,
+  isLocale,
+  localeHtmlLang,
+  type Locale,
+} from '@/lib/i18n'
+
 import { StructuredData } from '@/components/structured-data'
 import { WhatsAppIcon } from '@/components/brand-icons'
 import { CtaLink } from '@/components/cta-link'
 import { TourCard } from '@/components/tour-card'
+import { LocalizedPrice } from '@/components/localized-price'
 
 export const dynamicParams = false
 
@@ -33,18 +41,198 @@ const allTours = [
   ...privateExperiences,
 ]
 
+type PageParams = {
+  locale: string
+  slug: string
+}
+
+type LocalizedTourContent = {
+  type: string
+  back: string
+  price: string
+  duration: string
+  schedule: string
+  highlights: string
+  whatsapp: string
+  whatsappDescription: string
+  moreExperiences: string
+  otherTours: string
+  otherToursDescription: string
+}
+
+const contentByLocale: Record<
+  Locale,
+  LocalizedTourContent
+> = {
+  pt: {
+    type: 'Passeio',
+    back: 'Voltar para os passeios',
+    price: 'Valor',
+    duration: 'Duração',
+    schedule: 'Horário e disponibilidade',
+    highlights: 'Destaques',
+    whatsapp: 'Consultar pelo WhatsApp',
+    whatsappDescription:
+      'Consulte disponibilidade, condições e detalhes diretamente com a Vem Ver.',
+    moreExperiences: 'Mais experiências',
+    otherTours: 'Conheça outros passeios',
+    otherToursDescription:
+      'Encontre outras experiências para aproveitar os Lençóis Maranhenses.',
+  },
+
+  en: {
+    type: 'Tour',
+    back: 'Back to tours',
+    price: 'Price',
+    duration: 'Duration',
+    schedule: 'Schedule and availability',
+    highlights: 'Highlights',
+    whatsapp: 'Ask via WhatsApp',
+    whatsappDescription:
+      'Check availability, conditions and details directly with Vem Ver.',
+    moreExperiences: 'More experiences',
+    otherTours: 'Discover other tours',
+    otherToursDescription:
+      'Find other experiences to enjoy in Lençóis Maranhenses.',
+  },
+
+  es: {
+    type: 'Paseo',
+    back: 'Volver a los paseos',
+    price: 'Precio',
+    duration: 'Duración',
+    schedule: 'Horario y disponibilidad',
+    highlights: 'Destacados',
+    whatsapp: 'Consultar por WhatsApp',
+    whatsappDescription:
+      'Consulta disponibilidad, condiciones y detalles directamente con Vem Ver.',
+    moreExperiences: 'Más experiencias',
+    otherTours: 'Conoce otros paseos',
+    otherToursDescription:
+      'Encuentra otras experiencias para disfrutar de los Lençóis Maranhenses.',
+  },
+
+  fr: {
+    type: 'Excursion',
+    back: 'Retour aux excursions',
+    price: 'Prix',
+    duration: 'Durée',
+    schedule: 'Horaires et disponibilité',
+    highlights: 'Points forts',
+    whatsapp: 'Consulter sur WhatsApp',
+    whatsappDescription:
+      'Consultez les disponibilités, conditions et détails directement avec Vem Ver.',
+    moreExperiences: 'Plus d’expériences',
+    otherTours: 'Découvrez d’autres excursions',
+    otherToursDescription:
+      'Découvrez d’autres expériences pour profiter des Lençóis Maranhenses.',
+  },
+
+  it: {
+    type: 'Escursione',
+    back: 'Torna alle escursioni',
+    price: 'Prezzo',
+    duration: 'Durata',
+    schedule: 'Orari e disponibilità',
+    highlights: 'Punti salienti',
+    whatsapp: 'Consulta su WhatsApp',
+    whatsappDescription:
+      'Consulta disponibilità, condizioni e dettagli direttamente con Vem Ver.',
+    moreExperiences: 'Altre esperienze',
+    otherTours: 'Scopri altre escursioni',
+    otherToursDescription:
+      'Trova altre esperienze per vivere i Lençóis Maranhenses.',
+  },
+
+  zh: {
+    type: '游览项目',
+    back: '返回游览项目',
+    price: '价格',
+    duration: '时长',
+    schedule: '时间与可用情况',
+    highlights: '亮点',
+    whatsapp: '通过 WhatsApp 咨询',
+    whatsappDescription:
+      '可直接联系 Vem Ver 查询可用日期、条件和详细信息。',
+    moreExperiences: '更多体验',
+    otherTours: '探索其他游览项目',
+    otherToursDescription:
+      '发现更多体验，享受 Lençóis Maranhenses 的自然风光。',
+  },
+
+  ja: {
+    type: 'ツアー',
+    back: 'ツアー一覧に戻る',
+    price: '料金',
+    duration: '所要時間',
+    schedule: '時間・空き状況',
+    highlights: '見どころ',
+    whatsapp: 'WhatsAppで問い合わせる',
+    whatsappDescription:
+      '空き状況、条件、詳細について Vem Ver に直接お問い合わせください。',
+    moreExperiences: 'その他の体験',
+    otherTours: 'その他のツアーを見る',
+    otherToursDescription:
+      'レンソイス・マラニャンセスを楽しめる、その他の体験をご覧ください。',
+  },
+}
+
+function getLocalizedPath(
+  locale: Locale,
+  path: string,
+): string {
+  if (locale === defaultLocale) {
+    return path
+  }
+
+  if (path === '/') {
+    return `/${locale}/`
+  }
+
+  return `/${locale}${path}`
+}
+
 export function generateStaticParams() {
-  return allTours.map((tour) => ({
-    slug: tour.slug,
-  }))
+  return localesAndTours()
+}
+
+function localesAndTours() {
+  const params: PageParams[] = []
+
+  const supportedLocales = [
+    'en',
+    'es',
+    'fr',
+    'it',
+    'zh',
+    'ja',
+  ] as const
+
+  for (const locale of supportedLocales) {
+    for (const tour of allTours) {
+      params.push({
+        locale,
+        slug: tour.slug,
+      })
+    }
+  }
+
+  return params
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<PageParams>
 }): Promise<Metadata> {
-  const { slug } = await params
+  const { locale: localeParam, slug } =
+    await params
+
+  const locale: Locale = isLocale(
+    localeParam,
+  )
+    ? localeParam
+    : defaultLocale
 
   const tour = allTours.find(
     (item) => item.slug === slug,
@@ -58,6 +246,15 @@ export async function generateMetadata({
 
   const pageDescription =
     tour.shortDescription
+
+  const localizedPath =
+    getLocalizedPath(
+      locale,
+      `/passeios/${tour.slug}/`,
+    )
+
+  const htmlLang =
+    localeHtmlLang[locale]
 
   return {
     title: pageTitle,
@@ -75,16 +272,26 @@ export async function generateMetadata({
     ],
 
     alternates: {
-      canonical: `/passeios/${tour.slug}/`,
+      canonical: localizedPath,
+      languages: {
+        'pt-BR': `/passeios/${tour.slug}/`,
+        en: `/en/passeios/${tour.slug}/`,
+        es: `/es/passeios/${tour.slug}/`,
+        fr: `/fr/passeios/${tour.slug}/`,
+        it: `/it/passeios/${tour.slug}/`,
+        'zh-CN': `/zh/passeios/${tour.slug}/`,
+        ja: `/ja/passeios/${tour.slug}/`,
+      },
     },
 
     openGraph: {
       type: 'website',
-      locale: 'pt_BR',
+      locale:
+        htmlLang.replace('-', '_'),
       siteName: 'VEM VER Turismo',
       title: pageTitle,
       description: pageDescription,
-      url: `/passeios/${tour.slug}/`,
+      url: localizedPath,
       images: [
         {
           url: asset(tour.image),
@@ -111,12 +318,21 @@ export async function generateMetadata({
   }
 }
 
-export default async function TourPage({
+export default async function LocalizedTourPage({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<PageParams>
 }) {
-  const { slug } = await params
+  const {
+    locale: localeParam,
+    slug,
+  } = await params
+
+  if (!isLocale(localeParam)) {
+    notFound()
+  }
+
+  const locale = localeParam
 
   const tour = allTours.find(
     (item) => item.slug === slug,
@@ -126,24 +342,28 @@ export default async function TourPage({
     notFound()
   }
 
+  const content =
+    contentByLocale[locale]
+
   const info = [
     {
       icon: Tag,
-      label: 'Valor',
-      value:
-        tour.price || siteConfig.fallbackPrice,
+      label: content.price,
+      value: tour.price,
     },
     {
       icon: Clock,
-      label: 'Duração',
+      label: content.duration,
       value:
-        tour.duration || siteConfig.fallbackInfo,
+        tour.duration ||
+        siteConfig.fallbackInfo,
     },
     {
       icon: CalendarClock,
-      label: 'Horário e disponibilidade',
+      label: content.schedule,
       value:
-        tour.schedule || siteConfig.fallbackInfo,
+        tour.schedule ||
+        siteConfig.fallbackInfo,
     },
   ]
 
@@ -153,9 +373,21 @@ export default async function TourPage({
     )
     .slice(0, 3)
 
+  const localizedHomePath =
+    getLocalizedPath(locale, '/')
+
+  const localizedToursPath =
+    getLocalizedPath(
+      locale,
+      '/#passeios',
+    )
+
   return (
     <>
-      <StructuredData tour={tour} />
+      <StructuredData
+        tour={tour}
+        locale={locale}
+      />
 
       <article className="bg-background px-4 pb-16 pt-8 md:px-6 md:pb-24 md:pt-12">
         <div className="mx-auto max-w-6xl">
@@ -165,7 +397,7 @@ export default async function TourPage({
             className="vem-ver-fade-left mb-8"
           >
             <Link
-              href="/#passeios"
+              href={localizedToursPath}
               className="inline-flex min-h-11 items-center gap-2 rounded-full px-3 font-medium text-primary transition-all duration-200 hover:translate-x-1 hover:bg-primary/5 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <ArrowLeft
@@ -173,7 +405,7 @@ export default async function TourPage({
                 aria-hidden="true"
               />
 
-              Voltar para os passeios
+              {content.back}
             </Link>
           </nav>
 
@@ -195,8 +427,8 @@ export default async function TourPage({
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
                   {tour.type === 'privativo'
-                    ? 'Experiência privativa'
-                    : 'Passeio'}
+                    ? content.moreExperiences
+                    : content.type}
                 </p>
 
                 <h1 className="mt-3 font-serif text-4xl font-semibold leading-tight text-balance md:text-5xl">
@@ -234,13 +466,30 @@ export default async function TourPage({
                         </dt>
 
                         <dd className="mt-1 font-semibold">
-                          {value}
+                          {label ===
+                          content.price ? (
+                            <LocalizedPrice
+                              amount={
+                                value as number
+                              }
+                              locale={
+                                localeHtmlLang[
+                                  locale
+                                ]
+                              }
+                            />
+                          ) : (
+                            value
+                          )}
                         </dd>
 
-                        {label === 'Valor' &&
+                        {label ===
+                          content.price &&
                           tour.priceInfo && (
                             <p className="mt-1 text-sm text-muted-foreground">
-                              {tour.priceInfo}
+                              {
+                                tour.priceInfo
+                              }
                             </p>
                           )}
 
@@ -255,7 +504,7 @@ export default async function TourPage({
                 <div className="vem-ver-fade-up mt-8">
 
                   <h2 className="text-lg font-semibold">
-                    Destaques
+                    {content.highlights}
                   </h2>
 
                   <ul className="mt-3 list-inside list-disc space-y-2 text-muted-foreground">
@@ -282,15 +531,16 @@ export default async function TourPage({
                   external
                   variant="whatsapp"
                   className="vem-ver-button w-full sm:w-fit"
-                  ariaLabel={`Consultar ${tour.name} pelo WhatsApp`}
+                  ariaLabel={`${content.whatsapp}: ${tour.name}`}
                 >
                   <WhatsAppIcon />
-                  Consultar pelo WhatsApp
+                  {content.whatsapp}
                 </CtaLink>
 
                 <p className="mt-3 text-sm text-muted-foreground">
-                  Consulte disponibilidade, condições e
-                  detalhes diretamente com a Vem Ver.
+                  {
+                    content.whatsappDescription
+                  }
                 </p>
 
               </div>
@@ -309,19 +559,22 @@ export default async function TourPage({
           <div className="vem-ver-fade-up max-w-2xl">
 
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
-              Mais experiências
+              {
+                content.moreExperiences
+              }
             </p>
 
             <h2
               id="outros-title"
               className="mt-3 font-serif text-3xl font-semibold leading-tight md:text-4xl"
             >
-              Conheça outros passeios
+              {content.otherTours}
             </h2>
 
             <p className="mt-3 text-lg leading-relaxed text-muted-foreground">
-              Encontre outras experiências para aproveitar
-              os Lençóis Maranhenses.
+              {
+                content.otherToursDescription
+              }
             </p>
 
           </div>
