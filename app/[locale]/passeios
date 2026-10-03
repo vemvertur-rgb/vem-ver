@@ -1,0 +1,804 @@
+import type { Metadata } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import {
+  ArrowLeft,
+  CalendarClock,
+  Clock,
+  Tag,
+} from 'lucide-react'
+
+import {
+  siteConfig,
+  tours,
+  privateExperiences,
+} from '@/lib/site-config'
+
+import {
+  asset,
+  tourWhatsappMessage,
+  whatsappLink,
+} from '@/lib/links'
+
+import {
+  defaultLocale,
+  isLocale,
+  localeHtmlLang,
+  locales,
+  type Locale,
+} from '@/lib/i18n'
+
+import { getTourTranslation } from '@/lib/tour-translations'
+
+import { StructuredData } from '@/components/structured-data'
+import { WhatsAppIcon } from '@/components/brand-icons'
+import { CtaLink } from '@/components/cta-link'
+import { TourCard } from '@/components/tour-card'
+import { LocalizedPrice } from '@/components/localized-price'
+
+export const dynamicParams = false
+
+const allTours = [
+  ...tours,
+  ...privateExperiences,
+]
+
+type PageParams = {
+  locale: string
+  slug: string
+}
+
+type TourLike = Record<string, any>
+
+type TranslationLike = {
+  title?: string
+  name?: string
+  description?: string
+  shortDescription?: string
+  duration?: string
+  highlights?: string[]
+  type?: string
+}
+
+const contentByLocale: Record<
+  Locale,
+  {
+    back: string
+    duration: string
+    type: string
+    shared: string
+    private: string
+    highlights: string
+    booking: string
+    bookingText: string
+    book: string
+    related: string
+    notFoundTitle: string
+    notFoundText: string
+    priceFrom: string
+  }
+> = {
+  pt: {
+    back: 'Voltar para passeios',
+    duration: 'Duração',
+    type: 'Tipo de passeio',
+    shared: 'Compartilhado',
+    private: 'Privativo',
+    highlights: 'Destaques do passeio',
+    booking: 'Reserve seu passeio',
+    bookingText:
+      'Fale conosco pelo WhatsApp para consultar disponibilidade, tirar dúvidas e realizar sua reserva.',
+    book: 'Reservar pelo WhatsApp',
+    related: 'Você também pode gostar',
+    notFoundTitle: 'Passeio não encontrado',
+    notFoundText:
+      'O passeio que você procura não está disponível.',
+    priceFrom: 'A partir de',
+  },
+
+  en: {
+    back: 'Back to tours',
+    duration: 'Duration',
+    type: 'Tour type',
+    shared: 'Shared',
+    private: 'Private',
+    highlights: 'Tour highlights',
+    booking: 'Book your tour',
+    bookingText:
+      'Contact us on WhatsApp to check availability, ask questions and make your reservation.',
+    book: 'Book on WhatsApp',
+    related: 'You may also like',
+    notFoundTitle: 'Tour not found',
+    notFoundText:
+      'The tour you are looking for is not available.',
+    priceFrom: 'From',
+  },
+
+  es: {
+    back: 'Volver a los paseos',
+    duration: 'Duración',
+    type: 'Tipo de paseo',
+    shared: 'Compartido',
+    private: 'Privado',
+    highlights: 'Destacados del paseo',
+    booking: 'Reserva tu paseo',
+    bookingText:
+      'Contáctanos por WhatsApp para consultar disponibilidad, resolver dudas y realizar tu reserva.',
+    book: 'Reservar por WhatsApp',
+    related: 'También te puede gustar',
+    notFoundTitle: 'Paseo no encontrado',
+    notFoundText:
+      'El paseo que buscas no está disponible.',
+    priceFrom: 'Desde',
+  },
+
+  fr: {
+    back: 'Retour aux excursions',
+    duration: 'Durée',
+    type: 'Type d’excursion',
+    shared: 'Partagée',
+    private: 'Privée',
+    highlights: 'Points forts de l’excursion',
+    booking: 'Réservez votre excursion',
+    bookingText:
+      'Contactez-nous sur WhatsApp pour vérifier les disponibilités, poser vos questions et effectuer votre réservation.',
+    book: 'Réserver sur WhatsApp',
+    related: 'Vous pourriez aussi aimer',
+    notFoundTitle: 'Excursion introuvable',
+    notFoundText:
+      'L’excursion que vous recherchez n’est pas disponible.',
+    priceFrom: 'À partir de',
+  },
+
+  it: {
+    back: 'Torna alle escursioni',
+    duration: 'Durata',
+    type: 'Tipo di escursione',
+    shared: 'Condivisa',
+    private: 'Privata',
+    highlights: 'Punti salienti dell’escursione',
+    booking: 'Prenota la tua escursione',
+    bookingText:
+      'Contattaci su WhatsApp per verificare la disponibilità, chiarire i tuoi dubbi e effettuare la prenotazione.',
+    book: 'Prenota su WhatsApp',
+    related: 'Potrebbero piacerti anche',
+    notFoundTitle: 'Escursione non trovata',
+    notFoundText:
+      'L’escursione che stai cercando non è disponibile.',
+    priceFrom: 'A partire da',
+  },
+
+  zh: {
+    back: '返回行程',
+    duration: '行程时间',
+    type: '行程类型',
+    shared: '拼团',
+    private: '私人',
+    highlights: '行程亮点',
+    booking: '预订您的行程',
+    bookingText:
+      '通过 WhatsApp 联系我们，查询可用日期、咨询问题并完成预订。',
+    book: '通过 WhatsApp 预订',
+    related: '您可能也喜欢',
+    notFoundTitle: '未找到行程',
+    notFoundText:
+      '您查找的行程暂不可用。',
+    priceFrom: '起价',
+  },
+
+  ja: {
+    back: 'ツアー一覧に戻る',
+    duration: '所要時間',
+    type: 'ツアータイプ',
+    shared: '乗り合い',
+    private: 'プライベート',
+    highlights: 'ツアーのポイント',
+    booking: 'ツアーを予約する',
+    bookingText:
+      'WhatsAppからお問い合わせいただき、空き状況の確認やご予約を承ります。',
+    book: 'WhatsAppで予約する',
+    related: 'こちらもおすすめ',
+    notFoundTitle: 'ツアーが見つかりません',
+    notFoundText:
+      'お探しのツアーは現在ご利用いただけません。',
+    priceFrom: '料金',
+  },
+}
+
+function getLocalizedPath(
+  locale: Locale,
+  path: string,
+) {
+  if (locale === defaultLocale) {
+    return path
+  }
+
+  return `/${locale}${path}`
+}
+
+function getTourValue(
+  tour: TourLike,
+  keys: string[],
+) {
+  for (const key of keys) {
+    const value = tour[key]
+
+    if (
+      value !== undefined &&
+      value !== null &&
+      value !== ''
+    ) {
+      return value
+    }
+  }
+
+  return undefined
+}
+
+function getTourImage(tour: TourLike) {
+  const image = getTourValue(tour, [
+    'image',
+    'imageUrl',
+    'photo',
+    'photoUrl',
+  ])
+
+  if (!image) {
+    return asset('/images/hero-lencois.jpg')
+  }
+
+  return asset(String(image))
+}
+
+function getTourDescription(
+  tour: TourLike,
+  translation: TranslationLike,
+) {
+  return (
+    translation.description ||
+    getTourValue(tour, [
+      'description',
+      'fullDescription',
+      'details',
+      'content',
+    ]) ||
+    translation.shortDescription ||
+    getTourValue(tour, [
+      'shortDescription',
+      'summary',
+    ]) ||
+    ''
+  )
+}
+
+function getTourTitle(
+  tour: TourLike,
+  translation: TranslationLike,
+) {
+  return (
+    translation.title ||
+    translation.name ||
+    getTourValue(tour, [
+      'title',
+      'name',
+    ]) ||
+    tour.slug
+  )
+}
+
+function getTourDuration(
+  tour: TourLike,
+  translation: TranslationLike,
+) {
+  return (
+    translation.duration ||
+    getTourValue(tour, [
+      'duration',
+      'durationText',
+    ]) ||
+    ''
+  )
+}
+
+function getTourType(
+  tour: TourLike,
+  translation: TranslationLike,
+  labels: (typeof contentByLocale)[Locale],
+) {
+  const type =
+    translation.type ||
+    getTourValue(tour, [
+      'type',
+      'category',
+    ])
+
+  if (
+    typeof type === 'string' &&
+    type.toLowerCase().includes('private')
+  ) {
+    return labels.private
+  }
+
+  if (
+    typeof type === 'string' &&
+    type.toLowerCase().includes('privat')
+  ) {
+    return labels.private
+  }
+
+  if (
+    getTourValue(tour, [
+      'private',
+      'isPrivate',
+    ]) === true
+  ) {
+    return labels.private
+  }
+
+  return labels.shared
+}
+
+function getTourHighlights(
+  tour: TourLike,
+  translation: TranslationLike,
+) {
+  const translatedHighlights =
+    translation.highlights
+
+  if (
+    Array.isArray(translatedHighlights) &&
+    translatedHighlights.length > 0
+  ) {
+    return translatedHighlights
+  }
+
+  const highlights = getTourValue(tour, [
+    'highlights',
+    'features',
+    'includes',
+  ])
+
+  if (Array.isArray(highlights)) {
+    return highlights.filter(Boolean)
+  }
+
+  return []
+}
+
+function getTranslation(
+  slug: string,
+  locale: Locale,
+): TranslationLike {
+  try {
+    const translation = getTourTranslation(
+      slug,
+      locale,
+    )
+
+    if (translation) {
+      return translation as TranslationLike
+    }
+  } catch {
+    // Fallback below.
+  }
+
+  try {
+    const translation = getTourTranslation(
+      slug,
+      defaultLocale,
+    )
+
+    if (translation) {
+      return translation as TranslationLike
+    }
+  } catch {
+    // Fallback below.
+  }
+
+  return {}
+}
+
+export function generateStaticParams() {
+  return locales.flatMap((locale) =>
+    allTours.map((tour) => ({
+      locale,
+      slug: tour.slug,
+    })),
+  )
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<PageParams>
+}): Promise<Metadata> {
+  const { locale: localeParam, slug } = await params
+
+  const locale: Locale = isLocale(localeParam)
+    ? localeParam
+    : defaultLocale
+
+  const tour = allTours.find(
+    (item) => item.slug === slug,
+  ) as TourLike | undefined
+
+  if (!tour) {
+    return {}
+  }
+
+  const translation = getTranslation(
+    slug,
+    locale,
+  )
+
+  const title = getTourTitle(
+    tour,
+    translation,
+  )
+
+  const description =
+    getTourDescription(
+      tour,
+      translation,
+    ).slice(0, 160)
+
+  const path = getLocalizedPath(
+    locale,
+    `/passeios/${slug}/`,
+  )
+
+  const baseUrl =
+    siteConfig.url ||
+    siteConfig.siteUrl ||
+    'https://vemvertur-rgb.github.io/vem-ver'
+
+  const canonical = `${String(baseUrl).replace(
+    /\/$/,
+    '',
+  )}${path}`
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical,
+      languages: Object.fromEntries(
+        locales.map((item) => [
+          localeHtmlLang[item],
+          `${String(baseUrl).replace(
+            /\/$/,
+            '',
+          )}${getLocalizedPath(
+            item,
+            `/passeios/${slug}/`,
+          )}`,
+        ]),
+      ),
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: 'website',
+    },
+  }
+}
+
+export default async function LocalizedTourPage({
+  params,
+}: {
+  params: Promise<PageParams>
+}) {
+  const {
+    locale: localeParam,
+    slug,
+  } = await params
+
+  if (!isLocale(localeParam)) {
+    notFound()
+  }
+
+  const locale = localeParam
+
+  const tour = allTours.find(
+    (item) => item.slug === slug,
+  ) as TourLike | undefined
+
+  if (!tour) {
+    notFound()
+  }
+
+  const labels = contentByLocale[locale]
+
+  const translation = getTranslation(
+    slug,
+    locale,
+  )
+
+  const title = getTourTitle(
+    tour,
+    translation,
+  )
+
+  const description = getTourDescription(
+    tour,
+    translation,
+  )
+
+  const duration = getTourDuration(
+    tour,
+    translation,
+  )
+
+  const type = getTourType(
+    tour,
+    translation,
+    labels,
+  )
+
+  const highlights = getTourHighlights(
+    tour,
+    translation,
+  )
+
+  const image = getTourImage(tour)
+
+  const whatsappUrl = whatsappLink(
+    tourWhatsappMessage(
+      tour,
+      locale,
+    ),
+  )
+
+  const relatedTours = allTours
+    .filter(
+      (item) =>
+        item.slug !== tour.slug,
+    )
+    .slice(0, 3)
+
+  const tourPath = getLocalizedPath(
+    locale,
+    `/passeios/${tour.slug}/`,
+  )
+
+  const homePath =
+    locale === defaultLocale
+      ? '/'
+      : `/${locale}/`
+
+  const baseUrl =
+    siteConfig.url ||
+    siteConfig.siteUrl ||
+    'https://vemvertur-rgb.github.io/vem-ver'
+
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'TouristTrip',
+    name: title,
+    description,
+    image: image,
+    url: `${String(baseUrl).replace(
+      /\/$/,
+      '',
+    )}${tourPath}`,
+    touristType: [
+      'Leisure',
+      'Adventure tourism',
+      'Ecotourism',
+    ],
+    provider: {
+      '@type': 'TravelAgency',
+      name:
+        siteConfig.name ||
+        'Vem Ver',
+      url: baseUrl,
+    },
+  }
+
+  return (
+    <>
+      <StructuredData data={structuredData} />
+
+      <main
+        lang={localeHtmlLang[locale]}
+        className="min-h-screen"
+      >
+        <section className="border-b bg-background">
+          <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
+            <Link
+              href={getLocalizedPath(
+                locale,
+                '/passeios/',
+              )}
+              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              {labels.back}
+            </Link>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
+          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+            <div className="overflow-hidden rounded-3xl border bg-muted shadow-sm">
+              <div className="relative aspect-[4/3] w-full">
+                <Image
+                  src={image}
+                  alt={title}
+                  fill
+                  priority
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 55vw"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col">
+              <div className="mb-4">
+                <span className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  <Tag className="h-3.5 w-3.5" />
+                  {type}
+                </span>
+              </div>
+
+              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+                {title}
+              </h1>
+
+              {duration && (
+                <div className="mt-6 flex items-center gap-3 text-muted-foreground">
+                  <Clock className="h-5 w-5" />
+                  <div>
+                    <div className="text-xs font-medium uppercase tracking-wide">
+                      {labels.duration}
+                    </div>
+
+                    <div className="font-medium text-foreground">
+                      {duration}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className="mt-8 rounded-2xl border bg-card p-5">
+                <div className="text-sm font-medium text-muted-foreground">
+                  {labels.priceFrom}
+                </div>
+
+                <div className="mt-1">
+                  <LocalizedPrice
+                    tour={tour}
+                    locale={locale}
+                  />
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <CtaLink
+                  href={whatsappUrl}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl px-6 py-4 text-center font-semibold"
+                >
+                  <WhatsAppIcon className="h-5 w-5" />
+                  {labels.book}
+                </CtaLink>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-5xl px-4 pb-12 sm:px-6 lg:px-8">
+          <div className="grid gap-10 lg:grid-cols-[1fr_280px]">
+            <article>
+              <h2 className="text-2xl font-bold tracking-tight">
+                {title}
+              </h2>
+
+              <div className="mt-6 space-y-5 text-base leading-8 text-muted-foreground">
+                {description
+                  .split(/\n+/)
+                  .filter(Boolean)
+                  .map(
+                    (
+                      paragraph: string,
+                      index: number,
+                    ) => (
+                      <p key={index}>
+                        {paragraph}
+                      </p>
+                    ),
+                  )}
+              </div>
+
+              {highlights.length > 0 && (
+                <div className="mt-10">
+                  <h2 className="text-2xl font-bold tracking-tight">
+                    {labels.highlights}
+                  </h2>
+
+                  <ul className="mt-5 space-y-3">
+                    {highlights.map(
+                      (
+                        highlight: string,
+                        index: number,
+                      ) => (
+                        <li
+                          key={index}
+                          className="flex gap-3"
+                        >
+                          <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-current" />
+                          <span className="text-muted-foreground">
+                            {highlight}
+                          </span>
+                        </li>
+                      ),
+                    )}
+                  </ul>
+                </div>
+              )}
+            </article>
+
+            <aside className="lg:sticky lg:top-24 lg:self-start">
+              <div className="rounded-2xl border bg-card p-5">
+                <div className="flex items-start gap-3">
+                  <CalendarClock className="mt-0.5 h-5 w-5 shrink-0" />
+
+                  <div>
+                    <h3 className="font-semibold">
+                      {labels.booking}
+                    </h3>
+
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                      {labels.bookingText}
+                    </p>
+                  </div>
+                </div>
+
+                <CtaLink
+                  href={whatsappUrl}
+                  className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-center text-sm font-semibold"
+                >
+                  <WhatsAppIcon className="h-5 w-5" />
+                  {labels.book}
+                </CtaLink>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        {relatedTours.length > 0 && (
+          <section className="border-t bg-muted/30">
+            <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+              <h2 className="text-2xl font-bold tracking-tight">
+                {labels.related}
+              </h2>
+
+              <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {relatedTours.map(
+                  (relatedTour) => (
+                    <TourCard
+                      key={relatedTour.slug}
+                      tour={relatedTour}
+                    />
+                  ),
+                )}
+              </div>
+            </div>
+          </section>
+        )}
+
+        <section className="border-t">
+          <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+            <Link
+              href={homePath}
+              className="text-sm font-medium text-muted-foreground hover:text-foreground"
+            >
+              {labels.back}
+            </Link>
+          </div>
+        </section>
+      </main>
+    </>
+  )
+}
