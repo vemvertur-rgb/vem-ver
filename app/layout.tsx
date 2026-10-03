@@ -64,9 +64,17 @@ export const metadata: Metadata = {
   ],
 
   creator: 'VEM VER Turismo',
+  publisher: 'VEM VER Turismo',
+  category: 'travel',
 
   alternates: {
     canonical: '/',
+  },
+
+  formatDetection: {
+    telephone: false,
+    address: false,
+    email: false,
   },
 
   openGraph: {
@@ -75,6 +83,7 @@ export const metadata: Metadata = {
     siteName: 'VEM VER Turismo',
     title,
     description,
+    url: siteUrl,
 
     images: [
       {
