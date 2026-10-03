@@ -1,87 +1,339 @@
+import type { Metadata } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import {
+  ArrowLeft,
+  CalendarClock,
+  Clock,
+  Tag,
+} from 'lucide-react'
+
 import {
   siteConfig,
-  type Tour,
+  tours,
+  privateExperiences,
 } from '@/lib/site-config'
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  'https://vemvertur-rgb.github.io/vem-ver'
+import {
+  asset,
+  tourWhatsappMessage,
+  whatsappLink,
+} from '@/lib/links'
 
-type StructuredDataProps = {
-  tour?: Tour
+import { StructuredData } from '@/components/structured-data'
+import { WhatsAppIcon } from '@/components/brand-icons'
+import { CtaLink } from '@/components/cta-link'
+import { TourCard } from '@/components/tour-card'
+
+export const dynamicParams = false
+
+const allTours = [
+  ...tours,
+  ...privateExperiences,
+]
+
+export function generateStaticParams() {
+  return allTours.map((tour) => ({
+    slug: tour.slug,
+  }))
 }
 
-export function StructuredData({
-  tour,
-}: StructuredDataProps) {
-  const organization = {
-    '@type': 'TravelAgency',
-    '@id': `${siteUrl}/#organization`,
-    name: siteConfig.name,
-    url: siteUrl,
-    description:
-      'Agência de turismo especializada em experiências e passeios nos Lençóis Maranhenses.',
-    email: siteConfig.email,
-    telephone: `+${siteConfig.whatsappNumber}`,
-    areaServed: {
-      '@type': 'Place',
-      name: 'Lençóis Maranhenses, Maranhão, Brasil',
-    },
-    sameAs: [
-      siteConfig.instagramUrl,
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+
+  const tour = allTours.find(
+    (item) => item.slug === slug,
+  )
+
+  if (!tour) {
+    return {}
+  }
+
+  const pageTitle = `${tour.name} | Vem Ver Turismo`
+  const pageDescription = tour.shortDescription
+
+  return {
+    title: pageTitle,
+
+    description: pageDescription,
+
+    keywords: [
+      tour.name,
+      'Lençóis Maranhenses',
+      'passeios Lençóis Maranhenses',
+      'turismo Maranhão',
+      'turismo Barreirinhas',
+      'Vem Ver Turismo',
     ],
-  }
 
-  const destination = {
-    '@type': 'TouristDestination',
-    '@id': `${siteUrl}/#destination`,
-    name: 'Lençóis Maranhenses',
-    description:
-      'Destino turístico conhecido por suas dunas de areia branca e lagoas sazonais no Maranhão, Brasil.',
-    containedInPlace: {
-      '@type': 'AdministrativeArea',
-      name: 'Maranhão',
+    alternates: {
+      canonical: `/passeios/${tour.slug}/`,
+    },
+
+    openGraph: {
+      type: 'website',
+      locale: 'pt_BR',
+      siteName: 'VEM VER Turismo',
+      title: pageTitle,
+      description: pageDescription,
+      url: `/passeios/${tour.slug}/`,
+      images: [
+        {
+          url: asset(tour.image),
+          width: 1200,
+          height: 900,
+          alt: tour.imageAlt,
+        },
+      ],
+    },
+
+    twitter: {
+      card: 'summary_large_image',
+      title: pageTitle,
+      description: pageDescription,
+      images: [
+        asset(tour.image),
+      ],
     },
   }
+}
 
-  const tourData = tour
-    ? {
-        '@type': 'TouristTrip',
-        '@id': `${siteUrl}/passeios/${tour.slug}/#tour`,
-        name: tour.name,
-        description: tour.description,
-        url: `${siteUrl}/passeios/${tour.slug}/`,
-        touristType:
-          tour.type === 'privativo'
-            ? 'Experiência privativa'
-            : 'Passeio compartilhado',
-        itinerary: {
-          '@type': 'TouristDestination',
-          name: 'Lençóis Maranhenses',
-        },
-        provider: {
-          '@id': `${siteUrl}/#organization`,
-        },
-        image: `${siteUrl}${tour.image}`,
-        duration: tour.duration,
-      }
-    : null
+export default async function TourPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
 
-  const data = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      organization,
-      destination,
-      ...(tourData ? [tourData] : []),
-    ],
+  const tour = allTours.find(
+    (item) => item.slug === slug,
+  )
+
+  if (!tour) {
+    notFound()
   }
+
+  const info = [
+    {
+      icon: Tag,
+      label: 'Valor',
+      value:
+        tour.price || siteConfig.fallbackPrice,
+    },
+    {
+      icon: Clock,
+      label: 'Duração',
+      value:
+        tour.duration || siteConfig.fallbackInfo,
+    },
+    {
+      icon: CalendarClock,
+      label: 'Horário e disponibilidade',
+      value:
+        tour.schedule || siteConfig.fallbackInfo,
+    },
+  ]
+
+  const others = tours
+    .filter((item) => item.slug !== tour.slug)
+    .slice(0, 3)
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(data),
-      }}
-    />
+    <>
+      <StructuredData tour={tour} />
+
+      {/* =====================================================
+          DETALHES DO PASSEIO
+      ===================================================== */}
+
+      <article className="bg-background px-4 pb-16 pt-8 md:px-6 md:pb-24 md:pt-12">
+        <div className="mx-auto max-w-6xl">
+
+          {/* Voltar */}
+          <nav
+            aria-label="Navegação estrutural"
+            className="vem-ver-fade-left mb-8"
+          >
+            <Link
+              href="/#passeios"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full px-3 font-medium text-primary transition-all duration-200 hover:translate-x-1 hover:bg-primary/5 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <ArrowLeft
+                className="size-4"
+                aria-hidden="true"
+              />
+              Voltar para os passeios
+            </Link>
+          </nav>
+
+          <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
+
+            {/* Imagem */}
+            <div className="vem-ver-fade-left relative aspect-[4/3] overflow-hidden rounded-3xl bg-muted shadow-sm">
+              <Image
+                src={asset(tour.image)}
+                alt={tour.imageAlt}
+                fill
+                priority
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover transition-transform duration-700 hover:scale-105"
+              />
+            </div>
+
+            {/* Informações */}
+            <div className="vem-ver-fade-right flex flex-col">
+
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
+                  {tour.type === 'privativo'
+                    ? 'Experiência privativa'
+                    : 'Passeio'}
+                </p>
+
+                <h1 className="mt-3 font-serif text-4xl font-semibold leading-tight text-balance md:text-5xl">
+                  {tour.name}
+                </h1>
+
+                <p className="mt-5 whitespace-pre-line text-lg leading-relaxed text-muted-foreground text-pretty">
+                  {tour.description}
+                </p>
+              </div>
+
+              {/* Informações principais */}
+              <dl className="mt-8 grid gap-3">
+                {info.map(
+                  ({
+                    icon: Icon,
+                    label,
+                    value,
+                  }) => (
+                    <div
+                      key={label}
+                      className="vem-ver-card flex items-start gap-4 rounded-2xl border border-border bg-sand p-4"
+                    >
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-transform duration-300 hover:scale-105">
+                        <Icon
+                          className="size-5"
+                          aria-hidden="true"
+                        />
+                      </div>
+
+                      <div className="min-w-0">
+                        <dt className="text-sm text-muted-foreground">
+                          {label}
+                        </dt>
+
+                        <dd className="mt-1 font-semibold">
+                          {value}
+                        </dd>
+
+                        {label === 'Valor' &&
+                          tour.priceInfo && (
+                            <p className="mt-1 text-sm text-muted-foreground">
+                              {tour.priceInfo}
+                            </p>
+                          )}
+                      </div>
+                    </div>
+                  ),
+                )}
+              </dl>
+
+              {/* Destaques */}
+              {tour.highlights.length > 0 && (
+                <div className="vem-ver-fade-up mt-8">
+                  <h2 className="text-lg font-semibold">
+                    Destaques
+                  </h2>
+
+                  <ul className="mt-3 list-inside list-disc space-y-2 text-muted-foreground">
+                    {tour.highlights.map(
+                      (highlight) => (
+                        <li key={highlight}>
+                          {highlight}
+                        </li>
+                      ),
+                    )}
+                  </ul>
+                </div>
+              )}
+
+              {/* CTA */}
+              <div className="vem-ver-fade-up mt-8">
+                <CtaLink
+                  href={whatsappLink(
+                    tourWhatsappMessage(
+                      tour.name,
+                    ),
+                  )}
+                  external
+                  variant="whatsapp"
+                  className="vem-ver-button w-full sm:w-fit"
+                  ariaLabel={`Consultar ${tour.name} pelo WhatsApp`}
+                >
+                  <WhatsAppIcon />
+                  Consultar pelo WhatsApp
+                </CtaLink>
+
+                <p className="mt-3 text-sm text-muted-foreground">
+                  Consulte disponibilidade, condições e
+                  detalhes diretamente com a Vem Ver.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      {/* =====================================================
+          OUTROS PASSEIOS
+      ===================================================== */}
+
+      <section
+        aria-labelledby="outros-title"
+        className="bg-sand px-4 py-16 md:px-6 md:py-24"
+      >
+        <div className="mx-auto max-w-6xl">
+
+          <div className="vem-ver-fade-up max-w-2xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
+              Mais experiências
+            </p>
+
+            <h2
+              id="outros-title"
+              className="mt-3 font-serif text-3xl font-semibold leading-tight md:text-4xl"
+            >
+              Conheça outros passeios
+            </h2>
+
+            <p className="mt-3 text-lg leading-relaxed text-muted-foreground">
+              Encontre outras experiências para aproveitar
+              os Lençóis Maranhenses.
+            </p>
+          </div>
+
+          <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {others.map((item, index) => (
+              <li
+                key={item.slug}
+                className="vem-ver-float-in flex"
+                style={{
+                  animationDelay: `${index * 120}ms`,
+                }}
+              >
+                <TourCard tour={item} />
+              </li>
+            ))}
+          </ul>
+
+        </div>
+      </section>
+    </>
   )
 }
