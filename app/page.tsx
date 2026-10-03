@@ -1,5 +1,4 @@
 import { Hero } from '@/components/hero'
-import { Intro } from '@/components/intro'
 import { Tours } from '@/components/tours'
 import { HowItWorks } from '@/components/how-it-works'
 import { About } from '@/components/about'
@@ -25,9 +24,6 @@ export default function HomePage() {
 
       {/* Como funciona */}
       <HowItWorks />
-
-      {/* Introdução e diferenciais */}
-      <Intro />
 
       {/* Depoimentos */}
       <Testimonials />
