@@ -27,7 +27,7 @@ export function TourCard({ tour }: { tour: Tour }) {
   }
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+    <article className="vem-ver-card group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
       <div className="relative aspect-[4/3] overflow-hidden bg-muted">
         <Image
           src={asset(tour.image)}
