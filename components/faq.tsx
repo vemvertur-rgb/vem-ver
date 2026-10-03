@@ -23,14 +23,14 @@ export function Faq() {
           description="Confira as principais informações antes de reservar sua experiência com a Vem Ver."
         />
 
-        <div className="mt-12 overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
+        <div className="vem-ver-fade-up mt-12 overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
           {faq.map((item, index) => {
             const isOpen = openIndex === index
 
             return (
               <div
                 key={item.question}
-                className="border-b border-border last:border-b-0"
+                className="border-b border-border last:border-b-0 transition-colors duration-300 hover:bg-muted/20"
               >
                 <button
                   type="button"
@@ -75,7 +75,7 @@ export function Faq() {
         </div>
 
         {/* Chamada final */}
-        <div className="mt-8 text-center">
+        <div className="vem-ver-fade-up mt-8 text-center">
           <p className="text-sm text-muted-foreground">
             Ainda ficou com alguma dúvida?
           </p>
