@@ -18,8 +18,8 @@ export type Tour = {
   description: string
   image: string
   imageAlt: string
-  price: string
-  originalPrice?: string
+  price: number
+  originalPrice?: number
   priceInfo: string
   type: 'compartilhado' | 'privativo'
   duration: string
@@ -153,8 +153,8 @@ export const tours: Tour[] = [
     imageAlt:
       'Paisagem de Atins com rio, coqueiros e dunas',
 
-    originalPrice: 'R$ 250,00',
-    price: 'R$ 230,50',
+    originalPrice: 250.00,
+    price: 230.50,
     priceInfo: 'por pessoa',
 
     type: 'compartilhado',
@@ -179,8 +179,8 @@ export const tours: Tour[] = [
     imageAlt:
       'Lagoa de água azul entre as dunas dos Lençóis Maranhenses',
 
-    originalPrice: 'R$ 160,00',
-    price: 'R$ 149,90',
+    originalPrice: 160.00,
+    price: 149.90,
     priceInfo: 'por pessoa',
 
     type: 'compartilhado',
@@ -205,8 +205,8 @@ export const tours: Tour[] = [
     imageAlt:
       'Vista do alto de uma duna para uma lagoa entre as dunas',
 
-    originalPrice: 'R$ 160,00',
-    price: 'R$ 149,90',
+    originalPrice: 160.00,
+    price: 149.90,
     priceInfo: 'por pessoa',
 
     type: 'compartilhado',
@@ -231,8 +231,8 @@ export const tours: Tour[] = [
     imageAlt:
       'Passeio pelas paisagens naturais da região dos Lençóis Maranhenses',
 
-    originalPrice: 'R$ 150,00',
-    price: 'R$ 129,90',
+    originalPrice: 150.00,
+    price: 129.90,
     priceInfo: 'por pessoa',
 
     type: 'compartilhado',
@@ -257,8 +257,8 @@ export const tours: Tour[] = [
     imageAlt:
       'Lagoa de águas claras em Santo Amaro do Maranhão',
 
-    originalPrice: 'R$ 330,00',
-    price: 'R$ 305,50',
+    originalPrice: 330.00,
+    price: 305.50,
     priceInfo: 'por pessoa',
 
     type: 'compartilhado',
@@ -283,8 +283,8 @@ export const tours: Tour[] = [
     imageAlt:
       'Paisagem da região dos Lençóis Maranhenses',
 
-    originalPrice: 'R$ 180,00',
-    price: 'R$ 159,90',
+    originalPrice: 180.00,
+    price: 159.90,
     priceInfo: 'por pessoa',
 
     type: 'compartilhado',
@@ -309,8 +309,8 @@ export const tours: Tour[] = [
     imageAlt:
       'Lagoa entre as dunas dos Lençóis Maranhenses',
 
-    originalPrice: 'R$ 330,00',
-    price: 'R$ 305,50',
+    originalPrice: 330.00,
+    price: 305.50,
     priceInfo: 'por pessoa',
 
     type: 'compartilhado',
@@ -335,8 +335,8 @@ export const tours: Tour[] = [
     imageAlt:
       'Passeio pelas trilhas de areia dos Lençóis Maranhenses',
 
-    originalPrice: 'R$ 650,00',
-    price: 'R$ 599,90',
+    originalPrice: 650.00,
+    price: 599.90,
     priceInfo: 'para até 2 pessoas',
 
     type: 'compartilhado',
@@ -367,8 +367,8 @@ export const privateExperiences: Tour[] = [
     imageAlt:
       'Céu sobre as dunas dos Lençóis Maranhenses',
 
-    originalPrice: 'R$ 1.400,00',
-    price: 'R$ 1.250,50',
+    originalPrice: 1400.00,
+    price: 1250.50,
     priceInfo: 'para até 9 pessoas',
 
     type: 'privativo',
@@ -393,8 +393,8 @@ export const privateExperiences: Tour[] = [
     imageAlt:
       'Dunas de areia branca nos Lençóis Maranhenses',
 
-    originalPrice: 'R$ 1.400,00',
-    price: 'R$ 1.250,50',
+    originalPrice: 1400.00,
+    price: 1250.50,
     priceInfo: 'para até 9 pessoas',
 
     type: 'privativo',
@@ -562,6 +562,11 @@ export const navLinks = [
   },
 
   {
+    label: 'Sobre',
+    href: '/#sobre',
+  },
+
+  {
     label: 'Passeios',
     href: '/#passeios',
   },
@@ -572,8 +577,13 @@ export const navLinks = [
   },
 
   {
-    label: 'Sobre',
-    href: '/#sobre',
+    label: 'Contato',
+    href: '/#contato',
+  },
+
+  {
+    label: 'Como funciona',
+    href: '/#como-funciona',
   },
 
   {
@@ -582,7 +592,7 @@ export const navLinks = [
   },
 
   {
-    label: 'Contato',
-    href: '/#contato',
+    label: 'Galeria',
+    href: '/#galeria',
   },
 ]
