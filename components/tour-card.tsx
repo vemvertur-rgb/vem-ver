@@ -6,24 +6,12 @@ import { Clock, Info } from 'lucide-react'
 
 import type { Tour } from '@/lib/site-config'
 import { asset } from '@/lib/links'
-import {
-  defaultLocale,
-} from '@/lib/i18n'
-import {
-  getTourTranslation,
-} from '@/lib/tour-translations'
-import {
-  WhatsAppIcon,
-} from '@/components/brand-icons'
-import {
-  ctaClass,
-} from '@/components/cta-link'
-import {
-  LocalizedPrice,
-} from '@/components/localized-price'
-import {
-  useLocale,
-} from '@/components/locale-provider'
+import { defaultLocale } from '@/lib/i18n'
+import { getTourTranslation } from '@/lib/tour-translations'
+import { WhatsAppIcon } from '@/components/brand-icons'
+import { ctaClass } from '@/components/cta-link'
+import { LocalizedPrice } from '@/components/localized-price'
+import { useLocale } from '@/components/locale-provider'
 
 type TourCardProps = {
   tour: Tour
@@ -83,10 +71,10 @@ const labels = {
 export function TourCard({
   tour,
 }: TourCardProps) {
-  const locale = useLocale()
+  const localeContext = useLocale()
 
   const activeLocale =
-    locale || defaultLocale
+    localeContext.locale || defaultLocale
 
   const translation =
     getTourTranslation(
@@ -95,35 +83,24 @@ export function TourCard({
     )
 
   const title =
-    translation.title ||
-    tour.title
+    translation?.name ||
+    tour.name
 
   const description =
-    translation.description ||
+    translation?.description ||
     tour.description
 
   const duration =
-    translation.duration ||
+    translation?.duration ||
     tour.duration
 
-  /*
-   * IMPORTANTE:
-   *
-   * Português usa a rota original:
-   * /passeios/slug/
-   *
-   * Os outros idiomas usam:
-   * /en/passeios/slug/
-   * /es/passeios/slug/
-   * etc.
-   */
   const tourPath =
     activeLocale === defaultLocale
       ? `/passeios/${tour.slug}/`
       : `/${activeLocale}/passeios/${tour.slug}/`
 
   const label =
-    tour.type === 'private'
+    tour.type === 'privativo'
       ? labels[activeLocale].private
       : labels[activeLocale].shared
 
@@ -154,9 +131,7 @@ export function TourCard({
             {duration && (
               <div className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
                 <Clock className="h-4 w-4" />
-                <span>
-                  {duration}
-                </span>
+                <span>{duration}</span>
               </div>
             )}
           </div>
