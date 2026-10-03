@@ -201,12 +201,14 @@ export function Testimonials() {
       className="bg-sand px-4 py-20 md:px-6 md:py-28"
     >
       <div className="mx-auto max-w-6xl">
-        <SectionHeading
-          id="depoimentos-title"
-          eyebrow="Depoimentos"
-          title="Experiências que ficam na memória"
-          description="Confira o que nossos clientes têm a dizer sobre suas experiências com a Vem Ver."
-        />
+        <div className="vem-ver-fade-up">
+          <SectionHeading
+            id="depoimentos-title"
+            eyebrow="Depoimentos"
+            title="Experiências que ficam na memória"
+            description="Confira o que nossos clientes têm a dizer sobre suas experiências com a Vem Ver."
+          />
+        </div>
 
         {/* Depoimentos aprovados */}
         {!loading && testimonials.length > 0 && (
@@ -231,7 +233,7 @@ export function Testimonials() {
                     {Array.from({ length: 5 }).map((_, index) => (
                       <Star
                         key={index}
-                        className={`size-4 ${
+                        className={`size-4 transition-transform duration-200 ${
                           index < testimonial.estrelas
                             ? 'fill-current'
                             : 'fill-none opacity-30'
@@ -260,7 +262,7 @@ export function Testimonials() {
                           <img
                             src={photo}
                             alt={`Foto enviada por ${testimonial.nome}`}
-                            className="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-110"
                             loading="lazy"
                           />
 
@@ -268,7 +270,7 @@ export function Testimonials() {
                             className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/0 text-white transition-colors duration-300 group-hover:bg-black/20"
                             aria-hidden="true"
                           >
-                            <span className="rounded-full bg-black/50 px-3 py-1 text-xs opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                            <span className="rounded-full bg-black/50 px-3 py-1 text-xs opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100">
                               Ver foto
                             </span>
                           </span>
@@ -304,7 +306,7 @@ export function Testimonials() {
         )}
 
         {/* Formulário de depoimento */}
-        <div className="vem-ver-fade-up mx-auto mt-16 max-w-3xl rounded-2xl border border-border bg-card p-6 shadow-sm md:p-8">
+        <div className="vem-ver-fade-up mx-auto mt-16 max-w-3xl rounded-2xl border border-border bg-card p-6 shadow-sm transition-shadow duration-300 hover:shadow-md md:p-8">
           <div className="mb-8">
             <h3 className="text-2xl font-semibold">
               Conte como foi sua experiência
@@ -332,7 +334,7 @@ export function Testimonials() {
                 value={name}
                 onChange={(event) => setName(event.target.value)}
                 placeholder="Como podemos identificar você?"
-                className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none transition focus:border-primary"
+                className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none transition-all duration-200 focus:border-primary focus:ring-2 focus:ring-primary/10"
                 required
               />
             </div>
@@ -354,10 +356,10 @@ export function Testimonials() {
                   return (
                     <label
                       key={item.slug}
-                      className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm transition ${
+                      className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm transition-all duration-200 ${
                         isSelected
-                          ? 'border-primary bg-primary/10'
-                          : 'border-border bg-background hover:border-primary/50'
+                          ? 'border-primary bg-primary/10 shadow-sm'
+                          : 'border-border bg-background hover:border-primary/50 hover:bg-primary/[0.03]'
                       }`}
                     >
                       <input
@@ -433,7 +435,7 @@ export function Testimonials() {
                 onChange={(event) => setDescription(event.target.value)}
                 placeholder="Conte um pouco sobre como foi seu passeio..."
                 rows={5}
-                className="w-full resize-none rounded-xl border border-border bg-background px-4 py-3 text-sm leading-relaxed outline-none transition focus:border-primary"
+                className="w-full resize-none rounded-xl border border-border bg-background px-4 py-3 text-sm leading-relaxed outline-none transition-all duration-200 focus:border-primary focus:ring-2 focus:ring-primary/10"
                 required
               />
             </div>
@@ -449,9 +451,9 @@ export function Testimonials() {
 
               <label
                 htmlFor="testimonial-photos"
-                className="flex cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-border bg-background px-6 py-8 text-center transition hover:border-primary"
+                className="group flex cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-border bg-background px-6 py-8 text-center transition-all duration-300 hover:border-primary hover:bg-primary/[0.03]"
               >
-                <ImagePlus className="size-8 text-primary" />
+                <ImagePlus className="size-8 text-primary transition-transform duration-300 group-hover:scale-110" />
 
                 <span className="mt-3 text-sm font-medium">
                   Adicionar fotos
@@ -497,7 +499,7 @@ export function Testimonials() {
             {message && (
               <p
                 role="status"
-                className="rounded-xl border border-border bg-background px-4 py-3 text-sm leading-relaxed text-muted-foreground"
+                className="vem-ver-fade-up rounded-xl border border-border bg-background px-4 py-3 text-sm leading-relaxed text-muted-foreground"
               >
                 {message}
               </p>
@@ -514,7 +516,7 @@ export function Testimonials() {
       {/* Visualizador da foto */}
       {selectedPhoto && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 vem-ver-float-in"
           role="dialog"
           aria-modal="true"
           aria-label="Visualização ampliada da foto"
@@ -523,7 +525,7 @@ export function Testimonials() {
           <button
             type="button"
             onClick={() => setSelectedPhoto(null)}
-            className="absolute right-4 top-4 z-10 flex size-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white"
+            className="absolute right-4 top-4 z-10 flex size-11 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white"
             aria-label="Fechar foto"
           >
             <X className="size-6" />
