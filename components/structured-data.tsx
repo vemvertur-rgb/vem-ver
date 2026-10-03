@@ -18,9 +18,11 @@ export function StructuredData({
     '@type': 'TravelAgency',
     '@id': `${siteUrl}/#organization`,
     name: siteConfig.name,
+    alternateName: 'VEM VER Turismo',
     url: siteUrl,
+    logo: `${siteUrl}/images/logo-vemver.png`,
     description:
-      'Agência de turismo especializada em experiências e passeios nos Lençóis Maranhenses.',
+      'Agência de turismo especializada em passeios e experiências nos Lençóis Maranhenses.',
     email: siteConfig.email,
     telephone: `+${siteConfig.whatsappNumber}`,
     areaServed: {
@@ -37,7 +39,7 @@ export function StructuredData({
     '@id': `${siteUrl}/#destination`,
     name: 'Lençóis Maranhenses',
     description:
-      'Destino turístico conhecido por suas dunas de areia branca e lagoas sazonais no Maranhão, Brasil.',
+      'Destino turístico no Maranhão conhecido por suas dunas de areia branca, lagoas sazonais e paisagens naturais.',
     containedInPlace: {
       '@type': 'AdministrativeArea',
       name: 'Maranhão',
@@ -51,6 +53,7 @@ export function StructuredData({
         name: tour.name,
         description: tour.description,
         url: `${siteUrl}/passeios/${tour.slug}/`,
+        image: `${siteUrl}${tour.image}`,
         touristType:
           tour.type === 'privativo'
             ? 'Experiência privativa'
@@ -62,7 +65,6 @@ export function StructuredData({
         provider: {
           '@id': `${siteUrl}/#organization`,
         },
-        image: `${siteUrl}${tour.image}`,
         duration: tour.duration,
       }
     : null
