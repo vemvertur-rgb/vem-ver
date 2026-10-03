@@ -1,8 +1,18 @@
-import { privateExperiences, tours } from '@/lib/site-config'
+'use client'
+
+import {
+  privateExperiences,
+  tours,
+} from '@/lib/site-config'
+
 import { SectionHeading } from './section-heading'
 import { TourCard } from './tour-card'
+import { useLocale } from './locale-provider'
 
 export function Tours() {
+  const { translations: t } =
+    useLocale()
+
   return (
     <>
       {/* =====================================================
@@ -19,9 +29,9 @@ export function Tours() {
           <div className="vem-ver-fade-up">
             <SectionHeading
               id="passeios-title"
-              eyebrow="Nossos passeios"
-              title="Escolha sua próxima aventura"
-              description="Explore dunas, lagoas, rios e paisagens incríveis dos Lençóis Maranhenses. Escolha seu passeio e fale com a Vem Ver para consultar disponibilidade."
+              eyebrow={t.tour.shared}
+              title={t.tour.otherTours}
+              description={t.tour.moreExperiencesDescription}
             />
           </div>
 
@@ -57,25 +67,27 @@ export function Tours() {
           <div className="vem-ver-fade-up">
             <SectionHeading
               id="privativos-title"
-              eyebrow="Experiências privativas"
-              title="Viva os Lençóis do seu jeito"
-              description="Experiências pensadas para quem busca mais exclusividade, tranquilidade e momentos especiais durante a viagem."
+              eyebrow={t.tour.privateExperience}
+              title={t.tour.moreExperiences}
+              description={t.tour.contactDescription}
             />
           </div>
 
           {/* Experiências privativas */}
           <ul className="mt-12 grid gap-6 md:grid-cols-2">
-            {privateExperiences.map((tour, index) => (
-              <li
-                key={tour.slug}
-                className="vem-ver-float-in flex"
-                style={{
-                  animationDelay: `${index * 140}ms`,
-                }}
-              >
-                <TourCard tour={tour} />
-              </li>
-            ))}
+            {privateExperiences.map(
+              (tour, index) => (
+                <li
+                  key={tour.slug}
+                  className="vem-ver-float-in flex"
+                  style={{
+                    animationDelay: `${index * 140}ms`,
+                  }}
+                >
+                  <TourCard tour={tour} />
+                </li>
+              ),
+            )}
           </ul>
 
         </div>
