@@ -55,7 +55,9 @@ export async function generateMetadata({
   }
 
   const pageTitle = `${tour.name} | Vem Ver Turismo`
-  const pageDescription = tour.shortDescription
+
+  const pageDescription =
+    tour.shortDescription
 
   return {
     title: pageTitle,
@@ -68,6 +70,7 @@ export async function generateMetadata({
       'passeios Lençóis Maranhenses',
       'turismo Maranhão',
       'turismo Barreirinhas',
+      'passeios em Barreirinhas',
       'Vem Ver Turismo',
     ],
 
@@ -99,6 +102,11 @@ export async function generateMetadata({
       images: [
         asset(tour.image),
       ],
+    },
+
+    robots: {
+      index: true,
+      follow: true,
     },
   }
 }
@@ -140,21 +148,18 @@ export default async function TourPage({
   ]
 
   const others = tours
-    .filter((item) => item.slug !== tour.slug)
+    .filter(
+      (item) => item.slug !== tour.slug,
+    )
     .slice(0, 3)
 
   return (
     <>
       <StructuredData tour={tour} />
 
-      {/* =====================================================
-          DETALHES DO PASSEIO
-      ===================================================== */}
-
       <article className="bg-background px-4 pb-16 pt-8 md:px-6 md:pb-24 md:pt-12">
         <div className="mx-auto max-w-6xl">
 
-          {/* Voltar */}
           <nav
             aria-label="Navegação estrutural"
             className="vem-ver-fade-left mb-8"
@@ -167,13 +172,13 @@ export default async function TourPage({
                 className="size-4"
                 aria-hidden="true"
               />
+
               Voltar para os passeios
             </Link>
           </nav>
 
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
 
-            {/* Imagem */}
             <div className="vem-ver-fade-left relative aspect-[4/3] overflow-hidden rounded-3xl bg-muted shadow-sm">
               <Image
                 src={asset(tour.image)}
@@ -185,7 +190,6 @@ export default async function TourPage({
               />
             </div>
 
-            {/* Informações */}
             <div className="vem-ver-fade-right flex flex-col">
 
               <div>
@@ -204,8 +208,8 @@ export default async function TourPage({
                 </p>
               </div>
 
-              {/* Informações principais */}
               <dl className="mt-8 grid gap-3">
+
                 {info.map(
                   ({
                     icon: Icon,
@@ -224,6 +228,7 @@ export default async function TourPage({
                       </div>
 
                       <div className="min-w-0">
+
                         <dt className="text-sm text-muted-foreground">
                           {label}
                         </dt>
@@ -238,15 +243,17 @@ export default async function TourPage({
                               {tour.priceInfo}
                             </p>
                           )}
+
                       </div>
                     </div>
                   ),
                 )}
+
               </dl>
 
-              {/* Destaques */}
               {tour.highlights.length > 0 && (
                 <div className="vem-ver-fade-up mt-8">
+
                   <h2 className="text-lg font-semibold">
                     Destaques
                   </h2>
@@ -260,11 +267,12 @@ export default async function TourPage({
                       ),
                     )}
                   </ul>
+
                 </div>
               )}
 
-              {/* CTA */}
               <div className="vem-ver-fade-up mt-8">
+
                 <CtaLink
                   href={whatsappLink(
                     tourWhatsappMessage(
@@ -284,15 +292,13 @@ export default async function TourPage({
                   Consulte disponibilidade, condições e
                   detalhes diretamente com a Vem Ver.
                 </p>
+
               </div>
+
             </div>
           </div>
         </div>
       </article>
-
-      {/* =====================================================
-          OUTROS PASSEIOS
-      ===================================================== */}
 
       <section
         aria-labelledby="outros-title"
@@ -301,6 +307,7 @@ export default async function TourPage({
         <div className="mx-auto max-w-6xl">
 
           <div className="vem-ver-fade-up max-w-2xl">
+
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
               Mais experiências
             </p>
@@ -316,9 +323,11 @@ export default async function TourPage({
               Encontre outras experiências para aproveitar
               os Lençóis Maranhenses.
             </p>
+
           </div>
 
           <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
             {others.map((item, index) => (
               <li
                 key={item.slug}
@@ -330,8 +339,8 @@ export default async function TourPage({
                 <TourCard tour={item} />
               </li>
             ))}
-          </ul>
 
+          </ul>
         </div>
       </section>
     </>
