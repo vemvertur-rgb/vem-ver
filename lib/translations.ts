@@ -56,6 +56,8 @@ export type Translation = {
   tour: {
     shared: string
     privateExperience: string
+    moreExperiences: string
+    otherTours: string
     moreExperiencesDescription: string
     contactDescription: string
   }
