@@ -9,20 +9,21 @@ import {
 } from '@/lib/currency'
 
 import { getExchangeRates } from '@/lib/exchange-rate'
+import { useCurrency } from './currency-provider'
 
 type LocalizedPriceProps = {
   amount: number
-  currency?: CurrencyCode
   locale?: string
   className?: string
 }
 
 export function LocalizedPrice({
   amount,
-  currency = defaultCurrency,
   locale = 'pt-BR',
   className,
 }: LocalizedPriceProps) {
+  const { currency } = useCurrency()
+
   const [rates, setRates] = useState<
     Partial<Record<CurrencyCode, number>>
   >({
@@ -33,7 +34,8 @@ export function LocalizedPrice({
     let active = true
 
     async function loadRates() {
-      const nextRates = await getExchangeRates()
+      const nextRates =
+        await getExchangeRates()
 
       if (active) {
         setRates(nextRates)
@@ -47,20 +49,24 @@ export function LocalizedPrice({
     }
   }, [])
 
-  const rate = rates[currency]
+  const selectedCurrency =
+    currency || defaultCurrency
+
+  const rate = rates[selectedCurrency]
 
   const convertedAmount =
-    currency === 'BRL'
+    selectedCurrency === 'BRL'
       ? amount
       : typeof rate === 'number'
         ? amount * rate
         : amount
 
   const formatted =
-    currency === 'BRL' || typeof rate === 'number'
+    selectedCurrency === 'BRL' ||
+    typeof rate === 'number'
       ? formatCurrency(
           convertedAmount,
-          currency,
+          selectedCurrency,
           locale,
         )
       : formatCurrency(
