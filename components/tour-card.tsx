@@ -3,14 +3,25 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Clock, Info } from 'lucide-react'
-import { siteConfig, type Tour } from '@/lib/site-config'
+
+import {
+  siteConfig,
+  type Tour,
+} from '@/lib/site-config'
+
 import { asset } from '@/lib/links'
 import { WhatsAppIcon } from './brand-icons'
 import { ctaClass } from './cta-link'
+import { LocalizedPrice } from './localized-price'
 
-export function TourCard({ tour }: { tour: Tour }) {
+export function TourCard({
+  tour,
+}: {
+  tour: Tour
+}) {
   function goToContact() {
-    const contact = document.getElementById('contato')
+    const contact =
+      document.getElementById('contato')
 
     if (contact) {
       contact.scrollIntoView({
@@ -61,7 +72,10 @@ export function TourCard({ tour }: { tour: Tour }) {
                 className="size-4 shrink-0"
                 aria-hidden="true"
               />
-              <span>{tour.duration}</span>
+
+              <span>
+                {tour.duration}
+              </span>
             </div>
           )}
 
@@ -72,15 +86,27 @@ export function TourCard({ tour }: { tour: Tour }) {
                   className="size-4 shrink-0"
                   aria-hidden="true"
                 />
+
                 <span className="line-through">
-                  {tour.originalPrice}
+                  <LocalizedPrice
+                    amount={
+                      tour.originalPrice
+                    }
+                  />
                 </span>
               </div>
             )}
 
             <div className="mt-1 flex flex-wrap items-baseline gap-2">
               <span className="text-2xl font-bold text-primary">
-                {tour.price || siteConfig.fallbackPrice}
+                <LocalizedPrice
+                  amount={
+                    tour.price ||
+                    siteConfig.fallbackPrice
+                      ? tour.price
+                      : 0
+                  }
+                />
               </span>
 
               <span className="text-sm text-muted-foreground">
@@ -101,7 +127,10 @@ export function TourCard({ tour }: { tour: Tour }) {
             type="button"
             onClick={goToContact}
             aria-label={`Consultar informações sobre ${tour.name}`}
-            className={ctaClass('whatsapp', 'w-full')}
+            className={ctaClass(
+              'whatsapp',
+              'w-full',
+            )}
           >
             <WhatsAppIcon />
             Consultar pelo WhatsApp
@@ -110,7 +139,10 @@ export function TourCard({ tour }: { tour: Tour }) {
           <Link
             href={`/passeios/${tour.slug}/`}
             aria-label={`Ver detalhes do passeio ${tour.name}`}
-            className={ctaClass('outline', 'w-full')}
+            className={ctaClass(
+              'outline',
+              'w-full',
+            )}
           >
             Ver detalhes
           </Link>
