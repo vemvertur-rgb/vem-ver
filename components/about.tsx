@@ -47,7 +47,7 @@ export function About() {
         <div className="grid items-center gap-10 md:grid-cols-2 md:gap-16">
 
           {/* Imagem */}
-          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl md:aspect-[4/5]">
+          <div className="vem-ver-fade-left relative aspect-[4/3] overflow-hidden rounded-3xl md:aspect-[4/5]">
             <Image
               src={asset(about.image)}
               alt={about.imageAlt}
@@ -59,7 +59,7 @@ export function About() {
           </div>
 
           {/* Conteúdo */}
-          <div className="flex flex-col">
+          <div className="vem-ver-fade-right flex flex-col">
 
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sand-deep">
               Sobre a Vem Ver
@@ -84,7 +84,7 @@ export function About() {
                 return (
                   <div
                     key={item.title}
-                    className="rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-4 transition-colors duration-300 hover:bg-primary-foreground/10"
+                    className="vem-ver-card rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-4 transition-colors duration-300 hover:bg-primary-foreground/10"
                   >
                     <div className="mb-3 flex size-10 items-center justify-center rounded-xl bg-primary-foreground/10">
                       <Icon
@@ -111,6 +111,7 @@ export function About() {
                 href={whatsappLink()}
                 external
                 variant="whatsapp"
+                className="vem-ver-button"
               >
                 <WhatsAppIcon />
                 Falar com a Vem Ver
