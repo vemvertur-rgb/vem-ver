@@ -14,7 +14,6 @@ import {
 
 import {
   defaultLocale,
-  getLocaleFromPathname,
 } from '@/lib/i18n'
 
 import {
@@ -170,23 +169,19 @@ export function TourCard({
     }
   }
 
-  const currentPath =
-    typeof window !== 'undefined'
-      ? window.location.pathname
-      : '/'
-
-  const detectedLocale =
-    getLocaleFromPathname(
-      currentPath,
-    )
-
+  /*
+   * As páginas de passeios estão dentro de:
+   *
+   * /[locale]/passeios/[slug]/
+   *
+   * Por isso, o português também precisa usar /pt/
+   * para que o Next.js encontre a página corretamente.
+   */
   const activeLocale =
-    locale || detectedLocale
+    locale || defaultLocale
 
   const tourPath =
-    activeLocale === defaultLocale
-      ? `/passeios/${tour.slug}/`
-      : `/${activeLocale}/passeios/${tour.slug}/`
+    `/${activeLocale}/passeios/${tour.slug}/`
 
   return (
     <article className="vem-ver-card group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
