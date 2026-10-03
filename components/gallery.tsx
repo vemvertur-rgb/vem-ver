@@ -24,13 +24,16 @@ export function Gallery() {
           {gallery.map((image, index) => (
             <figure
               key={`${image.src}-${index}`}
-              className={`group relative overflow-hidden rounded-2xl bg-muted ${
+              className={`vem-ver-float-in group relative overflow-hidden rounded-2xl bg-muted ${
                 index === 0
                   ? 'col-span-2 row-span-2'
                   : index === 3
                     ? 'row-span-2'
                     : ''
               }`}
+              style={{
+                animationDelay: `${index * 100}ms`,
+              }}
             >
               <Image
                 src={asset(image.src)}
