@@ -15,18 +15,25 @@ export function Tours() {
       >
         <div className="mx-auto max-w-6xl">
 
-          <SectionHeading
-            id="passeios-title"
-            eyebrow="Nossos passeios"
-            title="Escolha sua próxima aventura"
-            description="Explore dunas, lagoas, rios e paisagens incríveis dos Lençóis Maranhenses. Escolha seu passeio e fale com a Vem Ver para consultar disponibilidade."
-          />
+          {/* Título */}
+          <div className="vem-ver-fade-up">
+            <SectionHeading
+              id="passeios-title"
+              eyebrow="Nossos passeios"
+              title="Escolha sua próxima aventura"
+              description="Explore dunas, lagoas, rios e paisagens incríveis dos Lençóis Maranhenses. Escolha seu passeio e fale com a Vem Ver para consultar disponibilidade."
+            />
+          </div>
 
+          {/* Passeios */}
           <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {tours.map((tour) => (
+            {tours.map((tour, index) => (
               <li
                 key={tour.slug}
-                className="flex"
+                className="vem-ver-float-in flex"
+                style={{
+                  animationDelay: `${index * 100}ms`,
+                }}
               >
                 <TourCard tour={tour} />
               </li>
@@ -46,18 +53,25 @@ export function Tours() {
       >
         <div className="mx-auto max-w-6xl">
 
-          <SectionHeading
-            id="privativos-title"
-            eyebrow="Experiências privativas"
-            title="Viva os Lençóis do seu jeito"
-            description="Experiências pensadas para quem busca mais exclusividade, tranquilidade e momentos especiais durante a viagem."
-          />
+          {/* Título */}
+          <div className="vem-ver-fade-up">
+            <SectionHeading
+              id="privativos-title"
+              eyebrow="Experiências privativas"
+              title="Viva os Lençóis do seu jeito"
+              description="Experiências pensadas para quem busca mais exclusividade, tranquilidade e momentos especiais durante a viagem."
+            />
+          </div>
 
+          {/* Experiências privativas */}
           <ul className="mt-12 grid gap-6 md:grid-cols-2">
-            {privateExperiences.map((tour) => (
+            {privateExperiences.map((tour, index) => (
               <li
                 key={tour.slug}
-                className="flex"
+                className="vem-ver-float-in flex"
+                style={{
+                  animationDelay: `${index * 140}ms`,
+                }}
               >
                 <TourCard tour={tour} />
               </li>
