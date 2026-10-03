@@ -12,10 +12,16 @@ export function CurrencySelector() {
     useCurrency()
 
   return (
-    <label className="sr-only">
-      Moeda
+    <div className="relative">
+      <label
+        htmlFor="currency-selector"
+        className="sr-only"
+      >
+        Selecionar moeda
+      </label>
 
       <select
+        id="currency-selector"
         value={currency}
         onChange={(event) =>
           setCurrency(
@@ -23,6 +29,7 @@ export function CurrencySelector() {
           )
         }
         aria-label="Selecionar moeda"
+        className="min-h-10 cursor-pointer appearance-none rounded-full border border-border bg-background px-3 pr-8 text-sm font-medium text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         {Object.values(currencies).map(
           (item) => (
@@ -30,11 +37,18 @@ export function CurrencySelector() {
               key={item.code}
               value={item.code}
             >
-              {item.code}
+              {item.flag} {item.code}
             </option>
           ),
         )}
       </select>
-    </label>
+
+      <span
+        className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground"
+        aria-hidden="true"
+      >
+        ▼
+      </span>
+    </div>
   )
 }
