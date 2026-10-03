@@ -4,311 +4,198 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Clock, Info } from 'lucide-react'
 
+import type { Tour } from '@/lib/site-config'
+import { asset } from '@/lib/links'
 import {
-  type Tour,
-} from '@/lib/site-config'
-
-import {
-  asset,
-} from '@/lib/links'
-
+  defaultLocale,
+} from '@/lib/i18n'
 import {
   getTourTranslation,
 } from '@/lib/tour-translations'
+import {
+  WhatsAppIcon,
+} from '@/components/brand-icons'
+import {
+  ctaClass,
+} from '@/components/cta-link'
+import {
+  LocalizedPrice,
+} from '@/components/localized-price'
+import {
+  useLocale,
+} from '@/components/locale-provider'
 
-import { WhatsAppIcon } from './brand-icons'
-import { ctaClass } from './cta-link'
-import { LocalizedPrice } from './localized-price'
-import { useLocale } from './locale-provider'
-
-type TourCardContent = {
-  specialOffer: string
-  specialCondition: string
-  consultWhatsapp: string
-  viewDetails: string
-  consultInformation: string
+type TourCardProps = {
+  tour: Tour
 }
 
-const contentByLocale: Record<
-  string,
-  TourCardContent
-> = {
+const labels = {
   pt: {
-    specialOffer: 'OFERTA ESPECIAL',
-    specialCondition: 'Condição especial',
-    consultWhatsapp:
-      'Consultar pelo WhatsApp',
-    viewDetails: 'Ver detalhes',
-    consultInformation:
-      'Consultar informações sobre',
+    details: 'Ver detalhes',
+    book: 'Reservar',
+    shared: 'Compartilhado',
+    private: 'Privativo',
   },
 
   en: {
-    specialOffer: 'SPECIAL OFFER',
-    specialCondition: 'Special condition',
-    consultWhatsapp:
-      'Ask via WhatsApp',
-    viewDetails: 'View details',
-    consultInformation:
-      'Ask for information about',
+    details: 'View details',
+    book: 'Book',
+    shared: 'Shared',
+    private: 'Private',
   },
 
   es: {
-    specialOffer: 'OFERTA ESPECIAL',
-    specialCondition: 'Condición especial',
-    consultWhatsapp:
-      'Consultar por WhatsApp',
-    viewDetails: 'Ver detalles',
-    consultInformation:
-      'Consultar información sobre',
+    details: 'Ver detalles',
+    book: 'Reservar',
+    shared: 'Compartido',
+    private: 'Privado',
   },
 
   fr: {
-    specialOffer: 'OFFRE SPÉCIALE',
-    specialCondition:
-      'Condition spéciale',
-    consultWhatsapp:
-      'Consulter sur WhatsApp',
-    viewDetails: 'Voir les détails',
-    consultInformation:
-      'Consulter les informations sur',
+    details: 'Voir les détails',
+    book: 'Réserver',
+    shared: 'Partagé',
+    private: 'Privé',
   },
 
   it: {
-    specialOffer: 'OFFERTA SPECIALE',
-    specialCondition:
-      'Condizione speciale',
-    consultWhatsapp:
-      'Consulta su WhatsApp',
-    viewDetails: 'Vedi dettagli',
-    consultInformation:
-      'Consulta le informazioni su',
+    details: 'Vedi dettagli',
+    book: 'Prenota',
+    shared: 'Condiviso',
+    private: 'Privato',
   },
 
   zh: {
-    specialOffer: '特别优惠',
-    specialCondition: '特别条件',
-    consultWhatsapp:
-      '通过 WhatsApp 咨询',
-    viewDetails: '查看详情',
-    consultInformation:
-      '咨询相关信息',
+    details: '查看详情',
+    book: '预订',
+    shared: '拼团',
+    private: '私人',
   },
 
   ja: {
-    specialOffer: '特別オファー',
-    specialCondition:
-      '特別条件',
-    consultWhatsapp:
-      'WhatsAppで問い合わせる',
-    viewDetails: '詳細を見る',
-    consultInformation:
-      '詳細について問い合わせる',
+    details: '詳細を見る',
+    book: '予約する',
+    shared: '乗り合い',
+    private: 'プライベート',
   },
-}
+} as const
 
 export function TourCard({
   tour,
-}: {
-  tour: Tour
-}) {
-  const {
-    locale,
-  } = useLocale()
+}: TourCardProps) {
+  const locale = useLocale()
 
-  const content =
-    contentByLocale[locale] ||
-    contentByLocale.pt
+  const activeLocale =
+    locale || defaultLocale
 
-  const localizedTour =
+  const translation =
     getTourTranslation(
       tour.slug,
-      locale,
+      activeLocale,
     )
 
-  const displayTour =
-    localizedTour || {
-      name: tour.name,
-      shortDescription:
-        tour.shortDescription,
-      description:
-        tour.description,
-      imageAlt:
-        tour.imageAlt,
-      priceInfo:
-        tour.priceInfo,
-      duration:
-        tour.duration,
-      schedule:
-        tour.schedule,
-      highlights:
-        tour.highlights,
-    }
+  const title =
+    translation.title ||
+    tour.title
 
-  function goToContact() {
-    const contact =
-      document.getElementById(
-        'contato',
-      )
+  const description =
+    translation.description ||
+    tour.description
 
-    if (contact) {
-      contact.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
-
-      window.history.replaceState(
-        null,
-        '',
-        `${window.location.pathname}#contato`,
-      )
-    }
-  }
+  const duration =
+    translation.duration ||
+    tour.duration
 
   /*
-   * A página de detalhes dos passeios
-   * está na rota:
+   * IMPORTANTE:
    *
-   * /passeios/[slug]/
+   * Português usa a rota original:
+   * /passeios/slug/
    *
-   * Portanto, o link não deve adicionar
-   * /pt/, /en/, /es/ etc.
+   * Os outros idiomas usam:
+   * /en/passeios/slug/
+   * /es/passeios/slug/
+   * etc.
    */
   const tourPath =
-    `/passeios/${tour.slug}/`
+    activeLocale === defaultLocale
+      ? `/passeios/${tour.slug}/`
+      : `/${activeLocale}/passeios/${tour.slug}/`
+
+  const label =
+    tour.type === 'private'
+      ? labels[activeLocale].private
+      : labels[activeLocale].shared
 
   return (
-    <article className="vem-ver-card group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+    <article className="group overflow-hidden rounded-2xl border bg-card shadow-sm transition-shadow hover:shadow-md">
+      <Link
+        href={tourPath}
+        className="block"
+      >
+        <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+          <Image
+            src={asset(tour.image)}
+            alt={title}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        </div>
+      </Link>
 
-      <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+      <div className="p-5">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <h3 className="text-xl font-bold tracking-tight">
+              {title}
+            </h3>
 
-        <Image
-          src={asset(tour.image)}
-          alt={displayTour.imageAlt}
-          fill
-          loading="lazy"
-          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-
-        {tour.originalPrice && (
-          <div className="absolute left-4 top-4 rounded-full bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground shadow-md">
-            {content.specialOffer}
-          </div>
-        )}
-
-      </div>
-
-      <div className="flex flex-1 flex-col p-6">
-
-        <div className="flex flex-1 flex-col gap-3">
-
-          <h3 className="font-serif text-2xl font-semibold leading-tight text-balance">
-            {displayTour.name}
-          </h3>
-
-          <p className="leading-relaxed text-muted-foreground">
-            {displayTour.shortDescription}
-          </p>
-
-          {displayTour.duration && (
-            <div className="flex items-center gap-2 pt-1 text-sm text-muted-foreground">
-
-              <Clock
-                className="size-4 shrink-0"
-                aria-hidden="true"
-              />
-
-              <span>
-                {displayTour.duration}
-              </span>
-
-            </div>
-          )}
-
-          <div className="mt-2 border-t border-border pt-4">
-
-            {tour.originalPrice && (
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-
-                <Info
-                  className="size-4 shrink-0"
-                  aria-hidden="true"
-                />
-
-                <span className="line-through">
-                  <LocalizedPrice
-                    amount={
-                      tour.originalPrice
-                    }
-                    locale={
-                      locale === 'pt'
-                        ? 'pt-BR'
-                        : locale
-                    }
-                  />
+            {duration && (
+              <div className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
+                <Clock className="h-4 w-4" />
+                <span>
+                  {duration}
                 </span>
-
               </div>
             )}
-
-            <div className="mt-1 flex flex-wrap items-baseline gap-2">
-
-              <span className="text-2xl font-bold text-primary">
-                <LocalizedPrice
-                  amount={tour.price}
-                  locale={
-                    locale === 'pt'
-                      ? 'pt-BR'
-                      : locale
-                  }
-                />
-              </span>
-
-              <span className="text-sm text-muted-foreground">
-                {displayTour.priceInfo}
-              </span>
-
-            </div>
-
-            {tour.originalPrice && (
-              <p className="mt-1 text-sm font-medium text-primary">
-                {content.specialCondition}
-              </p>
-            )}
-
           </div>
 
+          <span className="shrink-0 rounded-full border px-2.5 py-1 text-xs font-medium">
+            {label}
+          </span>
         </div>
 
-        <div className="mt-5 flex flex-col gap-2">
+        <p className="mt-4 line-clamp-4 text-sm leading-6 text-muted-foreground">
+          {description}
+        </p>
 
-          <button
-            type="button"
-            onClick={goToContact}
-            aria-label={`${content.consultInformation} ${displayTour.name}`}
-            className={ctaClass(
-              'whatsapp',
-              'w-full',
-            )}
-          >
-            <WhatsAppIcon />
-            {content.consultWhatsapp}
-          </button>
+        <div className="mt-5">
+          <LocalizedPrice
+            tour={tour}
+            locale={activeLocale}
+          />
+        </div>
 
+        <div className="mt-5 flex flex-col gap-2 sm:flex-row">
           <Link
             href={tourPath}
-            aria-label={`${content.viewDetails}: ${displayTour.name}`}
-            className={ctaClass(
-              'outline',
-              'w-full',
-            )}
+            className={`${ctaClass} flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-3 text-center text-sm font-semibold`}
           >
-            {content.viewDetails}
+            <Info className="h-4 w-4" />
+            {labels[activeLocale].details}
           </Link>
 
+          <Link
+            href={`https://wa.me/5598985698375?text=${encodeURIComponent(
+              `Olá! Vim pelo site da Vem Ver e gostaria de reservar o passeio "${title}".`,
+            )}`}
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl border px-4 py-3 text-center text-sm font-semibold transition-colors hover:bg-muted"
+          >
+            <WhatsAppIcon className="h-4 w-4" />
+            {labels[activeLocale].book}
+          </Link>
         </div>
-
       </div>
     </article>
   )
