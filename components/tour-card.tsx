@@ -9,16 +9,28 @@ import {
   type Tour,
 } from '@/lib/site-config'
 
-import { asset } from '@/lib/links'
+import {
+  asset,
+} from '@/lib/links'
+
+import {
+  defaultLocale,
+  getLocaleFromPathname,
+} from '@/lib/i18n'
+
 import { WhatsAppIcon } from './brand-icons'
 import { ctaClass } from './cta-link'
 import { LocalizedPrice } from './localized-price'
+import { useLocale } from './locale-provider'
 
 export function TourCard({
   tour,
 }: {
   tour: Tour
 }) {
+  const { locale } =
+    useLocale()
+
   function goToContact() {
     const contact =
       document.getElementById('contato')
@@ -37,8 +49,27 @@ export function TourCard({
     }
   }
 
+  const currentPath =
+    typeof window !== 'undefined'
+      ? window.location.pathname
+      : '/'
+
+  const detectedLocale =
+    getLocaleFromPathname(
+      currentPath,
+    )
+
+  const activeLocale =
+    locale || detectedLocale
+
+  const tourPath =
+    activeLocale === defaultLocale
+      ? `/passeios/${tour.slug}/`
+      : `/${activeLocale}/passeios/${tour.slug}/`
+
   return (
     <article className="vem-ver-card group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+
       <div className="relative aspect-[4/3] overflow-hidden bg-muted">
         <Image
           src={asset(tour.image)}
@@ -57,7 +88,9 @@ export function TourCard({
       </div>
 
       <div className="flex flex-1 flex-col p-6">
+
         <div className="flex flex-1 flex-col gap-3">
+
           <h3 className="font-serif text-2xl font-semibold leading-tight text-balance">
             {tour.name}
           </h3>
@@ -80,8 +113,10 @@ export function TourCard({
           )}
 
           <div className="mt-2 border-t border-border pt-4">
+
             {tour.originalPrice && (
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
+
                 <Info
                   className="size-4 shrink-0"
                   aria-hidden="true"
@@ -94,24 +129,22 @@ export function TourCard({
                     }
                   />
                 </span>
+
               </div>
             )}
 
             <div className="mt-1 flex flex-wrap items-baseline gap-2">
+
               <span className="text-2xl font-bold text-primary">
                 <LocalizedPrice
-                  amount={
-                    tour.price ||
-                    siteConfig.fallbackPrice
-                      ? tour.price
-                      : 0
-                  }
+                  amount={tour.price}
                 />
               </span>
 
               <span className="text-sm text-muted-foreground">
                 {tour.priceInfo}
               </span>
+
             </div>
 
             {tour.originalPrice && (
@@ -119,10 +152,12 @@ export function TourCard({
                 Condição especial
               </p>
             )}
+
           </div>
         </div>
 
         <div className="mt-5 flex flex-col gap-2">
+
           <button
             type="button"
             onClick={goToContact}
@@ -137,7 +172,7 @@ export function TourCard({
           </button>
 
           <Link
-            href={`/passeios/${tour.slug}/`}
+            href={tourPath}
             aria-label={`Ver detalhes do passeio ${tour.name}`}
             className={ctaClass(
               'outline',
@@ -146,7 +181,9 @@ export function TourCard({
           >
             Ver detalhes
           </Link>
+
         </div>
+
       </div>
     </article>
   )
