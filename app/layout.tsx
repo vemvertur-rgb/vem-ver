@@ -4,6 +4,7 @@ import { Fraunces, Inter } from 'next/font/google'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { WhatsAppButton } from '@/components/whatsapp-button'
+import { StructuredData } from '@/components/structured-data'
 import { asset } from '@/lib/links'
 
 import './globals.css'
@@ -132,6 +133,8 @@ export default function RootLayout({
       className={`${inter.variable} ${fraunces.variable}`}
     >
       <body className="antialiased">
+        <StructuredData />
+
         {/* Acessibilidade */}
         <a
           href="#conteudo"
